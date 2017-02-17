@@ -90,6 +90,14 @@ def stats(ctx):
     for thing in c:
         print(thing)
 
+def exact_match_field(field, term):
+    print("searching", field, "for term:", sha1hash)
+    #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
+    query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
+    #answer = c.execute('''SELECT * FROM path_db WHERE data_hash=?''', (sha1hash,))
+    answer = c.execute(query, (term,))
+    for result in answer.fetchall():
+        print(result)
 
 
 @fsindex.command()
@@ -99,14 +107,20 @@ def stats(ctx):
 def search(ctx, field, term):
     print("field:", field)
     print("term:", term)
+    assert field in FIELDS.keys()
+    if FIELDS[field] == 'BLOB':
+        term = bytes(term, 'UTF8')
+    elif FIELDS[field] == 'INT'
+        term = int(term)
 
-    if field == 'file_name':
-        search_file_name(bytes(term, 'UTF8'))
-    if field == 'data_hash':
-        search_sha1hash(term)
+    exact_match_field(field, term)
 
-#field: bash
-#term: file_name
+    #if field == 'file_name':
+    #    #search_file_name(bytes(term, 'UTF8'))
+    #    search_file_name(term)
+    #if field == 'data_hash':
+    #    search_sha1hash(term)
+
 
 
 
