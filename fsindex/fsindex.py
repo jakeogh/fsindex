@@ -18,10 +18,9 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-
 def search_file_name(filename):
+    print("searching for:", filename)
     answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
-
     for result in answer.fetchall():
         print(result)
 
@@ -53,7 +52,6 @@ def search_existing_file_name(infile):
                 print(result[0])
             else:
                 print("hashes do not match! NOT a match:", result[0])
-
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
