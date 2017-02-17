@@ -58,6 +58,8 @@ def exact_match_field(field, term, resultfields):
     query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
+        print(dir(result))
+        exit(0)
         print(result[1:-3])
 
 @click.group(context_settings=CONTEXT_SETTINGS)
