@@ -127,6 +127,8 @@ def search(ctx, field, term, resultfields, exists, substring):
     for rfield in resultfields:
         assert rfield in FIELDS.keys()
     seprint("resultfields:", resultfields)
+    seprint("exists:", exists)
+    seprint("substring:", substring)
 
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
