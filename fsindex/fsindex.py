@@ -10,6 +10,7 @@ import hashlib
 import pprint
 
 from kcl.printops import cprint
+from kcl.printops import seprint
 from kcl.printops import set_verbose
 from .update import update_db
 from .db_operations import db_stats
@@ -47,9 +48,9 @@ def search_existing_file_name(infile):
                 filehash = hashlib.sha1(fh.read()).hexdigest()
             if matchhash == filehash:
     #           print("match found:", result[0])
-                print(result[0])
+                seprint(result[0])
             else:
-                print("hashes do not match! NOT a match:", result[0])
+                seprint("hashes do not match! NOT a match:", result[0])
 
 def exact_match_field(field, term, resultfields):
     if 'hash' in field:
@@ -118,11 +119,11 @@ def stats(ctx):
 @click.pass_context
 def search(ctx, field, term, resultfields, exists, substring):
     assert field in FIELDS.keys()
-    print("field:", field)
-    print("term:", term)
+    seprint("field:", field)
+    seprint("term:", term)
     for rfield in resultfields:
         assert rfield in FIELDS.keys()
-    print("resultfields:", resultfields)
+    seprint("resultfields:", resultfields)
 
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
