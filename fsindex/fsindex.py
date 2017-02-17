@@ -76,7 +76,7 @@ def stats(ctx):
     for thing in c:
         print(thing)
 
-@click.argument('term', required=True, nargs=1)
+@click.argument('term', required=True, nargs=1, type=bytes)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
 @click.option('--name', is_flag=True)
 @click.option('--sha1hash', is_flag=True)
