@@ -99,6 +99,7 @@ def stats(ctx):
 def search(ctx, field, term, resultfields, exists, substring):
     print("field:", field)
     print("term:", term)
+    print("resultfields:", resultfields)
 
     resultfields = ''.join(resultfields.split(' '))
     resultfields = resultfields.split(',')
