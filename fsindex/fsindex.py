@@ -18,6 +18,15 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
+
+def search_sha1hash(sha1hash):
+    assert isinstance(filename, bytes)
+    print("searching for:", sha1hash)
+    #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
+    answer = c.execute('''SELECT * FROM path_db WHERE data_hash=?''', (sha1hash,))
+    for result in answer.fetchall():
+        print(result)
+
 def search_file_name(filename):
     assert isinstance(filename, bytes)
     print("searching for:", filename)
