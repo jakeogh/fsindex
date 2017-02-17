@@ -63,9 +63,13 @@ def exact_match_field(field, term, resultfields):
         #print(FIELDS.keys())
         for index, rfield in enumerate(FIELDS.keys()):
             #print("rfield:", rfield)
+            newline = False
             if rfield in resultfields:
-                print(result[index])
+                newline = True
+                print(result[index], end='')
 
+            if newline:
+                print('\n')
 
         #print(dir(result))
         exit(0)
