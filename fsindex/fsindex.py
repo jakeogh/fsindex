@@ -72,8 +72,9 @@ def exact_match_field(field, term, resultfields):
             print('\n', end='')
 
         #print(dir(result))
-        exit(0)
-        print(result[1:-3])
+        #exit(0)
+        #print(result[1:-3])
+    print("\n", end='')
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
