@@ -12,6 +12,7 @@ from kcl.printops import cprint
 from kcl.printops import set_verbose
 from .update import update_db
 from .db_operations import db_stats
+from .db_connection import c
 
 CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
