@@ -65,6 +65,7 @@ def fsindex(ctx):
 def update(root):
     update_db(root)
 
+@fsindex.command()
 @click.pass_context
 def stats(ctx):
     print(db_stats())
