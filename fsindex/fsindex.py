@@ -76,7 +76,7 @@ def stats(ctx):
     for thing in c:
         print(thing)
 
-@click.argument('term', required=True, nargs=1, type=bytes)
+@click.argument('term', required=True, nargs=1)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
 @click.option('--name', is_flag=True)
 @click.option('--sha1hash', is_flag=True)
@@ -84,7 +84,7 @@ def stats(ctx):
 @click.pass_context
 def search(ctx, term, name, sha1hash):
     if name:
-        search_file_name(term)
+        search_file_name(bytes(term, 'UTF8'))
 
 
 
