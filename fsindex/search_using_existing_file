@@ -3,7 +3,7 @@
 import glob
 import sys
 import os
-import hashlib 
+import hashlib
 import time
 import pickle
 
@@ -17,9 +17,9 @@ conn = sqlite3.connect('/home/user/.fsindex/_good/fsindex.sha1.db')
 c = conn.cursor()
 
 def file_exists(file):
-	if os.path.isfile(file): #unlike os.path.exists(False), os.path.isfile(False) returns False so no need to call path_exists() first.
-		return True
-	return False
+    if os.path.isfile(file): #unlike os.path.exists(False), os.path.isfile(False) returns False so no need to call path_exists() first.
+        return True
+    return False
 
 def folder_exists(path):
         if os.path.isdir(path): #unlike os.path.exists(False), os.path.isfile(False) returns False so no need to call path_exists() first.
@@ -31,168 +31,168 @@ def folder_exists(path):
 #c.execute("PRAGMA synchronous = OFF")
 
 def lookup_hash(file):
-#	print("lookup_hash():", file)
-	file_hash = b''
-#	print("searching db")
-	full_path_search_results = c.execute('''SELECT data_hash FROM path_db WHERE full_path=?''', (file,))
-#	print("done searching db")
+#   print("lookup_hash():", file)
+    file_hash = b''
+#   print("searching db")
+    full_path_search_results = c.execute('''SELECT data_hash FROM path_db WHERE full_path=?''', (file,))
+#   print("done searching db")
 
-	try:
-		file_hash = full_path_search_results.fetchone()[0]
-	except:
-		pass
-	
-	if len(file_hash) > 0:
-#		print("looked up hash in db:", file_hash)
-		return file_hash
-	else:
-#		print("manually hashing file:", file)
-		with open(file, 'rb') as fh:
-			file_hash = hashlib.sha1(fh.read()).hexdigest()
+    try:
+        file_hash = full_path_search_results.fetchone()[0]
+    except:
+        pass
 
-#	print("returning from lookup_hash()")
-	return file_hash
+    if len(file_hash) > 0:
+#       print("looked up hash in db:", file_hash)
+        return file_hash
+    else:
+#       print("manually hashing file:", file)
+        with open(file, 'rb') as fh:
+            file_hash = hashlib.sha1(fh.read()).hexdigest()
+
+#   print("returning from lookup_hash()")
+    return file_hash
 
 
 def search_for(file):
-	filename = file.split(b'/')[-1]
-	filestat = os.stat(file)
-	filehash = False
+    filename = file.split(b'/')[-1]
+    filestat = os.stat(file)
+    filehash = False
 
-#	print("searching for:", file, "...")
-	#os.system(b'/bin/ls -al ' + b'"' + file + b'"')
-	#print('\n')
+#   print("searching for:", file, "...")
+    #os.system(b'/bin/ls -al ' + b'"' + file + b'"')
+    #print('\n')
 
-#	print("searching for file name")
-	file_name_match = c.execute('''SELECT full_path, file_name, st_size, data_hash FROM path_db WHERE file_name=?''', (filename,))
-#	print("done searching for file name")
-	results = file_name_match.fetchall()
-#	print("done fetchall()")
+#   print("searching for file name")
+    file_name_match = c.execute('''SELECT full_path, file_name, st_size, data_hash FROM path_db WHERE file_name=?''', (filename,))
+#   print("done searching for file name")
+    results = file_name_match.fetchall()
+#   print("done fetchall()")
 
-	pre_results = []
-	final_results = {}
-	final_results[file] = []
-
-
-	for result in results:
-#		print("search by file name result:", result)
-		if result[0] == file:
-			continue
-
-		pre_results.append(result)
+    pre_results = []
+    final_results = {}
+    final_results[file] = []
 
 
-		try:
-#			print("search by file name calling os.stat on:", result[0])
-			matchstat = os.stat(result[0])
-		except FileNotFoundError:
-#			print("Error: No such file or directory:", result[0], "skipping")
-#			os._exit(1)
-			continue
+    for result in results:
+#       print("search by file name result:", result)
+        if result[0] == file:
+            continue
+
+        pre_results.append(result)
 
 
-#		print(matchstat)
-#		print(matchstat.st_size)
-		if matchstat.st_size > 0:
-			filehash = lookup_hash(file)
-		else:
-			continue
+        try:
+#           print("search by file name calling os.stat on:", result[0])
+            matchstat = os.stat(result[0])
+        except FileNotFoundError:
+#           print("Error: No such file or directory:", result[0], "skipping")
+#           os._exit(1)
+            continue
 
 
-
-		if result[2] == filestat.st_size:
-#			print("filename and size match:", result)
-#			print("checking if match still exists")
-
-			if result[3] == filehash:
-#				print("match found:", result[0])
-				final_results[file].append(result[0])
-#				print(result[0])
-			else:
-				print("hashes do not match! NOT a match:", result[0])
-		
+#       print(matchstat)
+#       print(matchstat.st_size)
+        if matchstat.st_size > 0:
+            filehash = lookup_hash(file)
+        else:
+            continue
 
 
 
-	if filehash != 'da39a3ee5e6b4b0d3255bfef95601890afd80709':
-#		print("searching for file hash in db:", filehash)
-#		print(type(filehash))
-#		print(filehash)
-		hash_match = c.execute('''SELECT full_path FROM path_db WHERE data_hash=?''', (filehash,))
-#		print("done searching for file hash in db:", filehash)
+        if result[2] == filestat.st_size:
+#           print("filename and size match:", result)
+#           print("checking if match still exists")
 
-		for result in hash_match.fetchall():
-			if result[0] == file:
-				continue
-			pre_results.append(result[0])
-#			print("pre result:", result[0])
-			if file_exists(result[0]):
-#				print("exists")
-				final_results[file].append(result[0])
-		
+            if result[3] == filehash:
+#               print("match found:", result[0])
+                final_results[file].append(result[0])
+#               print(result[0])
+            else:
+                print("hashes do not match! NOT a match:", result[0])
+        
 
-	if len(final_results) > 0:
-#		for result in final_results:
-#			print(result)
 
-		final_results[file] = list(set(final_results[file]))
-#		nice_formatting = [str(filestat.st_size), final_results]
-#		pp.pprint(nice_formatting)
-		print(str(filestat.st_size).rjust(12,' ')+' ', end="")
-		pp.pprint(final_results)
 
-		return final_results
-	else:
-		print("no results found, pre result list:")
-		pp.pprint(pre_results)
-		return {file:[]}
-#		for result in pre_results:
-#			print(result)
-	
+    if filehash != 'da39a3ee5e6b4b0d3255bfef95601890afd80709':
+#       print("searching for file hash in db:", filehash)
+#       print(type(filehash))
+#       print(filehash)
+        hash_match = c.execute('''SELECT full_path FROM path_db WHERE data_hash=?''', (filehash,))
+#       print("done searching for file hash in db:", filehash)
+
+        for result in hash_match.fetchall():
+            if result[0] == file:
+                continue
+            pre_results.append(result[0])
+#           print("pre result:", result[0])
+            if file_exists(result[0]):
+#               print("exists")
+                final_results[file].append(result[0])
+        
+
+    if len(final_results) > 0:
+#       for result in final_results:
+#           print(result)
+
+        final_results[file] = list(set(final_results[file]))
+#       nice_formatting = [str(filestat.st_size), final_results]
+#       pp.pprint(nice_formatting)
+        print(str(filestat.st_size).rjust(12,' ')+' ', end="")
+        pp.pprint(final_results)
+
+        return final_results
+    else:
+        print("no results found, pre result list:")
+        pp.pprint(pre_results)
+        return {file:[]}
+#       for result in pre_results:
+#           print(result)
+    
 
 
 
 
 if __name__ == '__main__':
 
-	path = bytes(sys.argv[1], 'UTF8')
+    path = bytes(sys.argv[1], 'UTF8')
 
-	if len(sys.argv) > 2:
-		ext = bytes(sys.argv[2], 'UTF8')
-	else:
-		ext = False
+    if len(sys.argv) > 2:
+        ext = bytes(sys.argv[2], 'UTF8')
+    else:
+        ext = False
 
-	path = os.path.realpath(path)
+    path = os.path.realpath(path)
 
-	match_list = []
+    match_list = []
 
-	if folder_exists(path):
-#		print("indexing folder")
-		if ext:
-			all_paths = [os.path.join(path, filename) for path, dirs, files in os.walk(path) for filename in files if filename.endswith(ext)]
-		else:
-			all_paths = [os.path.join(path, filename) for path, dirs, files in os.walk(path) for filename in files]
-		
-#		print(all_paths)
+    if folder_exists(path):
+#       print("indexing folder")
+        if ext:
+            all_paths = [os.path.join(path, filename) for path, dirs, files in os.walk(path) for filename in files if filename.endswith(ext)]
+        else:
+            all_paths = [os.path.join(path, filename) for path, dirs, files in os.walk(path) for filename in files]
+        
+#       print(all_paths)
 
-		for file in all_paths:
-#			print("file:",file)
-			if file_exists(file):	#weed out folders
-				result = search_for(file)
-				match_list.append(result)
-#				pp.pprint(result)
+        for file in all_paths:
+#           print("file:",file)
+            if file_exists(file):   #weed out folders
+                result = search_for(file)
+                match_list.append(result)
+#               pp.pprint(result)
 
-#		print("writing pickle")
-		with open('./pl.answer.pickle.'+ str(time.time()), 'xb') as f:
-			pickle.dump(match_list, f)
-
-
-#		print(match_list)
+#       print("writing pickle")
+        with open('./pl.answer.pickle.'+ str(time.time()), 'xb') as f:
+            pickle.dump(match_list, f)
 
 
+#       print(match_list)
 
-	else:
-		pp.pprint(search_for(path))
+
+
+    else:
+        pp.pprint(search_for(path))
 
 
 

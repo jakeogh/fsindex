@@ -34,6 +34,5 @@ answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE fi
 for result in answer.fetchall():
     print(result)
     continue
-
     os._exit(1)
 

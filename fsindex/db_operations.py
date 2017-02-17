@@ -14,7 +14,6 @@ from stat import *
 import sqlite3
 #from kcl.fileops import is_regular_file
 
-
 def create_database(database):
     conn = sqlite3.connect(database)
     c = conn.cursor()
@@ -38,7 +37,7 @@ def read_config_file(config_file=config_file):
         write_default_config_file()
         config.read(config_file)
         return config
-        
+
 class Config_FSindex():
     def __init__(self, config_file=config_file):
         self.config             = read_config_file(config_file)

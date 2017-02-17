@@ -90,14 +90,14 @@ def generate_match_dict(path):
 
 #                   print("(before dedupe) duplicate_data_hash_results:", duplicate_data_hash_results)
 #                   print("(before dedupe) len(duplicate_data_hash_results):", len(duplicate_data_hash_results))
-            
+
                     existing_duplicate_data_hash_results = []
                     for dup_file in duplicate_data_hash_results:
 #                       print("checking if dup_file exists:", dup_file)
                         if file_exists(dup_file):
                             existing_duplicate_data_hash_results.append(dup_file)
-                            
-                                
+
+
                     if len(existing_duplicate_data_hash_results) > 1:
 #                       print("(after dedupe) duplicate_data_hash_results:", existing_duplicate_data_hash_results)
 #                       print(existing_duplicate_data_hash_results)

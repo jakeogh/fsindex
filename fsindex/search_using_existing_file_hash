@@ -42,7 +42,7 @@ for result in answer.fetchall():
 #           continue
 
 #       print("checking hash...")
-        
+
 #       with open(result[0], 'rb') as fh:
 #           matchhash = hashlib.sha1(fh.read()).hexdigest()
 #       with open(file, 'rb') as fh:
@@ -52,7 +52,7 @@ for result in answer.fetchall():
 #           print(result[0])
 #       else:
 #           print("hashes do not match! NOT a match:", result[0])
-        
+
 
 
 

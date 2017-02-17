@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 #fsindex
 #Public Domain - jak
 
@@ -13,7 +12,6 @@ from kcl.dirops import path_is_dir
 from kcl.hashops import sha1_hash_file
 from kcl.dirops import all_files
 from .dbconnection import c
-
 
 def update_db(path):
     assert path.startswith(b'/')
@@ -73,7 +71,6 @@ def update_db(path):
 
 
 if __name__ == '__main__':
-
     path = bytes(sys.argv[1], 'UTF-8')
     path = os.path.realpath(path)
     update_db(path)
