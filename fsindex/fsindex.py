@@ -19,7 +19,6 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-
 def search_existing_file_name(infile):
     assert isinstance(filename, bytes)
     infile = os.path.realpath(infile)
@@ -49,7 +48,6 @@ def search_existing_file_name(infile):
             else:
                 print("hashes do not match! NOT a match:", result[0])
 
-
 def exact_match_field(field, term):
     if 'hash' in field:
         term = term.lower()
@@ -57,7 +55,7 @@ def exact_match_field(field, term):
     query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
-        print(result)
+        print(result[-1:])
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
