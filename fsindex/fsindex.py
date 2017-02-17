@@ -58,8 +58,11 @@ def exact_match_field(field, term, resultfields):
     query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
-        result = zip(FIELDS.keys(), result)
-        print(result)
+        #result = zip(FIELDS.keys(), result)
+        #print(result)
+        for index, rfield in enumerate(FIELDS.keys()):
+            if rfield in resultfields:
+                print(result[index], end=' ')
         #print(dir(result))
         exit(0)
         print(result[1:-3])
