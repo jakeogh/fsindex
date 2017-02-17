@@ -92,13 +92,9 @@ def stats(ctx):
 
 
 
+@fsindex.command()
 @click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
-#@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
-#@click.option('--name', is_flag=True)
-#@click.option('--hexname', is_flag=True)
-#@click.option('--sha1hash', is_flag=True)
-@fsindex.command()
 @click.pass_context
 def search(ctx, field, term):
     print("field:", field)
@@ -108,6 +104,10 @@ def search(ctx, field, term):
         search_file_name(bytes(term, 'UTF8'))
     if field == 'data_hash':
         search_sha1hash(term)
+
+#field: bash
+#term: file_name
+
 
 
 if __name__ == '__main__':
