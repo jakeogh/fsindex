@@ -54,7 +54,7 @@ def search_existing_file_name(infile):
 def exact_match_field(field, term, resultfields):
     if 'hash' in field:
         term = term.lower()
-    print("searching", field, "for term:", term)
+    #print("searching", field, "for term:", term)
     query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
