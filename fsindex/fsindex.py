@@ -70,7 +70,7 @@ def stats(ctx):
     print(db_stats())
     c.execute('select name from sqlite_master where type=\'table\'')
     for table in c:
-        print table[0]
+        print(table[0])
 
 @click.argument('term', required=True, nargs=1)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
