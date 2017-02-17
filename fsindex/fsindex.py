@@ -74,9 +74,8 @@ def update(root):
     update_db(root)
 
 @fsindex.command()
-@click.argument('root', required=True, nargs=1)
 @click.pass_context
-def listfields(root):
+def listfields():
     pp(FIELDS)
 
 
