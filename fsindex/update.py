@@ -11,7 +11,14 @@ from kcl.dirops import path_is_dir
 from kcl.hashops import sha1_hash_file
 from kcl.dirops import all_files
 from .db_connection import c
-from .search_for_full_path import search_for_full_path
+
+
+def search_for_full_path(full_path):
+    #c = conn.cursor()
+    query = '''SELECT * FROM path_db WHERE full_path=?'''
+    answer = c.execute(query, (full_path,))
+    results = answer.fetchall()
+    return results
 
 def update_db(path):
     assert path.startswith(b'/')
@@ -22,12 +29,10 @@ def update_db(path):
         #all_paths = [os.path.join(path, filename) for path, dirs, files in os.walk(path) for filename in files]
         all_paths = all_files(path)
         print("done generating all_paths:", file=sys.stderr)
-
     else:
         os._exit(1)
 
     skipped_file_list = []
-
     for index, path in enumerate(all_paths):
 #       print("path:", path)
         existing_db_entrys = search_for_full_path(path)
