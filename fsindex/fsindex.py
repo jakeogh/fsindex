@@ -55,37 +55,31 @@ def search_existing_file_name(infile):
 def match_field(field, term, resultfields, exists, substring):
     if 'hash' in field:
         term = term.lower()
-    #print("searching", field, "for term:", term)
     if substring:
-        #query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
         query = '''SELECT * FROM path_db WHERE ''' + field + ''' LIKE ?'''
         answer = c.execute(query, (b'%'+term+b'%',))
     else:
         query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
         answer = c.execute(query, (term,))
 
-    for result in answer.fetchall():
-        #result = zip(FIELDS.keys(), result)
-        #print(result)
-        #print(FIELDS.keys())
+    results = answer.fetchall()
+
+    for result in results:
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
-            #print("rfield:", rfield)
             if rfield in resultfields:
                 newline = True
                 if isinstance(result[index], bytes):
                     sys.stdout.buffer.write(result[index] + b' ')
                 else:
                     print(result[index], end=' ')
-
         if newline:
             print('\n', end='')
             newline = False
 
-        #print(dir(result))
-        #exit(0)
-        #print(result[1:-3])
-    print("\n", end='')
+    count = len(results)
+    seprint("count:", count)
+    seprint("\n", end='')
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
