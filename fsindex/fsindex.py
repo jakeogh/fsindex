@@ -29,7 +29,6 @@ def search_existing_file_name(infile):
     filename = infile.split('/')[-1]
     filestat = os.stat(infile)
     answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
-
     for result in answer.fetchall():
         if result[0] == infile:
             continue
@@ -69,6 +68,9 @@ def update(root):
 @click.pass_context
 def stats(ctx):
     print(db_stats())
+    c.execute('select name from sqlite_master where type=\'table\'')
+    for table in c:
+        print table[0]
 
 @click.argument('term', required=True, nargs=1)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
