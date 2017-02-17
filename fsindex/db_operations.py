@@ -32,7 +32,7 @@ field_str = ''
 for field in FIELDS:
     print(field)
     label, labeltype = field
-    field_str = label + ' ' + labeltype + ','
+    field_str = field_str + label + ' ' + labeltype + ','
 
 print(field_str)
 
