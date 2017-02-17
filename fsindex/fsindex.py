@@ -3,6 +3,7 @@
 import click
 import shutil
 from kcl.printops import eprint
+from kcl.printops import set_verbose
 from .update import update_db
 
 CONTEXT_SETTINGS = \
