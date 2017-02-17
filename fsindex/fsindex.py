@@ -63,12 +63,9 @@ def exact_match_field(field, term, resultfields):
         #print(FIELDS.keys())
         for index, rfield in enumerate(FIELDS.keys()):
             #print("rfield:", rfield)
-            outline = b''
             if rfield in resultfields:
-                outline = outline + result[index] + b' '
+                print(result[index])
 
-            if outline:
-                print(outline)
 
         #print(dir(result))
         exit(0)
