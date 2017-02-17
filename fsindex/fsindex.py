@@ -86,7 +86,6 @@ def match_field(field, term, resultfields, exists, substring):
 @click.pass_context
 def fsindex(ctx):
     pass
-    #cprint("ctx:", ctx)
 
 @fsindex.command()
 @click.argument('root', required=True, nargs=1)
@@ -135,7 +134,5 @@ if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
     fsindex()
     # pylint: enable=no-value-for-parameter
-    eprint("Exiting without error.", level=LOG['DEBUG'])
+    #eprint("Exiting without error.", level=LOG['DEBUG'])
 
-# substring search:
-# answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name LIKE ?''', (b'%'+file+b'%',))
