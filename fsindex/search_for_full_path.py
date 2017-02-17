@@ -21,5 +21,3 @@ if __name__ == '__main__':
     exit(1)
 
 
-#c.execute('''CREATE TABLE path_db (id TEXT, full_path BLOB, file_name BLOB, st_mode INT, st_ino INT, st_dev INT, st_nlink INT, st_uid INT, st_gid INT, st_size INT, st_atime REAL, st_mtime REAL, st_ctime REAL)''')
-#c.execute("PRAGMA synchronous = OFF")

@@ -11,6 +11,29 @@ home = os.path.expanduser("~")
 config_folder = home + '/.fsindex'
 config_file = config_folder + '/fsindex_config'
 
+FIELDS = [
+    ('path_hash', 'TEXT'),
+    ('full_path', 'BLOB'),
+    ('file_name', 'BLOB'),
+    ('data_hash', 'TEXT'),
+    ('st_mode', 'INT'),
+    ('st_ino', 'INT'),
+    ('st_dev', 'INT'),
+    ('st_nlink', 'INT'),
+    ('st_uid', 'INT'),
+    ('st_gid', 'INT'),
+    ('st_size', 'INT'),
+    ('st_atime_ns', 'INT'),
+    ('st_mtime_ns', 'INT'),
+    ('st_ctime_ns', 'INT')
+    ]
+
+field_str = ''
+for field in FIELDS:
+    for label, labeltype in field:
+        field_str = label + ' ' + labeltype + ','
+
+print(field_str)
 
 def create_database():
     query = '''CREATE TABLE path_db (path_hash TEXT, full_path BLOB, file_name BLOB, data_hash TEXT, st_mode INT, st_ino INT, st_dev INT, st_nlink INT, st_uid INT, st_gid INT, st_size INT, st_atime_ns INT, st_mtime_ns INT, st_ctime_ns INT)'''
