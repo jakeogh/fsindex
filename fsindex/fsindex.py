@@ -140,6 +140,7 @@ def search(ctx, field, term, resultfields, exists, substring, modes):
     seprint("exists:", exists)
     seprint("substring:", substring)
     for mode in modes:
+        print("mode:", mode)
         assert mode in MODES.keys()
     seprint("modes:", modes)
 
