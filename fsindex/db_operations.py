@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 
 import configparser
+import sys
+import os
+import hashlib
+from stat import *
+from .db_connection import c
 
 home = os.path.expanduser("~")
 config_folder = home + '/.fsindex'
 config_file = config_folder + '/fsindex_config'
 
-import sys
-import os
-import hashlib
-from stat import *
-#from kcl.fileops import is_regular_file
-
-from .db_connection import c
 
 def create_database():
     query = '''CREATE TABLE path_db (path_hash TEXT, full_path BLOB, file_name BLOB, data_hash TEXT, st_mode INT, st_ino INT, st_dev INT, st_nlink INT, st_uid INT, st_gid INT, st_size INT, st_atime_ns INT, st_mtime_ns INT, st_ctime_ns INT)'''
