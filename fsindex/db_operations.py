@@ -35,7 +35,7 @@ for label in FIELDS.keys():
     labeltype = FIELDS[label]
     field_str = field_str + label + ' ' + labeltype + ', '
 
-print(field_str)
+#print(field_str)
 
 def create_database():
     query = '''CREATE TABLE path_db (''' + field_str + ''')'''
