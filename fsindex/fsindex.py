@@ -17,6 +17,7 @@ from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
 from .db_operations import FIELDS
+from .db_operations import MODES
 
 pp = pprint.PrettyPrinter(indent=4)
 
