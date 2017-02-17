@@ -12,7 +12,7 @@ home = os.path.expanduser("~")
 config_folder = home + '/.fsindex'
 config_file = config_folder + '/fsindex_config'
 
-FIELDS = OrderedDict({
+FIELDS = OrderedDict((
     'path_hash':'TEXT',
     'full_path':'BLOB',
     'file_name':'BLOB',
@@ -27,7 +27,7 @@ FIELDS = OrderedDict({
     'st_atime_ns':'INT',
     'st_mtime_ns':'INT',
     'st_ctime_ns':'INT'
-    })
+    ))
 
 field_str = ''
 for label in FIELDS.keys():
