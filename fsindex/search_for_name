@@ -2,7 +2,7 @@
 
 import sys
 import os
-from .dbconnection import c
+from .db_connection import c
 
 file = bytes(sys.argv[1], 'UTF8')
 

@@ -6,15 +6,9 @@ import os
 import hashlib
 import time
 import pickle
-
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
-#pp = pprint.PrettyPrinter()
-
-import sqlite3
-conn = sqlite3.connect('/home/user/.fsindex/_good/fsindex.sha1.db')
-
-c = conn.cursor()
+from .db_connection import c
 
 def file_exists(file):
     if os.path.isfile(file): #unlike os.path.exists(False), os.path.isfile(False) returns False so no need to call path_exists() first.
@@ -23,7 +17,7 @@ def file_exists(file):
 
 def folder_exists(path):
         if os.path.isdir(path): #unlike os.path.exists(False), os.path.isfile(False) returns False so no need to call path_exists() first.
-                return True
+            return True
         return False
 
 

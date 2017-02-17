@@ -2,9 +2,7 @@
 
 import sys
 import os
-
-from .dbconnection import c
-
+from .db_connection import c
 
 def search_for_full_path(full_path):
     #c = conn.cursor()
