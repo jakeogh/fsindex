@@ -73,7 +73,8 @@ def stats(ctx):
     for table in c:
         print(table[0])
     c.execute('select * from sqlite_master')
-    print(c)
+    for thing in c:
+        print(thing)
 
 @click.argument('term', required=True, nargs=1)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
