@@ -76,7 +76,7 @@ def update(root):
 @fsindex.command()
 @click.pass_context
 def listfields(ctx):
-    pp(FIELDS)
+    pp.pprint(FIELDS)
 
 
 @fsindex.command()
