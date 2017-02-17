@@ -75,7 +75,7 @@ def update(root):
 
 @fsindex.command()
 @click.pass_context
-def listfields():
+def listfields(ctx):
     pp(FIELDS)
 
 
