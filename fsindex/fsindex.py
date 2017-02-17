@@ -65,7 +65,7 @@ def exact_match_field(field, term, resultfields):
             #print("rfield:", rfield)
             outline = ''
             if rfield in resultfields:
-                outline.append(result[index] + ' ')
+                outline = outline + result[index] + ' '
 
             if outline:
                 print(outline)
