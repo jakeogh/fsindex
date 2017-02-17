@@ -66,7 +66,10 @@ def exact_match_field(field, term, resultfields):
             #print("rfield:", rfield)
             if rfield in resultfields:
                 newline = True
-                print(result[index], end=' ')
+                if isinstance(result[index], bytes):
+                    sys.stdout.buffer.write(result[index])
+                else:
+                    print(result[index], end=' ')
 
         if newline:
             print('\n', end='')
