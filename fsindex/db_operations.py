@@ -39,7 +39,6 @@ MODES = OrderedDict((
     ('S_IFIFO', 'FIFO')
     ))
 
-
 field_str = ''
 for label in FIELDS.keys():
     #print(label)
