@@ -2,7 +2,7 @@
 
 import click
 import shutil
-from kcl.printops import eprint
+from kcl.printops import cprint
 from kcl.printops import set_verbose
 from .update import update_db
 from .db_operations import db_stats
@@ -15,7 +15,7 @@ CONTEXT_SETTINGS = \
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
 @click.pass_context
 def fsindex(ctx):
-    eprint("ctx:", ctx)
+    cprint("ctx:", ctx)
 
 @fsindex.command()
 @click.argument('root', required=True, nargs=1)
