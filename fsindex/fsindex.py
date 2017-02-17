@@ -91,10 +91,10 @@ def stats(ctx):
         print(thing)
 
 def exact_match_field(field, term):
+    if 'hash' in field:
+        term = term.lower()
     print("searching", field, "for term:", term)
-    #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
     query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
-    #answer = c.execute('''SELECT * FROM path_db WHERE data_hash=?''', (sha1hash,))
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
         print(result)
