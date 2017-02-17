@@ -16,12 +16,12 @@ CONTEXT_SETTINGS = \
 def fsindex(ctx):
     eprint("ctx:", ctx)
 
-@dnsgate.command()
+@fsindex.command()
 @click.argument('root', required=True, nargs=1)
 def update(root):
     update_db(root)
 
-@dnsgate.command()
+@fsindex.command()
 def stats():
     print(db_stats())
 
