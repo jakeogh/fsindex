@@ -97,18 +97,13 @@ def stats(ctx):
 @click.option('--substring', is_flag=True)
 @click.pass_context
 def search(ctx, field, term, resultfields, exists, substring):
+    assert field in FIELDS.keys()
     print("field:", field)
     print("term:", term)
-    print("resultfields:", resultfields)
-
-    
-    #resultfields = ''.join(resultfields.split(' '))
-    #resultfields = resultfields.split(',')
     for rfield in resultfields:
         assert rfield in FIELDS.keys()
-    #print("resultfields:", resultfields)
+    print("resultfields:", resultfields)
 
-    assert field in FIELDS.keys()
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
