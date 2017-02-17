@@ -8,6 +8,7 @@ import os
 import pickle
 import hashlib
 import pprint
+from stat import *
 
 from kcl.printops import cprint
 from kcl.printops import seprint
@@ -138,6 +139,9 @@ def search(ctx, field, term, resultfields, exists, substring, modes):
     seprint("resultfields:", resultfields)
     seprint("exists:", exists)
     seprint("substring:", substring)
+    for mode in modes:
+        assert mode in MODES.keys()
+    seprint("modes:", modes)
 
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
