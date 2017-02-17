@@ -13,16 +13,19 @@ CONTEXT_SETTINGS = \
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
+@click.pass_context
 def fsindex(ctx):
     eprint("ctx:", ctx)
 
 @fsindex.command()
 @click.argument('root', required=True, nargs=1)
+@click.pass_context
 def update(root):
     update_db(root)
 
 @fsindex.command()
-def stats():
+@click.pass_context
+def stats(ctx):
     print(db_stats())
 
 if __name__ == '__main__':
