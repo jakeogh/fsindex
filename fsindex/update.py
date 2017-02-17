@@ -5,13 +5,13 @@
 import sys
 import os
 import hashlib
-from search_for_full_path import search_for_full_path
 from stat import *
 from kcl.fileops import is_regular_file
 from kcl.dirops import path_is_dir
 from kcl.hashops import sha1_hash_file
 from kcl.dirops import all_files
 from .dbconnection import c
+from .search_for_full_path import search_for_full_path
 
 def update_db(path):
     assert path.startswith(b'/')
