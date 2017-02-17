@@ -20,7 +20,8 @@ CONTEXT_SETTINGS = \
 
 
 def search_sha1hash(sha1hash):
-    assert isinstance(filename, bytes)
+    assert isinstance(sha1hash, str)
+    sha1hash = sha1hash.lower()
     print("searching for:", sha1hash)
     #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
     answer = c.execute('''SELECT * FROM path_db WHERE data_hash=?''', (sha1hash,))
@@ -80,7 +81,7 @@ def update(root):
 @fsindex.command()
 @click.pass_context
 def stats(ctx):
-    print(db_stats())
+    #print(db_stats())
     c.execute('select name from sqlite_master where type=\'table\'')
     for table in c:
         print(table[0])
