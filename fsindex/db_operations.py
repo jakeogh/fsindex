@@ -20,8 +20,8 @@ def create_database():
 
 def db_stats():
     query = '''SELECT Count(*) FROM path_db'''
-    result = c.execute(query)
-    return result
+    answer = c.execute(query)
+    return answer.fetchall()
     #conn.close()
 
 def write_default_config_file():
