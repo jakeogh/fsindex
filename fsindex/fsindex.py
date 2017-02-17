@@ -110,7 +110,7 @@ def search(ctx, field, term):
     assert field in FIELDS.keys()
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
-    elif FIELDS[field] == 'INT'
+    elif FIELDS[field] == 'INT':
         term = int(term)
 
     exact_match_field(field, term)
