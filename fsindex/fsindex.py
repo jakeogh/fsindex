@@ -143,7 +143,7 @@ def search(ctx, field, term, resultfields, exists, substring, modes):
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-    match_field(field=filed, term=term, resultfields=resultfields, exists=exists, substring=substring, modes=modes)
+    match_field(field=field, term=term, resultfields=resultfields, exists=exists, substring=substring, modes=modes)
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
