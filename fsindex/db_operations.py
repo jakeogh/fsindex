@@ -31,11 +31,11 @@ FIELDS = OrderedDict({
 
 field_str = ''
 for label in FIELDS.keys():
-    print(label)
+    #print(label)
     labeltype = FIELDS[label]
     field_str = field_str + label + ' ' + labeltype + ', '
 
-#print(field_str)
+print(field_str)
 
 def create_database():
     query = '''CREATE TABLE path_db (''' + field_str + ''')'''

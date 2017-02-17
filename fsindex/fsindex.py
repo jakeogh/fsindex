@@ -22,7 +22,7 @@ CONTEXT_SETTINGS = \
 def search_sha1hash(sha1hash):
     assert isinstance(sha1hash, str)
     sha1hash = sha1hash.lower()
-    print("searching for:", sha1hash)
+    print("searching for sha1hash:", sha1hash)
     #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
     answer = c.execute('''SELECT * FROM path_db WHERE data_hash=?''', (sha1hash,))
     for result in answer.fetchall():
@@ -30,7 +30,7 @@ def search_sha1hash(sha1hash):
 
 def search_file_name(filename):
     assert isinstance(filename, bytes)
-    print("searching for:", filename)
+    print("searching for filename:", filename)
     #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
     answer = c.execute('''SELECT * FROM path_db WHERE file_name=?''', (filename,))
     for result in answer.fetchall():
@@ -101,6 +101,9 @@ def stats(ctx):
 @fsindex.command()
 @click.pass_context
 def search(ctx, field, term):
+    print("field:", field)
+    print("term:", term)
+
     if field == 'file_name':
         search_file_name(bytes(term, 'UTF8'))
     if field == 'data_hash':
