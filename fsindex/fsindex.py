@@ -53,7 +53,7 @@ def search_existing_file_name(infile):
             else:
                 seprint("hashes do not match! NOT a match:", result[0])
 
-def match_field(field, term, resultfields, exists, substring):
+def match_field(field, term, resultfields, exists, substring, modes):
     if 'hash' in field:
         term = term.lower()
     if substring:
@@ -72,6 +72,8 @@ def match_field(field, term, resultfields, exists, substring):
                 if exists:
                     if not path_exists(result[1]):
                         continue
+                if modes:
+                    print("modes:", modes)
                 newline = True
                 if isinstance(result[index], bytes):
                     sys.stdout.buffer.write(result[index] + b' ')
@@ -104,6 +106,11 @@ def listfields(ctx):
 
 @fsindex.command()
 @click.pass_context
+def listmodes(ctx):
+    pp.pprint(MODES)
+
+@fsindex.command()
+@click.pass_context
 def stats(ctx):
     #print(db_stats())
     c.execute('select name from sqlite_master where type=\'table\'')
@@ -119,8 +126,9 @@ def stats(ctx):
 @click.argument('resultfields', required=True, nargs=-1)
 @click.option('--exists', is_flag=True)
 @click.option('--substring', is_flag=True)
+@click.option('--modes', is_flag=False, type=click.Choice(MODES.keys()), required=False)
 @click.pass_context
-def search(ctx, field, term, resultfields, exists, substring):
+def search(ctx, field, term, resultfields, exists, substring, modes):
     assert field in FIELDS.keys()
     seprint("field:", field)
     seprint("term:", term)
@@ -134,7 +142,7 @@ def search(ctx, field, term, resultfields, exists, substring):
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-    match_field(field, term, resultfields, exists, substring)
+    match_field(field=filed, term=term, resultfields=resultfields, exists=exists, substring=substring, modes=modes)
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
