@@ -52,12 +52,18 @@ def search_existing_file_name(infile):
             else:
                 seprint("hashes do not match! NOT a match:", result[0])
 
-def exact_match_field(field, term, resultfields):
+def match_field(field, term, resultfields, exists, substring):
     if 'hash' in field:
         term = term.lower()
     #print("searching", field, "for term:", term)
-    query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
-    answer = c.execute(query, (term,))
+    if substring:
+        #query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
+        query = '''SELECT * FROM path_db WHERE ''' + field + ''' LIKE ?'''
+        answer = c.execute(query, (b'%'+term+b'%',))
+    else:
+        query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
+        answer = c.execute(query, (term,))
+
     for result in answer.fetchall():
         #result = zip(FIELDS.keys(), result)
         #print(result)
@@ -129,7 +135,7 @@ def search(ctx, field, term, resultfields, exists, substring):
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-    exact_match_field(field, term, resultfields)
+    match_field(field, term, resultfields, exists, substring)
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
