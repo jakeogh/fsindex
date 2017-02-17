@@ -68,9 +68,9 @@ def stats(ctx):
     print(db_stats())
 
 @click.argument('term', required=True, nargs=1)
-@click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
-@click.option('--name', is_flag=True, callback=set_verbose, expose_value=False)
-@click.option('--sha1hash', is_flag=True, callback=set_verbose, expose_value=False)
+#@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
+@click.option('--name', is_flag=True)
+@click.option('--sha1hash', is_flag=True)
 @fsindex.command()
 @click.pass_context
 def search(ctx, term, name, sha1hash):
