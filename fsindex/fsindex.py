@@ -67,7 +67,7 @@ def exact_match_field(field, term, resultfields):
             if rfield in resultfields:
                 newline = True
                 if isinstance(result[index], bytes):
-                    sys.stdout.buffer.write(result[index])
+                    sys.stdout.buffer.write(result[index] + b' ')
                 else:
                     print(result[index], end=' ')
 
