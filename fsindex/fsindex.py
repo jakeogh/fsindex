@@ -55,7 +55,7 @@ def exact_match_field(field, term):
     query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
-        print(result[-1:])
+        print(result[1:])
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
