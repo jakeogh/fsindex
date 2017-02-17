@@ -19,14 +19,17 @@ CONTEXT_SETTINGS = \
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
 def search_file_name(filename):
+    assert isinstance(filename, bytes)
     print("searching for:", filename)
-    answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
+    #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
+    answer = c.execute('''SELECT * FROM path_db WHERE file_name=?''', (filename,))
     for result in answer.fetchall():
         print(result)
 
 def search_existing_file_name(infile):
+    assert isinstance(filename, bytes)
     infile = os.path.realpath(infile)
-    filename = infile.split('/')[-1]
+    filename = infile.split(b'/')[-1]
     filestat = os.stat(infile)
     answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
     for result in answer.fetchall():
@@ -79,13 +82,15 @@ def stats(ctx):
 @click.argument('term', required=True, nargs=1)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
 @click.option('--name', is_flag=True)
+@click.option('--hexname', is_flag=True)
 @click.option('--sha1hash', is_flag=True)
 @fsindex.command()
 @click.pass_context
-def search(ctx, term, name, sha1hash):
+def search(ctx, term, name, hexname, sha1hash):
     if name:
         search_file_name(bytes(term, 'UTF8'))
-
+    if sha1hash:
+        search_sha1hash(term)
 
 
 if __name__ == '__main__':
