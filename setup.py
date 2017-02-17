@@ -10,7 +10,7 @@ import re
 from setuptools import find_packages, setup
 
 dependencies = ['kcl']
-version = 0.0.1
+version = 0.01
 
 setup(
     name = "fsindex",
