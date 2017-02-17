@@ -61,15 +61,16 @@ def exact_match_field(field, term, resultfields):
         #result = zip(FIELDS.keys(), result)
         #print(result)
         #print(FIELDS.keys())
+        newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             #print("rfield:", rfield)
-            newline = False
             if rfield in resultfields:
                 newline = True
                 print(result[index], end=' ')
 
         if newline:
             print('\n', end='')
+            newline = False
 
         #print(dir(result))
         #exit(0)
