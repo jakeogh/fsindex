@@ -50,6 +50,15 @@ def search_existing_file_name(infile):
                 print("hashes do not match! NOT a match:", result[0])
 
 
+def exact_match_field(field, term):
+    if 'hash' in field:
+        term = term.lower()
+    print("searching", field, "for term:", term)
+    query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
+    answer = c.execute(query, (term,))
+    for result in answer.fetchall():
+        print(result)
+
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
 @click.pass_context
@@ -74,16 +83,6 @@ def stats(ctx):
     for thing in c:
         print(thing)
 
-def exact_match_field(field, term):
-    if 'hash' in field:
-        term = term.lower()
-    print("searching", field, "for term:", term)
-    query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
-    answer = c.execute(query, (term,))
-    for result in answer.fetchall():
-        print(result)
-
-
 @fsindex.command()
 @click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
@@ -96,11 +95,7 @@ def search(ctx, field, term):
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-
     exact_match_field(field, term)
-
-
-
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
