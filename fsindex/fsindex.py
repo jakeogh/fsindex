@@ -17,17 +17,22 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-def search_file_name(infile):
-    infile = os.path.realpath(infile)
-    filename = infile.split('/')[-1]
-    filestat = os.stat(infile)
 
+def search_file_name(filename):
     answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
 
     for result in answer.fetchall():
-        if result[0] == file:
-            continue
+        print(result)
 
+def search_existing_file_name(infile):
+    infile = os.path.realpath(infile)
+    filename = infile.split('/')[-1]
+    filestat = os.stat(infile)
+    answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
+
+    for result in answer.fetchall():
+        if result[0] == infile:
+            continue
         if result[2] == filestat.st_size:
     #       print("filename and size match:", result)
     #       print("checking if match still exists")
@@ -37,7 +42,6 @@ def search_file_name(infile):
     #           print("Error: No such file or directory:", result[0], "skipping")
     #           os._exit(1)
                 continue
-
     #       print("checking hash...")
             with open(result[0], 'rb') as fh:
                 matchhash = hashlib.sha1(fh.read()).hexdigest()
