@@ -19,7 +19,7 @@ CONTEXT_SETTINGS = \
 
 def search_file_name(infile):
     infile = os.path.realpath(infile)
-    filename = infile.split(b'/')[-1]
+    filename = infile.split('/')[-1]
     filestat = os.stat(infile)
 
     answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
