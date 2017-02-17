@@ -29,6 +29,17 @@ FIELDS = OrderedDict((
     ('st_ctime_ns','INT')
     ))
 
+MODES = OrderedDict((
+    ('S_IFSOCK', 'Socket'),
+    ('S_IFLNK', 'Symbolic link'),
+    ('S_IFREG', 'Regular file'),
+    ('S_IFBLK', 'Block device'),
+    ('S_IFDIR', 'Directory'),
+    ('S_IFCHR', 'Character device'),
+    ('S_IFIFO', 'FIFO')
+    ))
+
+
 field_str = ''
 for label in FIELDS.keys():
     #print(label)
