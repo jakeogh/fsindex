@@ -12,6 +12,7 @@ import pprint
 from kcl.printops import cprint
 from kcl.printops import seprint
 from kcl.printops import set_verbose
+from kcl.fileops import path_exists
 from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
@@ -68,6 +69,9 @@ def match_field(field, term, resultfields, exists, substring):
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in resultfields:
+                if exists:
+                    if not path_exists(result[1]):
+                        continue
                 newline = True
                 if isinstance(result[index], bytes):
                     sys.stdout.buffer.write(result[index] + b' ')
