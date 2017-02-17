@@ -84,8 +84,10 @@ def stats(ctx):
 @fsindex.command()
 @click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
+@click.option('--exists', is_flag=True)
+@click.option('--substring', is_flag=True)
 @click.pass_context
-def search(ctx, field, term):
+def search(ctx, field, term, exists, substring):
     print("field:", field)
     print("term:", term)
     assert field in FIELDS.keys()
