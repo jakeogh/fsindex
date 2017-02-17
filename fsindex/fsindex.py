@@ -5,6 +5,7 @@ import shutil
 from kcl.printops import eprint
 from kcl.printops import set_verbose
 from .update import update_db
+from .db_operations import db_stats
 
 CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
@@ -22,7 +23,7 @@ def update(root):
 
 @dnsgate.command()
 def stats():
-    db_stats()
+    print(db_stats())
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
