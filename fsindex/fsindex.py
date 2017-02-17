@@ -19,22 +19,6 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-def search_sha1hash(sha1hash):
-    assert isinstance(sha1hash, str)
-    sha1hash = sha1hash.lower()
-    print("searching for sha1hash:", sha1hash)
-    #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
-    answer = c.execute('''SELECT * FROM path_db WHERE data_hash=?''', (sha1hash,))
-    for result in answer.fetchall():
-        print(result)
-
-def search_file_name(filename):
-    assert isinstance(filename, bytes)
-    print("searching for filename:", filename)
-    #answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
-    answer = c.execute('''SELECT * FROM path_db WHERE file_name=?''', (filename,))
-    for result in answer.fetchall():
-        print(result)
 
 def search_existing_file_name(infile):
     assert isinstance(filename, bytes)
@@ -115,12 +99,6 @@ def search(ctx, field, term):
 
     exact_match_field(field, term)
 
-    #if field == 'file_name':
-    #    #search_file_name(bytes(term, 'UTF8'))
-    #    search_file_name(term)
-    #if field == 'data_hash':
-    #    search_sha1hash(term)
-
 
 
 
@@ -130,4 +108,5 @@ if __name__ == '__main__':
     # pylint: enable=no-value-for-parameter
     eprint("Exiting without error.", level=LOG['DEBUG'])
 
-
+# substring search:
+# answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name LIKE ?''', (b'%'+file+b'%',))

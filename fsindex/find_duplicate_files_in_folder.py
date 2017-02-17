@@ -4,13 +4,11 @@ import sys
 import os
 import hashlib
 import pprint
-import sqlite3
-
 from fsindex_update import update_db
+from .db_connection import c
 
 pp = pprint.PrettyPrinter(indent=4)
-conn = sqlite3.connect('/home/user/.fsindex/_good/fsindex.sha1.db')
-c = conn.cursor()
+
 
 def file_exists(file):
 #   print("(checking) file_exists()", file)
