@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+
+import glob
+import sys
+import os
+import pickle
+import hashlib
+
+from fsindex_update import sha1_hash_file
+
+import sqlite3
+conn = sqlite3.connect('/home/user/.fsindex/_good/fsindex.sha1.db')
+
+c = conn.cursor()
+
+file = bytes(sys.argv[1], 'UTF8')
+file = os.path.realpath(file)
+filename = file.split(b'/')[-1]
+filestat = os.stat(file)
+
+#print("searching for:", file, "...")
+
+data_hash = sha1_hash_file(file)
+
+query = '''SELECT * FROM path_db WHERE data_hash=?'''
+answer = c.execute(query, (data_hash,))
+
+
+for result in answer.fetchall():
+    print(result)
+#   if result[0] == file:
+#       continue
+
+#   if result[2] == filestat.st_size:
+#       print("filename and size match:", result)
+#       print("checking if match still exists")
+#       try:
+#           matchstat = os.stat(result[0])
+#       except FileNotFoundError:
+#           print("Error: No such file or directory:", result[0], "skipping")
+##          os._exit(1)
+#           continue
+
+#       print("checking hash...")
+        
+#       with open(result[0], 'rb') as fh:
+#           matchhash = hashlib.sha1(fh.read()).hexdigest()
+#       with open(file, 'rb') as fh:
+#           filehash = hashlib.sha1(fh.read()).hexdigest()
+#       if matchhash == filehash:
+##          print("match found:", result[0])
+#           print(result[0])
+#       else:
+#           print("hashes do not match! NOT a match:", result[0])
+        
+
+
+
+#print(answer.fetchall())
+
+#'''CREATE TABLE path_db (id TEXT, full_path BLOB, file_name BLOB, data_hash TEXT, st_mode INT, st_ino INT, st_dev INT, st_nlink INT, st_uid INT, st_gid INT, st_size INT, st_atime REAL, st_mtime REAL, st_ctime REAL)'''
