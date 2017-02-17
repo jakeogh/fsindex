@@ -13,6 +13,7 @@ from kcl.printops import set_verbose
 from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
+from .db_connection import FIELDS
 
 CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
@@ -89,17 +90,20 @@ def stats(ctx):
     for thing in c:
         print(thing)
 
+
+
+@click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
 #@click.option('--verbose', is_flag=True, required=False, callback=set_verbose, expose_value=False)
-@click.option('--name', is_flag=True)
-@click.option('--hexname', is_flag=True)
-@click.option('--sha1hash', is_flag=True)
+#@click.option('--name', is_flag=True)
+#@click.option('--hexname', is_flag=True)
+#@click.option('--sha1hash', is_flag=True)
 @fsindex.command()
 @click.pass_context
-def search(ctx, term, name, hexname, sha1hash):
-    if name:
+def search(ctx, field, term):
+    if field == 'file_name':
         search_file_name(bytes(term, 'UTF8'))
-    if sha1hash:
+    if field == 'data_hash':
         search_sha1hash(term)
 
 
@@ -108,3 +112,5 @@ if __name__ == '__main__':
     fsindex()
     # pylint: enable=no-value-for-parameter
     eprint("Exiting without error.", level=LOG['DEBUG'])
+
+
