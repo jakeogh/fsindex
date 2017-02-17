@@ -7,6 +7,7 @@ import sys
 import os
 import pickle
 import hashlib
+import pprint
 
 from kcl.printops import cprint
 from kcl.printops import set_verbose
@@ -14,6 +15,8 @@ from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
 from .db_operations import FIELDS
+
+pp = pprint.PrettyPrinter(indent=4)
 
 CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
@@ -69,6 +72,13 @@ def fsindex(ctx):
 @click.pass_context
 def update(root):
     update_db(root)
+
+@fsindex.command()
+@click.argument('root', required=True, nargs=1)
+@click.pass_context
+def listfields(root):
+    pp(FIELDS)
+
 
 @fsindex.command()
 @click.pass_context
