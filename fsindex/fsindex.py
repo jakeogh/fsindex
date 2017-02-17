@@ -51,7 +51,7 @@ def search_existing_file_name(infile):
             else:
                 print("hashes do not match! NOT a match:", result[0])
 
-def exact_match_field(field, term):
+def exact_match_field(field, term, resultfields):
     if 'hash' in field:
         term = term.lower()
     print("searching", field, "for term:", term)
@@ -78,7 +78,6 @@ def update(root):
 def listfields(ctx):
     pp.pprint(FIELDS)
 
-
 @fsindex.command()
 @click.pass_context
 def stats(ctx):
@@ -93,18 +92,26 @@ def stats(ctx):
 @fsindex.command()
 @click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
+@click.argument('resultfields', required=True, nargs=-1)
 @click.option('--exists', is_flag=True)
 @click.option('--substring', is_flag=True)
 @click.pass_context
-def search(ctx, field, term, exists, substring):
+def search(ctx, field, term, resultfields, exists, substring):
     print("field:", field)
     print("term:", term)
+
+    resultfields = ''.join(resultfields.split(' '))
+    resultfields = resultfields.split(',')
+    for rfield in resultfields:
+        assert rfield in FIELDS.keys()
+    print("resultfields:", resultfields)
+
     assert field in FIELDS.keys()
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-    exact_match_field(field, term)
+    exact_match_field(field, term, resultfields)
 
 if __name__ == '__main__':
     # pylint: disable=no-value-for-parameter
