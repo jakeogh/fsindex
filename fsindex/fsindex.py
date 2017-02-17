@@ -18,7 +18,6 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-
 def search_sha1hash(sha1hash):
     assert isinstance(sha1hash, str)
     sha1hash = sha1hash.lower()
@@ -70,7 +69,8 @@ def search_existing_file_name(infile):
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
 @click.pass_context
 def fsindex(ctx):
-    cprint("ctx:", ctx)
+    pass
+    #cprint("ctx:", ctx)
 
 @fsindex.command()
 @click.argument('root', required=True, nargs=1)
