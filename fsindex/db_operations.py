@@ -30,6 +30,7 @@ FIELDS = [
 
 field_str = ''
 for field in FIELDS:
+    print(field)
     for label, labeltype in field:
         field_str = label + ' ' + labeltype + ','
 
