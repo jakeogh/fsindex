@@ -66,10 +66,10 @@ def exact_match_field(field, term, resultfields):
             newline = False
             if rfield in resultfields:
                 newline = True
-                print(result[index], end='')
+                print(result[index], end=' ')
 
-            if newline:
-                print('\n')
+        if newline:
+            print('\n', end='')
 
         #print(dir(result))
         exit(0)
