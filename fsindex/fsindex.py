@@ -63,7 +63,6 @@ def fsindex(ctx):
 def update(root):
     update_db(root)
 
-@fsindex.command()
 @click.pass_context
 def stats(ctx):
     print(db_stats())
@@ -72,6 +71,7 @@ def stats(ctx):
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
 @click.option('--name', is_flag=True, callback=set_verbose, expose_value=False)
 @click.option('--sha1hash', is_flag=True, callback=set_verbose, expose_value=False)
+@fsindex.command()
 @click.pass_context
 def search(ctx, term, name, sha1hash):
     if name:
