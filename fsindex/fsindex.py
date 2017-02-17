@@ -59,7 +59,7 @@ def exact_match_field(field, term, resultfields):
     answer = c.execute(query, (term,))
     for result in answer.fetchall():
         print(dir(result))
-        print(result.index)
+        print(result.index())
         exit(0)
         print(result[1:-3])
 
