@@ -171,12 +171,7 @@ def display(results, fields):
 @processor
 @click.pass_context
 def path(ctx, results):
-    #print("ctx:", ctx)
-    #print("type(ctx):", type(ctx))
-    #for thing in ctx:
-    #    print(thing)
-    #ctx.invoke(display, results=results, fields=('full_path',))
-    ctx.forward(display)
+    ctx.invoke(display, results=results, fields=('full_path',))
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
