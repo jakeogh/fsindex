@@ -67,6 +67,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
 
     results = answer.fetchall()
 
+    filtered_count = 0
     for result in results:
         if exists:
             if not path_exists(result[1]):
@@ -97,11 +98,13 @@ def match_field(field, term, resultfields, exists, substring, modes):
                 else:
                     print(result[index], end=' ')
         if newline:
+            filtered_count += 1
             print('\n', end='')
             newline = False
 
     count = len(results)
-    seprint("count:", count)
+    seprint("original count:", count)
+    seprint("filtered_count:", filtered_count)
     seprint("\n", end='')
 
 @click.group(context_settings=CONTEXT_SETTINGS)
