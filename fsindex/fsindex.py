@@ -27,7 +27,6 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-
 @click.group(chain=True)
 def cli():
     """This script processes a bunch of images through pillow in a unix
