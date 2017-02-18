@@ -174,7 +174,7 @@ def display(results, fields):
 @processor
 def result_bool(results, verbose):
     for result in results:
-        print(result)
+        print("result:", result)
         if result:
             if verbose: seprint(True)
             yield True
