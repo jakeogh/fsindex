@@ -125,7 +125,7 @@ def stats(ctx):
               type=click.Choice(list(MODE_FUNCTIONS.keys())),
               required=False, multiple=True)
 @click.pass_context
-def filter(ctx, results, exists, modes):
+def filter(ctx, results, exists, mode):
     for result in results:
         print("filter():", result)
 
