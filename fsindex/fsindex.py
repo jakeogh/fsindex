@@ -81,11 +81,15 @@ def generator(f):
 
 
 @cli.command('search')
-@click.option('--field', required=True, nargs=1)
+@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
 @generator
 def search(field, term, substring):
+    if FIELDS[field] == 'BLOB':
+        term = bytes(term, 'UTF8')
+    elif FIELDS[field] == 'INT':
+        term = int(term)
     print("field:", field)
     print("term:", term)
     if 'hash' in field:
