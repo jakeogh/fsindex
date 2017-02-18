@@ -145,6 +145,7 @@ def display(results):
 @cli.command()
 def listfields():
     pp.pprint(FIELDS)
+    return True
 
 @cli.command()
 def listmodes():
