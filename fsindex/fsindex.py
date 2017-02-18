@@ -77,13 +77,15 @@ def match_field(field, term, resultfields, exists, substring, modes):
                         continue
                 if modes:
                     #print("modes:", modes)
-                    for mode in modes:
-                        print("mode:", mode)
-                        #code = mode+'('+str(result[4])+')'
-                        #print("code:", code)
-                        print("eval(mode):", eval(mode))
-                        print("result[4]:", result[4])
-                        print("type(S_IFREG):", type(S_IFREG))
+                    for modefunc in modes:
+                        print("modefunc:", modefunc)
+                        code = modefunc+'('+str(result[4])+')'
+                        print("code:", code)
+                        print("eval(code):", eval(code))
+                        #print("eval(mode):", eval(mode))
+                        #print("result[4]:", result[4])
+                        #print("type(S_IFREG):", type(S_IFREG))
+
 
                 newline = True
                 if isinstance(result[index], bytes):
