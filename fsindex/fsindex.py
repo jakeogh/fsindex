@@ -68,10 +68,10 @@ def match_field(field, term, resultfields, exists, substring, modes):
     results = answer.fetchall()
 
     for result in results:
+        print(result)
         if exists:
             if not path_exists(result[1]):
                 continue
-        #print(result)
         valid_mode = False
         if modes:
             #print("modes:", modes)
