@@ -85,6 +85,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
                 if not answer:
                     print("skipping result, wrong type")
                     continue
+        print("here")
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in resultfields:
