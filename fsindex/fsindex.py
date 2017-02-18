@@ -150,6 +150,7 @@ def listfields():
 @cli.command()
 def listmodes():
     pp.pprint(MODE_FUNCTIONS)
+    return True
 
 @cli.command()
 def stats():
