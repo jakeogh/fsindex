@@ -1,26 +1,21 @@
 #!/usr/bin/env python3
 
-import click
 import shutil
-import glob
 import sys
 import os
-import pickle
 import hashlib
 import pprint
 from functools import update_wrapper
 from stat import *
-from kcl.printops import cprint
+import click
 from kcl.printops import seprint
-from kcl.printops import set_verbose
 from kcl.fileops import path_exists
 from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
 from .db_operations import FIELDS
 from .db_operations import MODE_FUNCTIONS
-
-pp = pprint.PrettyPrinter(indent=4)
+PP = pprint.PrettyPrinter(indent=4)
 
 CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
@@ -116,7 +111,7 @@ def match_field(field, term, substring):
         query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
         answer = c.execute(query, (term,))
     results = answer.fetchall()
-    count = len(results)
+    #count = len(results)
     #seprint("match_field() count:", "{:,}".format(count))
     return results
 
@@ -132,18 +127,18 @@ def search(field, term, substring):
 
 @cli.command('exists')
 @processor
-def filter(results):
+def exists(results):
     for result in results:
         if not path_exists(result[1]):
             continue
         yield result
 
-@cli.command('filter')
+@cli.command('mode')
 @click.option('--mode', 'modes', is_flag=False, nargs=1,
               type=click.Choice(list(MODE_FUNCTIONS.keys())),
               required=False, multiple=True)
 @processor
-def filter(results, exists, modes):
+def mode(results, modes):
     for result in results:
         if modes:
             if not matching_mode(result, modes):
@@ -184,12 +179,12 @@ def result_bool(results, verbose):
 
 @cli.command()
 def listfields():
-    pp.pprint(FIELDS)
+    PP.pprint(FIELDS)
     quit(0)
 
 @cli.command()
 def listmodes():
-    pp.pprint(MODE_FUNCTIONS)
+    PP.pprint(MODE_FUNCTIONS)
     quit(0)
 
 @cli.command()
@@ -208,4 +203,3 @@ def stats():
 def update(root):
     update_db(root)
     quit(0)
-
