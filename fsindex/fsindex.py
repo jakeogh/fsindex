@@ -172,6 +172,9 @@ def display(results, fields):
 @click.pass_context
 @processor
 def path(ctx, results):
+    print("ctx:", ctx)
+    print("type(ctx):", type(ctx))
+
     ctx.invoke(display, fields=('full_path',))
 
 @cli.command('bool')
