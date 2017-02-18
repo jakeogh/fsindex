@@ -174,7 +174,8 @@ def display(results, fields):
 def path(ctx, results):
     print("ctx:", ctx)
     print("type(ctx):", type(ctx))
-
+    for thing in ctx:
+        print(thing)
     ctx.invoke(display, fields=('full_path',))
 
 @cli.command('bool')
