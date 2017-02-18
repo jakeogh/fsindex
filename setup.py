@@ -28,7 +28,7 @@ setup(
     install_requires=dependencies,
     entry_points={
         'console_scripts': [
-            'fsindex = fsindex.fsindex:fsindex',
+            'fsindex = fsindex.fsindex:cli',
         ],
     },
     classifiers=[
