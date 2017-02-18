@@ -120,8 +120,8 @@ def match_field(field, term, substring):
 @click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
-@click.pass_context
 @generator
+@click.pass_context
 def search(ctx, field, term, substring):
     results = match_field(field=field, term=term, substring=substring)
     for result in results:
@@ -172,10 +172,10 @@ def display(results, fields):
 @processor
 @click.pass_context
 def path(ctx, results):
-    print("ctx:", ctx)
-    print("type(ctx):", type(ctx))
-    for thing in ctx:
-        print(thing)
+    #print("ctx:", ctx)
+    #print("type(ctx):", type(ctx))
+    #for thing in ctx:
+    #    print(thing)
     ctx.invoke(display, fields=('full_path',))
 
 @cli.command('bool')
