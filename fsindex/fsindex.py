@@ -86,6 +86,8 @@ def generator(f):
 @click.option('--substring', is_flag=True)
 @generator
 def search(field, term, substring):
+    print("field:", field)
+    print("term:", term))
     if 'hash' in field:
         term = term.lower()
     if substring:
