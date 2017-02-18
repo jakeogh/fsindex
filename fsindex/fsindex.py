@@ -130,7 +130,6 @@ def filter(ctx, results, exists, modes):
         print("filter():", result)
 
 
-
 @fsindex.command()
 @click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
