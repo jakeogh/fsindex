@@ -27,6 +27,13 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
+def matching_mode(result, modes):
+    for modefunc in modes:
+        code = modefunc+'('+str(result[4])+')'
+        answer = eval(code)
+        if answer:
+            return True
+
 @click.group(chain=True)
 def cli():
     """Interface to fsindex.
@@ -98,21 +105,11 @@ def search(field, term, substring):
     else:
         query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
         answer = c.execute(query, (term,))
-
     results = answer.fetchall()
     count = len(results)
     seprint("count:", "{:,}".format(count))
     for result in results:
         yield result
-
-
-def matching_mode(result, modes):
-    for modefunc in modes:
-        code = modefunc+'('+str(result[4])+')'
-        answer = eval(code)
-        if answer:
-            return True
-
 
 @cli.command('filter')
 @click.option('--exists', is_flag=True)
@@ -132,7 +129,6 @@ def filter(results, exists, modes):
         #print(result)
         yield result
 
-
 @cli.command('display')
 @click.option('--field', 'fields', is_flag=False, nargs=1,
               type=click.Choice(list(FIELDS.keys())),
@@ -151,7 +147,6 @@ def display(results, fields):
         if newline:
             print('\n', end='')
             newline = False
-
         #print(result)
         yield result
 
@@ -181,7 +176,6 @@ def stats():
 def update(root):
     update_db(root)
     quit(0)
-
 
 
 #def search_existing_file_hash(infile):
