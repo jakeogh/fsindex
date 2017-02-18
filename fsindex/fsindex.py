@@ -168,7 +168,7 @@ def display(results, fields):
 @cli.command('path')
 @processor
 def path(results):
-    yield display(results, ('full_path',))
+    yield display(results, 'full_path')
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
