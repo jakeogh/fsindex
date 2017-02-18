@@ -104,7 +104,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
 
     count = len(results)
     seprint("original count:", "{:,}".format(count))
-    seprint("filtered_count:", filtered_count)
+    seprint("filtered_count:", "{:,}".format(filtered_count))
     seprint("\n", end='')
 
 
