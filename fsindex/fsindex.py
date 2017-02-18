@@ -93,6 +93,7 @@ def search(field, term, substring):
         answer = c.execute(query, (b'%'+term+b'%',))
     else:
         query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
+        print("query:", query)
         answer = c.execute(query, (term,))
 
     results = answer.fetchall()
