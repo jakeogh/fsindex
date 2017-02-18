@@ -85,12 +85,20 @@ def generator(f):
             yield item
     return update_wrapper(new_func, f)
 
-@cli.command('search')
-@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
-@click.option('--term', required=True, nargs=1)
-@click.option('--substring', is_flag=True)
+@cli.command('dupes')
+@click.option('--file', 'infile', required=True, nargs=1)
 @generator
-def search(field, term, substring):
+def dupes(infile):
+    infile = bytes(infile, 'UTF8')
+    infile = os.path.realpath(infile)
+    with open(infile, 'rb') as fh:
+        infilehash = hashlib.sha1(fh.read()).hexdigest()
+    print("here------")
+    results = search(field='data_hash', term=infilehash, substring=False)
+    for result in results:
+        yield result
+
+def match_field(field, term, substring):
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
@@ -111,6 +119,16 @@ def search(field, term, substring):
     results = answer.fetchall()
     count = len(results)
     seprint("count:", "{:,}".format(count))
+    return results
+
+
+@cli.command('search')
+@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
+@click.option('--term', required=True, nargs=1)
+@click.option('--substring', is_flag=True)
+@generator
+def search(field, term, substring):
+    results = match_field(field=field, term=term, substring=substring)
     for result in results:
         yield result
 
@@ -180,19 +198,6 @@ def update(root):
     update_db(root)
     quit(0)
 
-
-@cli.command('dupes')
-@click.option('--file', 'infile', required=True, nargs=1)
-@generator
-def dupes(infile):
-    infile = bytes(infile, 'UTF8')
-    infile = os.path.realpath(infile)
-    with open(infile, 'rb') as fh:
-        infilehash = hashlib.sha1(fh.read()).hexdigest()
-    print("here------")
-    results = search(field='data_hash', term=infilehash, substring=False)
-    for result in results:
-        yield result
 
 
 
