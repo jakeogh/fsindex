@@ -81,7 +81,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
                 #print("code:", code)
                 #print("eval(code):", eval(code))
                 answer = eval(code)
-                #print("answer:", answer)
+                print("answer:", answer)
                 if answer:
                     valid_mode = True
 
