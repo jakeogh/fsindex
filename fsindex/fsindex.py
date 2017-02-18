@@ -11,8 +11,6 @@ import pprint
 from functools import update_wrapper
 from stat import *
 
-
-
 from kcl.printops import cprint
 from kcl.printops import seprint
 from kcl.printops import set_verbose
@@ -40,14 +38,51 @@ def cli():
         imagepipe open -i example02.jpg blur save
     """
 
+@cli.resultcallback()
+def process_commands(processors):
+    """This result callback is invoked with an iterable of all the chained
+    subcommands.  As in this example each subcommand returns a function
+    we can chain them together to feed one into the other, similar to how
+    a pipe on unix works.
+    """
+    # Start with an empty iterable.
+    stream = ()
+
+    # Pipe it through all stream processors.
+    for processor in processors:
+        stream = processor(stream)
+
+    # Evaluate the stream and throw away the items.
+    for _ in stream:
+        pass
+
+def processor(f):
+    """Helper decorator to rewrite a function so that it returns another
+    function from it.
+    """
+    def new_func(*args, **kwargs):
+        def processor(stream):
+            return f(stream, *args, **kwargs)
+        return processor
+    return update_wrapper(new_func, f)
 
 
-def search_existing_file_hash(infile):
-    infile = bytes(infile, 'UTF8')
-    infile = os.path.realpath(infile)
-    with open(infile, 'rb') as fh:
-        infilehash = hashlib.sha1(fh.read()).hexdigest()
-    match_field(field='data_hash', term=infilehash, resultfields=('full_path',), exists=False, substring=False, modes=False)
+def generator(f):
+    """Similar to the :func:`processor` but passes through old values
+    unchanged and does not pass through the values as parameter.
+    """
+    @processor
+    def new_func(stream, *args, **kwargs):
+        for item in stream:
+            yield item
+        for item in f(*args, **kwargs):
+            yield item
+    return update_wrapper(new_func, f)
+
+
+
+
+
 
 def matching_mode(result, modes):
     for modefunc in modes:
@@ -187,3 +222,10 @@ if __name__ == '__main__':
     # pylint: enable=no-value-for-parameter
     #eprint("Exiting without error.", level=LOG['DEBUG'])
 
+
+def search_existing_file_hash(infile):
+    infile = bytes(infile, 'UTF8')
+    infile = os.path.realpath(infile)
+    with open(infile, 'rb') as fh:
+        infilehash = hashlib.sha1(fh.read()).hexdigest()
+    match_field(field='data_hash', term=infilehash, resultfields=('full_path',), exists=False, substring=False, modes=False)
