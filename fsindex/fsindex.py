@@ -68,6 +68,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
     results = answer.fetchall()
 
     for result in results:
+        print(" ")
         print(result)
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
