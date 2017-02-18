@@ -77,19 +77,18 @@ def match_field(field, term, resultfields, exists, substring, modes):
             #print("modes:", modes)
             valid_mode = False
             for modefunc in modes:
-                print("modefunc:", modefunc)
+                #print("modefunc:", modefunc)
                 code = modefunc+'('+str(result[4])+')'
                 #print("code:", code)
                 #print("eval(code):", eval(code))
                 answer = eval(code)
-                print("answer:", answer)
+                #print("answer:", answer)
                 if answer:
                     valid_mode = True
 
         if not valid_mode:
             continue
 
-        print("here")
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in resultfields:
