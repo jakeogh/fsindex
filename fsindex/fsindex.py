@@ -120,7 +120,6 @@ def match_field(field, term, substring):
     seprint("match_field() count:", "{:,}".format(count))
     return results
 
-
 @cli.command('search')
 @click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
 @click.option('--term', required=True, nargs=1)
@@ -196,7 +195,4 @@ def stats():
 def update(root):
     update_db(root)
     quit(0)
-
-
-
 
