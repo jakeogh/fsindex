@@ -5,7 +5,7 @@ import sys
 import os
 import hashlib
 from collections import OrderedDict
-from stat import *
+#from stat import *
 from .db_connection import c
 
 home = os.path.expanduser("~")
@@ -29,7 +29,7 @@ FIELDS = OrderedDict((
     ('st_ctime_ns','INT')
     ))
 
-MODES = OrderedDict((
+MODE_DESCRIPTIONS = OrderedDict((
     ('S_IFSOCK', 'Socket'),
     ('S_IFLNK', 'Symbolic link'),
     ('S_IFREG', 'Regular file'),

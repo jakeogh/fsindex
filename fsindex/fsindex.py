@@ -18,7 +18,7 @@ from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
 from .db_operations import FIELDS
-from .db_operations import MODES
+from .db_operations import MODE_DESCRIPTIONS
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -78,9 +78,9 @@ def match_field(field, term, resultfields, exists, substring, modes):
                     #print("modes:", modes)
                     for mode in modes:
                         print("mode:", mode)
-                        code = mode+'('+str(result[4])+')'
-                        print("code:", code)
-                        print("eval(code:", eval(mode))
+                        #code = mode+'('+str(result[4])+')'
+                        #print("code:", code)
+                        print("eval(mode):", eval(mode))
                         print("result[4]:", result[4])
 
                 newline = True
@@ -116,7 +116,7 @@ def listfields(ctx):
 @fsindex.command()
 @click.pass_context
 def listmodes(ctx):
-    pp.pprint(MODES)
+    pp.pprint(MODE_DESCRIPTIONS)
 
 @fsindex.command()
 @click.pass_context
@@ -135,7 +135,6 @@ def stats(ctx):
 @click.argument('resultfields', required=True, nargs=-1)
 @click.option('--exists', is_flag=True)
 @click.option('--substring', is_flag=True)
-#@click.option('--modes', is_flag=False, type=click.Choice(list(MODES.keys())), required=False)
 @click.option('--mode', is_flag=False, nargs=1, required=False, multiple=True)
 @click.pass_context
 def search(ctx, field, term, resultfields, exists, substring, mode):
@@ -148,10 +147,10 @@ def search(ctx, field, term, resultfields, exists, substring, mode):
     seprint("resultfields:", resultfields)
     seprint("exists:", exists)
     seprint("substring:", substring)
-    assert len(modes) <= len(MODES.keys())
+    assert len(modes) <= len(MODE_DESCRIPTIONS.keys())
     for mode in modes:
         #print("mode:", mode)
-        assert mode in MODES.keys()
+        assert mode in MODE_DESCRIPTIONS.keys()
     seprint("modes:", modes)
 
     if FIELDS[field] == 'BLOB':
