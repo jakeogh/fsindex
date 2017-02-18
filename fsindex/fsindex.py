@@ -169,6 +169,14 @@ def display(results, fields):
         #print(result)
         yield result
 
+@cli.command('bool')
+@processor
+def result_bool(results):
+    if results:
+        quit(0)
+    else:
+        quit(1)
+
 @cli.command()
 def listfields():
     pp.pprint(FIELDS)
