@@ -132,6 +132,7 @@ def stats(ctx):
 @click.option('--mode', is_flag=False, nargs=1, required=False, multiple=True)
 @click.pass_context
 def search(ctx, field, term, resultfields, exists, substring, mode):
+    modes = mode
     assert field in FIELDS.keys()
     seprint("field:", field)
     seprint("term:", term)
@@ -142,12 +143,11 @@ def search(ctx, field, term, resultfields, exists, substring, mode):
     seprint("substring:", substring)
     #print(MODES.keys())
     #print(list(MODES.keys()))
-    assert len(mode) <= len(MODES.keys())
-    print("mode:", mode)
-    #for mode in modes:
-    #    print("mode:", mode)
-    #    assert mode in MODES.keys()
-    #seprint("modes:", modes)
+    assert len(modes) <= len(MODES.keys())
+    seprint("modes:", modes)
+    for mode in modes:
+        print("mode:", mode)
+        assert mode in MODES.keys()
 
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
