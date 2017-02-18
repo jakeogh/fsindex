@@ -101,7 +101,10 @@ def search(field, term, substring):
         term = term.lower()
     if substring:
         query = '''SELECT * FROM path_db WHERE ''' + field + ''' LIKE ?'''
-        answer = c.execute(query, (b'%'+term+b'%',))
+        try:
+            answer = c.execute(query, (b'%'+term+b'%',))
+        except TypeError:
+            answer = c.execute(query, ('%'+term+'%',))
     else:
         query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
         answer = c.execute(query, (term,))
