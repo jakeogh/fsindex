@@ -169,7 +169,7 @@ def display(results, fields):
 
 @cli.command('path')
 @processor
-@cli.pass_context
+@click.pass_context
 def path(ctx, results):
     ctx.invoke(display, results=results, fields=('full_path',))
 
