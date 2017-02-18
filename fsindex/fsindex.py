@@ -86,6 +86,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
                         answer = eval(code)
                         print("answer:", answer)
                         if not answer:
+                            print("skipping, wrong type")
                             continue
                         #print("eval(mode):", eval(mode))
                         #print("result[4]:", result[4])
