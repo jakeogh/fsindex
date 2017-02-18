@@ -26,34 +26,24 @@ CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
 
-def search_existing_file_name(infile):
-    assert isinstance(filename, bytes)
+def search_existing_file_hash(infile):
+    infile = bytes(infile, 'UTF8')
     infile = os.path.realpath(infile)
-    filename = infile.split(b'/')[-1]
-    filestat = os.stat(infile)
-    answer = c.execute('''SELECT full_path, file_name, st_size FROM path_db WHERE file_name=?''', (filename,))
-    for result in answer.fetchall():
-        if result[0] == infile:
-            continue
-        if result[2] == filestat.st_size:
-    #       print("filename and size match:", result)
-    #       print("checking if match still exists")
-            try:
-                matchstat = os.stat(result[0])
-            except FileNotFoundError:
-    #           print("Error: No such file or directory:", result[0], "skipping")
-    #           os._exit(1)
-                continue
-    #       print("checking hash...")
-            with open(result[0], 'rb') as fh:
-                matchhash = hashlib.sha1(fh.read()).hexdigest()
-            with open(file, 'rb') as fh:
-                filehash = hashlib.sha1(fh.read()).hexdigest()
-            if matchhash == filehash:
-    #           print("match found:", result[0])
-                seprint(result[0])
-            else:
-                seprint("hashes do not match! NOT a match:", result[0])
+    with open(infile, 'rb') as fh:
+        infilehash = hashlib.sha1(fh.read()).hexdigest()
+    match_field(field='data_hash', term=infilehash, resultfields=('full_path',), exists=False, substring=False, modes=False)
+
+def matching_mode(result, modes):
+    #print("modes:", modes)
+    for modefunc in modes:
+        #print("modefunc:", modefunc)
+        code = modefunc+'('+str(result[4])+')'
+        #print("code:", code)
+        #print("eval(code):", eval(code))
+        answer = eval(code)
+        #print("answer:", answer)
+        if answer:
+            return True
 
 def match_field(field, term, resultfields, exists, substring, modes):
     if 'hash' in field:
@@ -75,16 +65,18 @@ def match_field(field, term, resultfields, exists, substring, modes):
         print(result)
         valid_mode = False
         if modes:
-            #print("modes:", modes)
-            for modefunc in modes:
-                #print("modefunc:", modefunc)
-                code = modefunc+'('+str(result[4])+')'
-                #print("code:", code)
-                #print("eval(code):", eval(code))
-                answer = eval(code)
-                print("answer:", answer)
-                if answer:
-                    valid_mode = True
+            if matching_mode(result, modes):
+                valid_mode = True
+            ##print("modes:", modes)
+            #for modefunc in modes:
+            #    #print("modefunc:", modefunc)
+            #    code = modefunc+'('+str(result[4])+')'
+            #    #print("code:", code)
+            #    #print("eval(code):", eval(code))
+            #    answer = eval(code)
+            #    print("answer:", answer)
+            #    if answer:
+            #        valid_mode = True
         if modes:
             if not valid_mode:
                 continue
