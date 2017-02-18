@@ -145,11 +145,13 @@ def display(results):
 @cli.command()
 def listfields():
     pp.pprint(FIELDS)
+    quit(0)
     return True
 
 @cli.command()
 def listmodes():
     pp.pprint(MODE_FUNCTIONS)
+    quit(0)
     return True
 
 @cli.command()
