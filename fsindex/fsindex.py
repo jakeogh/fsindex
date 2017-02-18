@@ -173,9 +173,9 @@ def display(results, fields):
 @click.option('--verbose', is_flag=True)
 @processor
 def result_bool(results, verbose):
-    print("verbose:", verbose)
+    #print("verbose:", verbose)
     for result in results:
-        print("result:", result)
+        #print("result:", result)
         if verbose: seprint(True)
         yield True
         quit(0)
