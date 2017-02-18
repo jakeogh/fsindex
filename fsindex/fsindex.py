@@ -103,13 +103,17 @@ def search(field, term, substring):
         answer = c.execute(query, (term,))
 
     results = answer.fetchall()
-
     count = len(results)
-    seprint("original count:", "{:,}".format(count))
-    #seprint("filtered_count:", "{:,}".format(filtered_count))
-    seprint("\n", end='')
+    seprint("count:", "{:,}".format(count))
     for result in results:
         yield result
+
+
+@cli.command('display')
+@generator
+def display(results):
+    for result in results:
+        print(result)
 
 
 
