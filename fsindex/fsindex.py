@@ -68,7 +68,6 @@ def match_field(field, term, resultfields, exists, substring, modes):
     results = answer.fetchall()
 
     for result in results:
-        print(" ")
         if exists:
             if not path_exists(result[1]):
                 continue
