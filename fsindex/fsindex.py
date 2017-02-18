@@ -72,6 +72,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
         #print(result)
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
+            print("start")
             if rfield in resultfields:
                 if exists:
                     if not path_exists(result[1]):
