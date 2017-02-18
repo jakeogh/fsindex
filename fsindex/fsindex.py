@@ -121,8 +121,7 @@ def match_field(field, term, substring):
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
 @generator
-@click.pass_context
-def search(ctx, field, term, substring):
+def search(field, term, substring):
     results = match_field(field=field, term=term, substring=substring)
     for result in results:
         yield result
@@ -176,7 +175,7 @@ def path(ctx, results):
     #print("type(ctx):", type(ctx))
     #for thing in ctx:
     #    print(thing)
-    ctx.invoke(display, fields=('full_path',))
+    ctx.invoke(display, results=results, fields=('full_path',))
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
