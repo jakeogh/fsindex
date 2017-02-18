@@ -79,11 +79,12 @@ def match_field(field, term, resultfields, exists, substring, modes):
                 if modes:
                     #print("modes:", modes)
                     for modefunc in modes:
-                        #print("modefunc:", modefunc)
+                        print("modefunc:", modefunc)
                         code = modefunc+'('+str(result[4])+')'
-                        #print("code:", code)
-                        #print("eval(code):", eval(code))
+                        print("code:", code)
+                        print("eval(code):", eval(code))
                         answer = eval(code)
+                        print("answer:", answer)
                         if not answer:
                             continue
                         #print("eval(mode):", eval(mode))
