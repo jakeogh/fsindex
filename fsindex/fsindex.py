@@ -175,7 +175,8 @@ def path(ctx, results):
     #print("type(ctx):", type(ctx))
     #for thing in ctx:
     #    print(thing)
-    ctx.invoke(display, results=results, fields=('full_path',))
+    #ctx.invoke(display, results=results, fields=('full_path',))
+    ctx.forward(display)
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
