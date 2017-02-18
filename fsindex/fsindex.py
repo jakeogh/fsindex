@@ -117,7 +117,7 @@ def match_field(field, term, substring):
         answer = c.execute(query, (term,))
     results = answer.fetchall()
     count = len(results)
-    seprint("count:", "{:,}".format(count))
+    seprint("match_field() count:", "{:,}".format(count))
     return results
 
 
