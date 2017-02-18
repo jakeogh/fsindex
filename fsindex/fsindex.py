@@ -103,9 +103,10 @@ def match_field(field, term, resultfields, exists, substring, modes):
             newline = False
 
     count = len(results)
-    seprint("original count:", "{:,}".format(count)
+    seprint("original count:", "{:,}".format(count))
     seprint("filtered_count:", filtered_count)
     seprint("\n", end='')
+
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=False)
