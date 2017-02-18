@@ -75,12 +75,13 @@ def match_field(field, term, resultfields, exists, substring, modes):
                     if not path_exists(result[1]):
                         continue
                 if modes:
-                    print("modes:", modes)
+                    #print("modes:", modes)
                     for mode in modes:
+                        print("mode:", mode)
                         code = mode+'('+str(result[4])+')'
                         print("code:", code)
-                        print(eval(mode))
-                        print(result[4])
+                        print("eval(code:", eval(mode))
+                        print("result[4]:", result[4])
 
                 newline = True
                 if isinstance(result[index], bytes):
