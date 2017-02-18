@@ -90,8 +90,8 @@ def search(field, term, substring):
         term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-    print("field:", field)
-    print("term:", term)
+    #print("field:", field)
+    #print("term:", term)
     if 'hash' in field:
         term = term.lower()
     if substring:
@@ -99,7 +99,6 @@ def search(field, term, substring):
         answer = c.execute(query, (b'%'+term+b'%',))
     else:
         query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
-        print("query:", query)
         answer = c.execute(query, (term,))
 
     results = answer.fetchall()
@@ -142,6 +141,26 @@ def display(results):
     for result in results:
         print(result)
         yield result
+
+@cli.command()
+def listfields():
+    pp.pprint(FIELDS)
+
+@cli.command()
+def listmodes():
+    pp.pprint(MODE_FUNCTIONS)
+
+@cli.command()
+def stats():
+    #print(db_stats())
+    c.execute('select name from sqlite_master where type=\'table\'')
+    for table in c:
+        print(table[0])
+    c.execute('select * from sqlite_master')
+    for thing in c:
+        print(thing)
+
+
 
 
 #
@@ -201,26 +220,6 @@ def display(results):
 #def update(root):
 #    update_db(root)
 #
-#@fsindex.command()
-#@click.pass_context
-#def listfields(ctx):
-#    pp.pprint(FIELDS)
-#
-#@fsindex.command()
-#@click.pass_context
-#def listmodes(ctx):
-#    pp.pprint(MODE_FUNCTIONS)
-#
-#@fsindex.command()
-#@click.pass_context
-#def stats(ctx):
-#    #print(db_stats())
-#    c.execute('select name from sqlite_master where type=\'table\'')
-#    for table in c:
-#        print(table[0])
-#    c.execute('select * from sqlite_master')
-#    for thing in c:
-#        print(thing)
 #
 #
 #@fsindex.command()
