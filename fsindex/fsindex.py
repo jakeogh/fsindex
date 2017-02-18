@@ -151,6 +151,7 @@ def mode(results, modes):
               required=False, multiple=True)
 @processor
 def display(results, fields):
+    seprint("fields:", fields)
     for result in results:
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
@@ -168,7 +169,7 @@ def display(results, fields):
 @cli.command('path')
 @processor
 def path(results):
-    yield display(results, 'full_path')
+    yield display(results, ['full_path'])
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
