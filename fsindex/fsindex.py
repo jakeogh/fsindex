@@ -183,6 +183,7 @@ def update(root):
 
 @cli.command('dupes')
 @click.option('--file', 'infile', required=True, nargs=1)
+@generator
 def dupes(infile):
     infile = bytes(infile, 'UTF8')
     infile = os.path.realpath(infile)
