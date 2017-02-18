@@ -10,7 +10,6 @@ import hashlib
 import pprint
 from functools import update_wrapper
 from stat import *
-
 from kcl.printops import cprint
 from kcl.printops import seprint
 from kcl.printops import set_verbose
@@ -105,8 +104,6 @@ def match_field(field, term, substring):
             term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
-    #print("field:", field)
-    #print("term:", term)
     if 'hash' in field:
         term = term.lower()
     if substring:
@@ -151,7 +148,6 @@ def filter(results, exists, modes):
         if modes:
             if not matching_mode(result, modes):
                 continue
-        #print(result)
         yield result
 
 @cli.command('display')
@@ -172,21 +168,18 @@ def display(results, fields):
         if newline:
             print('\n', end='')
             newline = False
-        #print(result)
         yield result
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
 @processor
 def result_bool(results, verbose):
-    #print("verbose:", verbose)
     for result in results:
-        #print("result:", result)
         if verbose: seprint(True)
-        yield True
+        #yield True
         quit(0)
     if verbose: seprint(False)
-    yield False
+    #yield False
     quit(1)
 
 @cli.command()
