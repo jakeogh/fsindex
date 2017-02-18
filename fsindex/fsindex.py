@@ -128,7 +128,8 @@ def stats(ctx):
 @click.argument('resultfields', required=True, nargs=-1)
 @click.option('--exists', is_flag=True)
 @click.option('--substring', is_flag=True)
-@click.option('--modes', is_flag=False, type=click.Choice(list(MODES.keys())), required=False)
+#@click.option('--modes', is_flag=False, type=click.Choice(list(MODES.keys())), required=False)
+@click.option('--modes', is_flag=False, nargs=-1, required=False)
 @click.pass_context
 def search(ctx, field, term, resultfields, exists, substring, modes):
     assert field in FIELDS.keys()
@@ -139,8 +140,9 @@ def search(ctx, field, term, resultfields, exists, substring, modes):
     seprint("resultfields:", resultfields)
     seprint("exists:", exists)
     seprint("substring:", substring)
-    print(MODES.keys())
-    print(list(MODES.keys()))
+    #print(MODES.keys())
+    #print(list(MODES.keys()))
+    assert len(modes) <= len(MODES.keys())
     for mode in modes:
         print("mode:", mode)
         assert mode in MODES.keys()
