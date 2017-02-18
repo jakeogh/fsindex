@@ -62,7 +62,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
         if exists:
             if not path_exists(result[1]):
                 continue
-        print(result)
+        #print(result)
         valid_mode = False
         if modes:
             if matching_mode(result, modes):
