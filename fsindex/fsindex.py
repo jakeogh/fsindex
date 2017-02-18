@@ -165,6 +165,11 @@ def display(results, fields):
             newline = False
         yield result
 
+@cli.command('path')
+@processor
+def path(results):
+    yield display(results, ('full_path',))
+
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
 @processor
