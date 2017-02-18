@@ -18,7 +18,7 @@ from .update import update_db
 from .db_operations import db_stats
 from .db_connection import c
 from .db_operations import FIELDS
-from .db_operations import MODE_DESCRIPTIONS
+from .db_operations import MODE_FUNCTIONS
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -118,7 +118,7 @@ def listfields(ctx):
 @fsindex.command()
 @click.pass_context
 def listmodes(ctx):
-    pp.pprint(MODE_DESCRIPTIONS)
+    pp.pprint(MODE_FUNCTIONS)
 
 @fsindex.command()
 @click.pass_context
@@ -149,10 +149,10 @@ def search(ctx, field, term, resultfields, exists, substring, mode):
     seprint("resultfields:", resultfields)
     seprint("exists:", exists)
     seprint("substring:", substring)
-    assert len(modes) <= len(MODE_DESCRIPTIONS.keys())
+    assert len(modes) <= len(MODE_FUNCTIONS.keys())
     for mode in modes:
         #print("mode:", mode)
-        assert mode in MODE_DESCRIPTIONS.keys()
+        assert mode in MODE_FUNCTIONS.keys()
     seprint("modes:", modes)
 
     if FIELDS[field] == 'BLOB':

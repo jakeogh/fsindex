@@ -39,6 +39,22 @@ MODE_DESCRIPTIONS = OrderedDict((
     ('S_IFIFO', 'FIFO')             #4096
     ))
 
+MODE_FUNCTIONS = OrderedDict((
+    ('S_ISDIR', 'directory'),
+    ('S_ISCHR', 'character special device file'),
+    ('S_ISBLK', 'block special device file'),
+    ('S_ISREG', 'regular file'),
+    ('S_ISFIFO', 'FIFO (named pipe)'),
+    ('S_ISLNK', 'symbolic link'),
+    ('S_ISSOCK', 'socket'),
+    ('S_ISDOOR', 'door'),
+    ('S_ISPORT', 'event port'),
+    ('S_ISWHT', 'whiteout')
+    ))
+
+
+
+
 field_str = ''
 for label in FIELDS.keys():
     #print(label)
