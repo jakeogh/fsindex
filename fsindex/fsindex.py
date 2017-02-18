@@ -173,7 +173,7 @@ def display(results, fields):
 @click.option('--verbose', is_flag=True)
 @processor
 def result_bool(results, verbose):
-    print(results)
+    #print(results)
     if results:
         if verbose: seprint(True)
         yield True
