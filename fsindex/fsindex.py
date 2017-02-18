@@ -142,11 +142,12 @@ def search(ctx, field, term, resultfields, exists, substring, mode):
     seprint("substring:", substring)
     #print(MODES.keys())
     #print(list(MODES.keys()))
-    assert len(modes) <= len(MODES.keys())
-    for mode in modes:
-        print("mode:", mode)
-        assert mode in MODES.keys()
-    seprint("modes:", modes)
+    assert len(mode) <= len(MODES.keys())
+    print("mode:", mode)
+    #for mode in modes:
+    #    print("mode:", mode)
+    #    assert mode in MODES.keys()
+    #seprint("modes:", modes)
 
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
