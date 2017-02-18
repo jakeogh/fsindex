@@ -29,7 +29,8 @@ def matching_mode(result, modes):
             return True
 
 @click.group(chain=True)
-def cli():
+@click.pass_context
+def cli(ctx):
     """Interface to fsindex.
     Example:
     \b
