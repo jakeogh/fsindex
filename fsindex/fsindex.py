@@ -34,14 +34,9 @@ def search_existing_file_hash(infile):
     match_field(field='data_hash', term=infilehash, resultfields=('full_path',), exists=False, substring=False, modes=False)
 
 def matching_mode(result, modes):
-    #print("modes:", modes)
     for modefunc in modes:
-        #print("modefunc:", modefunc)
         code = modefunc+'('+str(result[4])+')'
-        #print("code:", code)
-        #print("eval(code):", eval(code))
         answer = eval(code)
-        #print("answer:", answer)
         if answer:
             return True
 
@@ -62,21 +57,10 @@ def match_field(field, term, resultfields, exists, substring, modes):
         if exists:
             if not path_exists(result[1]):
                 continue
-        #print(result)
         valid_mode = False
         if modes:
             if matching_mode(result, modes):
                 valid_mode = True
-            ##print("modes:", modes)
-            #for modefunc in modes:
-            #    #print("modefunc:", modefunc)
-            #    code = modefunc+'('+str(result[4])+')'
-            #    #print("code:", code)
-            #    #print("eval(code):", eval(code))
-            #    answer = eval(code)
-            #    print("answer:", answer)
-            #    if answer:
-            #        valid_mode = True
         if modes:
             if not valid_mode:
                 continue
@@ -132,6 +116,20 @@ def stats(ctx):
     c.execute('select * from sqlite_master')
     for thing in c:
         print(thing)
+
+
+@fsindex.command()
+@click.argument('results', required=True, nargs=-1, type=click.File('rb'))
+@click.option('--exists', is_flag=True)
+@click.option('--mode', is_flag=False, nargs=1,
+              type=click.Choice(list(MODE_FUNCTIONS.keys())),
+              required=False, multiple=True)
+@click.pass_context
+def filter(ctx, results, exists, modes):
+    for result in results:
+        print("filter():", result)
+
+
 
 @fsindex.command()
 @click.argument('field', required=True, nargs=1)
