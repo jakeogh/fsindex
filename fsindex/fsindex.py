@@ -8,7 +8,10 @@ import os
 import pickle
 import hashlib
 import pprint
+from functools import update_wrapper
 from stat import *
+
+
 
 from kcl.printops import cprint
 from kcl.printops import seprint
@@ -25,6 +28,19 @@ pp = pprint.PrettyPrinter(indent=4)
 CONTEXT_SETTINGS = \
     dict(help_option_names=['--help'],
          terminal_width=shutil.get_terminal_size((80, 20)).columns)
+
+
+@click.group(chain=True)
+def cli():
+    """This script processes a bunch of images through pillow in a unix
+    pipe.  One commands feeds into the next.
+    Example:
+    \b
+        imagepipe open -i example01.jpg resize -w 128 display
+        imagepipe open -i example02.jpg blur save
+    """
+
+
 
 def search_existing_file_hash(infile):
     infile = bytes(infile, 'UTF8')
@@ -126,6 +142,8 @@ def stats(ctx):
               required=False, multiple=True)
 @click.pass_context
 def filter(ctx, results, exists, mode):
+
+
     for result in results:
         print("filter():", result)
 
