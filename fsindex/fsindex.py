@@ -81,6 +81,29 @@ def generator(f):
 
 
 
+@cli.command('search')
+@click.option('--field', required=True, nargs=1)
+@click.option('--term', required=True, nargs=1)
+@click.option('--substring', is_flag=True)
+@generator
+def search(field, term, substring):
+    if 'hash' in field:
+        term = term.lower()
+    if substring:
+        query = '''SELECT * FROM path_db WHERE ''' + field + ''' LIKE ?'''
+        answer = c.execute(query, (b'%'+term+b'%',))
+    else:
+        query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
+        answer = c.execute(query, (term,))
+
+    results = answer.fetchall()
+
+    count = len(results)
+    seprint("original count:", "{:,}".format(count))
+    #seprint("filtered_count:", "{:,}".format(filtered_count))
+    seprint("\n", end='')
+    for result in results:
+        yield result
 
 
 
