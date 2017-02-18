@@ -84,9 +84,9 @@ def match_field(field, term, resultfields, exists, substring, modes):
                 print("answer:", answer)
                 if answer:
                     valid_mode = True
-
-        if not valid_mode:
-            continue
+        if modes:
+            if not valid_mode:
+                continue
 
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
