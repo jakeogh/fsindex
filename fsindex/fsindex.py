@@ -176,14 +176,12 @@ def result_bool(results, verbose):
     print("verbose:", verbose)
     for result in results:
         print("result:", result)
-        if result:
-            if verbose: seprint(True)
-            yield True
-            #quit(0)
-        else:
-            if verbose: seprint(False)
-            yield False
-            #quit(1)
+        if verbose: seprint(True)
+        yield True
+        #quit(0)
+    if verbose: seprint(False)
+        yield False
+        #quit(1)
 
 @cli.command()
 def listfields():
