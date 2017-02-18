@@ -87,7 +87,7 @@ def generator(f):
 @generator
 def search(field, term, substring):
     print("field:", field)
-    print("term:", term))
+    print("term:", term)
     if 'hash' in field:
         term = term.lower()
     if substring:
