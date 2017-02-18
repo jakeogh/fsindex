@@ -146,22 +146,23 @@ def stats(ctx):
 @click.option('--mode', is_flag=False, nargs=1,
               type=click.Choice(list(MODE_FUNCTIONS.keys())),
               required=False, multiple=True)
+@click.option('--verbose', is_flag=True)
 @click.pass_context
-def search(ctx, field, term, resultfields, exists, substring, mode):
+def search(ctx, field, term, resultfields, exists, substring, mode, verbose):
     modes = mode
     assert field in FIELDS.keys()
-    seprint("field:", field)
-    seprint("term:", term)
+    if verbose: seprint("field:", field)
+    if verbose: seprint("term:", term)
     for rfield in resultfields:
         assert rfield in FIELDS.keys()
-    seprint("resultfields:", resultfields)
-    seprint("exists:", exists)
-    seprint("substring:", substring)
+    if verbose: seprint("resultfields:", resultfields)
+    if verbose: seprint("exists:", exists)
+    if verbose: seprint("substring:", substring)
     assert len(modes) <= len(MODE_FUNCTIONS.keys())
     for mode in modes:
         #print("mode:", mode)
         assert mode in MODE_FUNCTIONS.keys()
-    seprint("modes:", modes)
+    if verbose: seprint("modes:", modes)
 
     if FIELDS[field] == 'BLOB':
         term = bytes(term, 'UTF8')
