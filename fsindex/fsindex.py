@@ -133,18 +133,21 @@ def search(field, term, substring):
     for result in results:
         yield result
 
+@cli.command('exists')
+@processor
+def filter(results):
+    for result in results:
+        if not path_exists(result[1]):
+            continue
+        yield result
+
 @cli.command('filter')
-@click.option('--exists', is_flag=True)
 @click.option('--mode', 'modes', is_flag=False, nargs=1,
               type=click.Choice(list(MODE_FUNCTIONS.keys())),
               required=False, multiple=True)
 @processor
 def filter(results, exists, modes):
-    #assert not (exists and modes)
     for result in results:
-        if exists:
-            if not path_exists(result[1]):
-                continue
         if modes:
             if not matching_mode(result, modes):
                 continue
