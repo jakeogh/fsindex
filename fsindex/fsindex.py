@@ -155,7 +155,7 @@ def filter(results, exists, modes):
 @processor
 def display(results, fields):
     if isinstance(list(results)[0], bool):
-        #print(list(results))
+        print(bool(list(results)))
         yield bool(list(results))
     for result in results:
         newline = False
