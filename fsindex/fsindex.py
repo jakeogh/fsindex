@@ -173,9 +173,11 @@ def display(results, fields):
 @processor
 def result_bool(results):
     if results:
-        quit(0)
+        yield True
+        #quit(0)
     else:
-        quit(1)
+        yield False
+        #quit(1)
 
 @cli.command()
 def listfields():
