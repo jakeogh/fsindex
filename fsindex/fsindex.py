@@ -180,8 +180,8 @@ def result_bool(results, verbose):
         yield True
         #quit(0)
     if verbose: seprint(False)
-        yield False
-        #quit(1)
+    yield False
+    #quit(1)
 
 @cli.command()
 def listfields():
