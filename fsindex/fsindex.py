@@ -175,15 +175,17 @@ def stats():
     quit(0)
 
 @cli.command()
-@click.argument('root', required=True, nargs=1)
+@click.option('--root', required=True, nargs=1)
 def update(root):
     update_db(root)
     quit(0)
 
 
-#def search_existing_file_hash(infile):
-#    infile = bytes(infile, 'UTF8')
-#    infile = os.path.realpath(infile)
-#    with open(infile, 'rb') as fh:
-#        infilehash = hashlib.sha1(fh.read()).hexdigest()
-#    match_field(field='data_hash', term=infilehash, resultfields=('full_path',), exists=False, substring=False, modes=False)
+@cli.command('dupes')
+@click.option('--file', 'infile', required=True, nargs=1)
+def dupes(infile):
+    infile = bytes(infile, 'UTF8')
+    infile = os.path.realpath(infile)
+    with open(infile, 'rb') as fh:
+        infilehash = hashlib.sha1(fh.read()).hexdigest()
+    yield search(field='data_hash', term=infilehash, substring=False)
