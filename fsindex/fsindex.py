@@ -72,9 +72,9 @@ def match_field(field, term, resultfields, exists, substring, modes):
             if not path_exists(result[1]):
                 continue
         #print(result)
+        valid_mode = False
         if modes:
             #print("modes:", modes)
-            valid_mode = False
             for modefunc in modes:
                 #print("modefunc:", modefunc)
                 code = modefunc+'('+str(result[4])+')'
