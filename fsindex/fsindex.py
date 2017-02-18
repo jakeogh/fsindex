@@ -83,6 +83,9 @@ def match_field(field, term, resultfields, exists, substring, modes):
                         code = modefunc+'('+str(result[4])+')'
                         print("code:", code)
                         print("eval(code):", eval(code))
+                        answer = eval(code)
+                        if not answer:
+                            continue
                         #print("eval(mode):", eval(mode))
                         #print("result[4]:", result[4])
                         #print("type(S_IFREG):", type(S_IFREG))
