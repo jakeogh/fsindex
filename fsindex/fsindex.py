@@ -91,7 +91,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
 
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
-            if rfield in resultfields:
+            if rfield in resultfields or not resultfields:
                 newline = True
                 if isinstance(result[index], bytes):
                     sys.stdout.buffer.write(result[index] + b' ')
@@ -144,7 +144,7 @@ def stats(ctx):
 @fsindex.command()
 @click.argument('field', required=True, nargs=1)
 @click.argument('term', required=True, nargs=1)
-@click.argument('resultfields', required=True, nargs=-1)
+@click.argument('resultfields', required=False, nargs=-1)
 @click.option('--exists', is_flag=True)
 @click.option('--substring', is_flag=True)
 @click.option('--mode', is_flag=False, nargs=1,
