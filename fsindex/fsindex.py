@@ -101,7 +101,8 @@ def dupes(infile, verbose):
 
 def match_field(field, term, substring):
     if FIELDS[field] == 'BLOB':
-        term = bytes(term, 'UTF8')
+        if not isinstance(term, bytes):
+            term = bytes(term, 'UTF8')
     elif FIELDS[field] == 'INT':
         term = int(term)
     #print("field:", field)
