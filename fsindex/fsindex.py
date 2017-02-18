@@ -173,15 +173,16 @@ def display(results, fields):
 @click.option('--verbose', is_flag=True)
 @processor
 def result_bool(results, verbose):
-    print(results)
-    if results:
-        if verbose: seprint(True)
-        yield True
-        #quit(0)
-    else:
-        if verbose: seprint(False)
-        yield False
-        #quit(1)
+    for result in results:
+        print(result)
+        if result:
+            if verbose: seprint(True)
+            yield True
+            #quit(0)
+        else:
+            if verbose: seprint(False)
+            yield False
+            #quit(1)
 
 @cli.command()
 def listfields():
