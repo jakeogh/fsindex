@@ -110,11 +110,11 @@ def search(field, term, substring):
 
 
 @cli.command('display')
-@generator
+@processor
 def display(results):
     for result in results:
         print(result)
-
+        yield result
 
 
 #def matching_mode(result, modes):
