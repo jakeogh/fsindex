@@ -76,6 +76,9 @@ def match_field(field, term, resultfields, exists, substring, modes):
                         continue
                 if modes:
                     print("modes:", modes)
+                    for mode in modes:
+                        print(eval(mode+'('+result[4]+')'))
+
                 newline = True
                 if isinstance(result[index], bytes):
                     sys.stdout.buffer.write(result[index] + b' ')
