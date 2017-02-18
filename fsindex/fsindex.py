@@ -120,8 +120,9 @@ def match_field(field, term, substring):
 @click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
+@click.pass_context
 @generator
-def search(field, term, substring):
+def search(ctx, field, term, substring):
     results = match_field(field=field, term=term, substring=substring)
     for result in results:
         yield result
