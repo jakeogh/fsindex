@@ -194,7 +194,7 @@ def filter(ctx, results, exists, mode):
               required=False, multiple=True)
 @click.option('--verbose', is_flag=True)
 @click.pass_context
-def search(ctx, field, term, resultfields, exists, substring, mode, verbose):
+def old_search(ctx, field, term, resultfields, exists, substring, mode, verbose):
     modes = mode
     assert field in FIELDS.keys()
     if verbose: seprint("field:", field)
