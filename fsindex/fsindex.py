@@ -68,8 +68,8 @@ def match_field(field, term, resultfields, exists, substring, modes):
     results = answer.fetchall()
 
     for result in results:
-        print(" ")
-        print(result)
+        #print(" ")
+        #print(result)
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in resultfields:
@@ -79,10 +79,10 @@ def match_field(field, term, resultfields, exists, substring, modes):
                 if modes:
                     #print("modes:", modes)
                     for modefunc in modes:
-                        print("modefunc:", modefunc)
+                        #print("modefunc:", modefunc)
                         code = modefunc+'('+str(result[4])+')'
-                        print("code:", code)
-                        print("eval(code):", eval(code))
+                        #print("code:", code)
+                        #print("eval(code):", eval(code))
                         answer = eval(code)
                         if not answer:
                             continue
