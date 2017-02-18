@@ -131,7 +131,7 @@ def filter(results, exists, modes):
         if modes:
             if not matching_mode(result, modes):
                 continue
-        print(result)
+        #print(result)
         yield result
 
 
