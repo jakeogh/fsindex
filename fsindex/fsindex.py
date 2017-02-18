@@ -155,8 +155,6 @@ def filter(results, exists, modes):
 @processor
 def display(results, fields):
     for result in results:
-        if isinstance(result, bool):
-            yield result
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in fields or not fields:
@@ -172,12 +170,16 @@ def display(results, fields):
         yield result
 
 @cli.command('bool')
+@click.option('--verbose', is_flag=True)
 @processor
-def result_bool(results):
+def result_bool(results, verbose):
+    print(results)
     if results:
+        if verbose: seprint(True)
         yield True
         #quit(0)
     else:
+        if verbose: seprint(False)
         yield False
         #quit(1)
 
