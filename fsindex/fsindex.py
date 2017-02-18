@@ -155,8 +155,8 @@ def filter(results, exists, modes):
 @processor
 def display(results, fields):
     if isinstance(list(results)[0], bool):
-        print(list(results))
-        yield list(results)[0]
+        #print(list(results))
+        yield bool(list(results))
     for result in results:
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
