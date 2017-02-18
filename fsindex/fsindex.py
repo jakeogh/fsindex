@@ -136,23 +136,36 @@ def filter(results, exists, modes):
 
 
 @cli.command('display')
+@click.option('--field', 'fields', is_flag=False, nargs=1,
+              type=click.Choice(list(FIELDS.keys())),
+              required=False, multiple=True)
 @processor
-def display(results):
+def display(results, fields):
     for result in results:
-        print(result)
+        newline = False
+        for index, rfield in enumerate(FIELDS.keys()):
+            if rfield in fields or not fields:
+                newline = True
+                if isinstance(result[index], bytes):
+                    sys.stdout.buffer.write(result[index] + b' ')
+                else:
+                    print(result[index], end=' ')
+        if newline:
+            print('\n', end='')
+            newline = False
+
+        #print(result)
         yield result
 
 @cli.command()
 def listfields():
     pp.pprint(FIELDS)
     quit(0)
-    return True
 
 @cli.command()
 def listmodes():
     pp.pprint(MODE_FUNCTIONS)
     quit(0)
-    return True
 
 @cli.command()
 def stats():
@@ -163,6 +176,7 @@ def stats():
     c.execute('select * from sqlite_master')
     for thing in c:
         print(thing)
+    quit(0)
 
 
 
