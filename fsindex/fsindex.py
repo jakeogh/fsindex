@@ -91,7 +91,7 @@ def generator(f):
 @generator
 def dupes(infile, verbose):
     infile = bytes(infile, 'UTF8')
-    if verbose seprint(infile)
+    if verbose: seprint(infile)
     infile = os.path.realpath(infile)
     with open(infile, 'rb') as fh:
         infilehash = hashlib.sha1(fh.read()).hexdigest()
