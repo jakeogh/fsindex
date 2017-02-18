@@ -137,7 +137,9 @@ def stats(ctx):
 @click.argument('resultfields', required=True, nargs=-1)
 @click.option('--exists', is_flag=True)
 @click.option('--substring', is_flag=True)
-@click.option('--mode', is_flag=False, nargs=1, required=False, multiple=True)
+@click.option('--mode', is_flag=False, nargs=1,
+              type=click.Choice(list(MODE_FUNCTIONS.keys())),
+              required=False, multiple=True)
 @click.pass_context
 def search(ctx, field, term, resultfields, exists, substring, mode):
     modes = mode
