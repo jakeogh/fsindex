@@ -30,13 +30,13 @@ FIELDS = OrderedDict((
     ))
 
 MODE_DESCRIPTIONS = OrderedDict((
-    ('S_IFSOCK', 'Socket'),
-    ('S_IFLNK', 'Symbolic link'),
-    ('S_IFREG', 'Regular file'),
-    ('S_IFBLK', 'Block device'),
-    ('S_IFDIR', 'Directory'),
-    ('S_IFCHR', 'Character device'),
-    ('S_IFIFO', 'FIFO')
+    ('S_IFSOCK', 'Socket'),         #49152
+    ('S_IFLNK', 'Symbolic link'),   #40960
+    ('S_IFREG', 'Regular file'),    #32768
+    ('S_IFBLK', 'Block device'),    #24576
+    ('S_IFDIR', 'Directory'),       #16384
+    ('S_IFCHR', 'Character device'),#8192
+    ('S_IFIFO', 'FIFO')             #4096
     ))
 
 field_str = ''

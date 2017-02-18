@@ -83,6 +83,7 @@ def match_field(field, term, resultfields, exists, substring, modes):
                         #print("code:", code)
                         print("eval(mode):", eval(mode))
                         print("result[4]:", result[4])
+                        print("type(S_IFREG):", type(S_IFREG))
 
                 newline = True
                 if isinstance(result[index], bytes):
