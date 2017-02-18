@@ -169,9 +169,10 @@ def display(results, fields):
         yield result
 
 @cli.command('path')
+@click.pass_context
 @processor
-def path(results):
-    yield display(('full_path',)) # Error: Got unexpected extra argument (full_path)
+def path(ctx, results):
+    ctx.invoke(display, fields=('full_path',))
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
