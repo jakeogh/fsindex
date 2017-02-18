@@ -93,7 +93,6 @@ def dupes(infile):
     infile = os.path.realpath(infile)
     with open(infile, 'rb') as fh:
         infilehash = hashlib.sha1(fh.read()).hexdigest()
-    print("here------")
     results = match_field(field='data_hash', term=infilehash, substring=False)
     for result in results:
         yield result
