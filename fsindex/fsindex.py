@@ -169,8 +169,8 @@ def display(results, fields):
         yield result
 
 @cli.command('path')
-@click.pass_context
 @processor
+@click.pass_context
 def path(ctx, results):
     print("ctx:", ctx)
     print("type(ctx):", type(ctx))
