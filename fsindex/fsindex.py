@@ -109,6 +109,33 @@ def search(field, term, substring):
         yield result
 
 
+def matching_mode(result, modes):
+    for modefunc in modes:
+        code = modefunc+'('+str(result[4])+')'
+        answer = eval(code)
+        if answer:
+            return True
+
+
+@cli.command('filter')
+@click.option('--exists', is_flag=True)
+@click.option('--mode', 'modes', is_flag=False, nargs=1,
+              type=click.Choice(list(MODE_FUNCTIONS.keys())),
+              required=False, multiple=True)
+@processor
+def filter(results, exists, modes):
+    #assert not (exists and modes)
+    for result in results:
+        if exists:
+            if not path_exists(result[1]):
+                continue
+        if modes:
+            if not matching_mode(result, modes):
+                continue
+        print(result)
+        yield result
+
+
 @cli.command('display')
 @processor
 def display(results):
@@ -117,12 +144,6 @@ def display(results):
         yield result
 
 
-#def matching_mode(result, modes):
-#    for modefunc in modes:
-#        code = modefunc+'('+str(result[4])+')'
-#        answer = eval(code)
-#        if answer:
-#            return True
 #
 #def match_field(field, term, resultfields, exists, substring, modes):
 #    if 'hash' in field:
