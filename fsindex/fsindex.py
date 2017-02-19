@@ -172,24 +172,8 @@ def display(results, fields):
 @processor
 @click.pass_context
 def path(ctx, results):
-    ctx.invoke(display, results=results, fields=('full_path',))
-
-#Traceback (most recent call last):
-#  File "/usr/lib/python-exec/python3.4/fsindex", line 11, in <module>
-#    load_entry_point('fsindex==0.1', 'console_scripts', 'fsindex')()
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 722, in __call__
-#    return self.main(*args, **kwargs)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 697, in main
-#    rv = self.invoke(ctx)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 1093, in invoke
-#    return _process_result(rv)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 1031, in _process_result
-#    **ctx.params)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 535, in invoke
-#    return callback(*args, **kwargs)
-#  File "/usr/lib64/python3.4/site-packages/fsindex/fsindex.py", line 56, in process_commands
-#    for _ in stream:
-#TypeError: 'NoneType' object is not iterable
+    ctx.forward(display)
+    #ctx.invoke(display, results=results, fields=('full_path',))
 
 
 @cli.command('bool')
