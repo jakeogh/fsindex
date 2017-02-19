@@ -168,6 +168,31 @@ def display(results, fields):
         yield result
 
 
+@cli.command('fields')
+@click.option('--field', 'fields', is_flag=False, nargs=1,
+              type=click.Choice(list(FIELDS.keys())),
+              required=False, multiple=True)
+@processor
+def fields(results, fields):
+    seprint("fields:", fields)
+    new_result = []
+    for result in results:
+        #newline = False
+        for index, rfield in enumerate(FIELDS.keys()):
+            if rfield in fields or not fields:
+                new_result.append(result[index])
+                #newline = True
+                #if isinstance(result[index], bytes):
+                #    sys.stdout.buffer.write(result[index] + b' ')
+                #else:
+                #    print(result[index], end=' ')
+        #if newline:
+        #    print('\n', end='')
+        #    newline = False
+        yield new_result
+
+
+
 @cli.command('print_results')
 @processor
 def print_results(results):
