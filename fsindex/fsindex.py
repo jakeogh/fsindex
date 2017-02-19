@@ -175,8 +175,8 @@ def display(results, fields):
 @processor
 def fields(results, fields):
     seprint("fields:", fields)
-    new_result = []
     for result in results:
+        new_result = []
         #newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in fields or not fields:
