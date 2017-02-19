@@ -167,6 +167,16 @@ def display(results, fields):
             newline = False
         yield result
 
+
+@cli.command('print_results')
+@processor
+def print_results(results):
+    for result in results:
+        PP.pprint(result)
+        yield result
+
+
+
 @cli.command('path')
 @processor
 @click.pass_context
