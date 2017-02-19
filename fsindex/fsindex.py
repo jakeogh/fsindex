@@ -172,6 +172,7 @@ def display(results, fields):
 @processor
 @click.pass_context
 def path(ctx, results):
+    from pudb import set_trace; set_trace()
     ctx.forward(display)
     #ctx.invoke(display, results=results, fields=('full_path',))
 
