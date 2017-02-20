@@ -53,8 +53,6 @@ MODE_FUNCTIONS = OrderedDict((
     ))
 
 
-
-
 field_str = ''
 for label in FIELDS.keys():
     #print(label)
@@ -63,7 +61,7 @@ for label in FIELDS.keys():
 
 #print(field_str)
 
-def create_database():
+def sqlite_create_database():
     query = '''CREATE TABLE path_db (''' + field_str + ''')'''
     c.execute(query) #bug there should not be a requirement to be unique, a file could change.
     c.execute("PRAGMA synchronous = OFF")
