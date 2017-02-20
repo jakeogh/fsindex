@@ -151,12 +151,12 @@ def mode(results, modes):
 def show(results):
     for result in results:
         newline = False
-        for index, rfield in enumerate(FIELDS.keys()):
+        for field in result:
             newline = True
-            if isinstance(result[index], bytes):
-                sys.stdout.buffer.write(result[index] + b' ')
+            if isinstance(field, bytes):
+                sys.stdout.buffer.write(field + b' ')
             else:
-                print(result[index], end=' ')
+                print(field, end=' ')
         if newline:
             print('\n', end='')
             newline = False
