@@ -135,7 +135,7 @@ def exists(results):
         yield result
 
 @cli.command('mode')
-@click.option('--mode', 'modes', is_flag=False, nargs=1,
+@click.option('--mode', 'file mode', is_flag=False, nargs=1,
               type=click.Choice(list(MODE_FUNCTIONS.keys())),
               required=False, multiple=True)
 @processor
