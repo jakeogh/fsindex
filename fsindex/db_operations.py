@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
 
-import configparser
 import sys
 import os
 import hashlib
 from collections import OrderedDict
-#from stat import *
 from .db_connection import c
-
-home = os.path.expanduser("~")
-config_folder = home + '/.fsindex'
-config_file = config_folder + '/fsindex_config'
 
 FIELDS = OrderedDict((
     ('path_hash','TEXT'),
@@ -52,14 +46,11 @@ MODE_FUNCTIONS = OrderedDict((
     ('S_ISWHT', 'whiteout')
     ))
 
-
 field_str = ''
 for label in FIELDS.keys():
     #print(label)
     labeltype = FIELDS[label]
     field_str = field_str + label + ' ' + labeltype + ', '
-
-#print(field_str)
 
 def sqlite_create_database():
     query = '''CREATE TABLE path_db (''' + field_str + ''')'''
@@ -71,27 +62,3 @@ def db_stats():
     answer = c.execute(query)
     return answer.fetchall()
 
-def write_default_config_file():
-    config['DATABASE'] = {'Location': database_location,
-                          'Compression': 'TODO',
-                          'CompressionLevel': 'TODO'}
-    with open(config_file, 'w') as configfile:
-        config.write(configfile)
-    return True
-
-def read_config_file(config_file=config_file):
-    #race condition, config.read throws no error when it trys to read empty or non existing config file...
-    if os.path.isfile(config_file) and is_non_zero_file(config_file):
-        config.read(config_file)
-        return config
-    else:
-        print("Problem reading config file, creating default config.")
-        write_default_config_file()
-        config.read(config_file)
-        return config
-
-class Config_FSindex():
-    def __init__(self, config_file=config_file):
-        self.config             = read_config_file(config_file)
-        self.database_folder    = self.config['DATABASE']['location']
-        self.hash_length        = 40
