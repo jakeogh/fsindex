@@ -146,27 +146,22 @@ def mode(results, modes):
                 continue
         yield result
 
-#@cli.command('old_display')
-#@click.option('--field', 'fields', is_flag=False, nargs=1,
-#              type=click.Choice(list(FIELDS.keys())),
-#              required=False, multiple=True)
-#@processor
-#def old_display(results, fields):
-#    seprint("fields:", fields)
-#    for result in results:
-#        newline = False
-#        for index, rfield in enumerate(FIELDS.keys()):
-#            if rfield in fields or not fields:
-#                newline = True
-#                if isinstance(result[index], bytes):
-#                    sys.stdout.buffer.write(result[index] + b' ')
-#                else:
-#                    print(result[index], end=' ')
-#        if newline:
-#            print('\n', end='')
-#            newline = False
-#        yield result
-
+@cli.command('show')
+@processor
+def show(results, fields):
+    seprint("fields:", fields)
+    for result in results:
+        newline = False
+        for index, rfield in enumerate(FIELDS.keys()):
+            newline = True
+            if isinstance(result[index], bytes):
+                sys.stdout.buffer.write(result[index] + b' ')
+            else:
+                print(result[index], end=' ')
+        if newline:
+            print('\n', end='')
+            newline = False
+        yield result
 
 @cli.command('fields')
 @click.option('--field', 'fields', is_flag=False, nargs=1,
@@ -182,43 +177,12 @@ def fields(results, fields):
                 new_result.append(result[index])
         yield new_result
 
-
-@cli.command('show')
+@cli.command('pprint')
 @processor
-def show(results):
+def p_print(results):
     for result in results:
         PP.pprint(result)
         yield result
-
-
-
-@cli.command('path')
-@processor
-@click.pass_context
-def path(ctx, results):
-    #from pudb import set_trace; set_trace()
-    ctx.forward(display)
-    #ctx.invoke(display, results=results, fields=('full_path',))
-
-#Traceback (most recent call last):
-#  File "/usr/lib/python-exec/python3.4/fsindex", line 11, in <module>
-#    load_entry_point('fsindex==0.1', 'console_scripts', 'fsindex')()
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 722, in __call__
-#    return self.main(*args, **kwargs)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 697, in main
-#    rv = self.invoke(ctx)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 1093, in invoke
-#    return _process_result(rv)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 1031, in _process_result
-#    **ctx.params)
-#  File "/usr/lib64/python3.4/site-packages/click/core.py", line 535, in invoke
-#    return callback(*args, **kwargs)
-#  File "/usr/lib64/python3.4/site-packages/fsindex/fsindex.py", line 56, in process_commands
-#    for _ in stream:
-#TypeError: 'NoneType' object is not iterable
-
-
-
 
 @cli.command('bool')
 @click.option('--verbose', is_flag=True)
