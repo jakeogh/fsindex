@@ -146,58 +146,48 @@ def mode(results, modes):
                 continue
         yield result
 
-@cli.command('display')
-@click.option('--field', 'fields', is_flag=False, nargs=1,
-              type=click.Choice(list(FIELDS.keys())),
-              required=False, multiple=True)
-@processor
-def display(results, fields):
-    seprint("fields:", fields)
-    for result in results:
-        newline = False
-        for index, rfield in enumerate(FIELDS.keys()):
-            if rfield in fields or not fields:
-                newline = True
-                if isinstance(result[index], bytes):
-                    sys.stdout.buffer.write(result[index] + b' ')
-                else:
-                    print(result[index], end=' ')
-        if newline:
-            print('\n', end='')
-            newline = False
-        yield result
+#@cli.command('old_display')
+#@click.option('--field', 'fields', is_flag=False, nargs=1,
+#              type=click.Choice(list(FIELDS.keys())),
+#              required=False, multiple=True)
+#@processor
+#def old_display(results, fields):
+#    seprint("fields:", fields)
+#    for result in results:
+#        newline = False
+#        for index, rfield in enumerate(FIELDS.keys()):
+#            if rfield in fields or not fields:
+#                newline = True
+#                if isinstance(result[index], bytes):
+#                    sys.stdout.buffer.write(result[index] + b' ')
+#                else:
+#                    print(result[index], end=' ')
+#        if newline:
+#            print('\n', end='')
+#            newline = False
+#        yield result
 
 
 @cli.command('fields')
 @click.option('--field', 'fields', is_flag=False, nargs=1,
               type=click.Choice(list(FIELDS.keys())),
-              required=False, multiple=True)
+              required=True, multiple=True)
 @processor
 def fields(results, fields):
     seprint("fields:", fields)
     for result in results:
         new_result = []
-        #newline = False
         for index, rfield in enumerate(FIELDS.keys()):
             if rfield in fields or not fields:
                 new_result.append(result[index])
-                #newline = True
-                #if isinstance(result[index], bytes):
-                #    sys.stdout.buffer.write(result[index] + b' ')
-                #else:
-                #    print(result[index], end=' ')
-        #if newline:
-        #    print('\n', end='')
-        #    newline = False
         yield new_result
 
 
-
-@cli.command('print_results')
+@cli.command('show')
 @processor
-def print_results(results):
+def show(results):
     for result in results:
-        PP.pprint(result[:])
+        PP.pprint(result)
         yield result
 
 
