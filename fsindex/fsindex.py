@@ -148,8 +148,7 @@ def mode(results, modes):
 
 @cli.command('show')
 @processor
-def show(results, fields):
-    seprint("fields:", fields)
+def show(results):
     for result in results:
         newline = False
         for index, rfield in enumerate(FIELDS.keys()):
