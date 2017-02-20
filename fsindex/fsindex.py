@@ -197,7 +197,7 @@ def fields(results, fields):
 @processor
 def print_results(results):
     for result in results:
-        PP.pprint(result)
+        PP.pprint(result[:])
         yield result
 
 
