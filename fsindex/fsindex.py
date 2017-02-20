@@ -168,7 +168,6 @@ def show(results):
               required=True, multiple=True)
 @processor
 def fields(results, fields):
-    seprint("fields:", fields)
     for result in results:
         new_result = []
         for index, rfield in enumerate(FIELDS.keys()):
@@ -221,3 +220,8 @@ def stats():
 def update(root):
     update_db(root)
     quit(0)
+
+
+
+
+
