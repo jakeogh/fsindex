@@ -10,8 +10,11 @@ from kcl.fileops import is_regular_file
 from kcl.dirops import path_is_dir
 from kcl.hashops import sha1_hash_file
 from kcl.dirops import all_files
-from .db_connection import c
+from .db_connection import get_db_connection
 
+DB_PATH = '/poolz3_8x5TB_A/__fsindex/_good/fsindex.sha1.db'
+
+c = get_db_connection(db_path)
 
 def search_for_full_path(full_path):
     #c = conn.cursor()
