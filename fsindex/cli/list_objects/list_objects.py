@@ -10,4 +10,4 @@ from fsindex.cli.list_objects.filerecord import filerecord
 def list_objects():
     pass
 
-list_objects.add_command(list_filerecords, name='records')
+list_objects.add_command(filerecord, name='records')
