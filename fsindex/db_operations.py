@@ -4,8 +4,8 @@ import sys
 import os
 import hashlib
 from collections import OrderedDict
-from .db_connection import c
-
+from .db_connection import get_db_connection()
+c = get_db_connection()
 
 FIELDS = OrderedDict((
     ('path_hash','TEXT'),
