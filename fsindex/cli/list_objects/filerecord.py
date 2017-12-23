@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import click
-from filerecorddb.model.Iri import Iri
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 
 @click.command()
