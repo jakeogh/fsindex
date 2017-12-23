@@ -6,7 +6,7 @@ from kcl.sqlalchemy.model.FileRecord import FileRecord
 from kcl.sqlalchemy.BaseMixin import BASE
 
 @click.command()
-@click.argument('path', type=click.Path(exists=True), dir_okay=False, allow_dash=False, path_type=bytes, nargs=1)
+@click.argument('path', type=click.Path(exists=True), dir_okay=False, path_type=bytes, nargs=1)
 @click.pass_obj
 def filerecord(config, path):
     with self_contained_session(config.database) as session:
