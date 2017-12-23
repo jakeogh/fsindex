@@ -49,6 +49,7 @@ def test(package, keep_databases, count, test_class, test_match):
     kcltest(package=package, keep_databases=keep_databases, count=count, test_class=test_class, test_match=test_match)
 
 fsindex.add_command(list_objects, name='list')
+fsindex.add_command(create_objects, name='create')
 
 #fsindex.add_command(list_objects, name='list')
 #fsindex.add_command(bookmark)
