@@ -4,7 +4,7 @@ import sys
 import os
 import hashlib
 from collections import OrderedDict
-from .db_connection import get_db_connection()
+from .db_connection import get_db_connection
 c = get_db_connection()
 
 FIELDS = OrderedDict((
