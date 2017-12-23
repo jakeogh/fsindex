@@ -28,6 +28,7 @@ setup(
     install_requires=dependencies,
     entry_points={
         'console_scripts': [
+            'fsindex = fsindex.fsindex:cli',
             'fsindex_orig = fsindex.fsindex_orig:cli',
         ],
     },
