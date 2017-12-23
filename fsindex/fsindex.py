@@ -15,6 +15,7 @@ from .db_operations import db_stats
 from .db_connection import get_db_connection
 
 DB_PATH = '/poolz3_8x5TB_A/__fsindex/_good/fsindex.sha1.db'
+c = get_db_connection(DB_PATH)
 
 from .db_operations import FIELDS
 from .db_operations import MODE_FUNCTIONS
@@ -98,7 +99,6 @@ def dupes(infile, verbose):
         yield result
 
 def match_field(field, term, substring):
-    c = get_db_connection(DB_PATH)
     if FIELDS[field] == 'BLOB':
         if not isinstance(term, bytes):
             term = bytes(term, 'UTF8')
