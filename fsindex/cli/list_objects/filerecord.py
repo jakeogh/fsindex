@@ -5,7 +5,7 @@ from kcl.sqlalchemy.self_contained_session import self_contained_session
 
 @click.command()
 @click.pass_obj
-def list_filerecords(config):
+def filerecord(config):
     with self_contained_session(config.database) as session:
         filerecord_generator = session.query(Iri)
         for filerecord in filerecord_generator:
