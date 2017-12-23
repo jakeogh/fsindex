@@ -8,11 +8,13 @@ import pprint
 from functools import update_wrapper
 from stat import *
 import click
-from kcl.printops import seprint
+from kcl.printops import eprint
 from kcl.fileops import path_exists
 from .update import update_db
 from .db_operations import db_stats
-from .db_connection import c
+from .db_connection import get_db_connection
+
+
 from .db_operations import FIELDS
 from .db_operations import MODE_FUNCTIONS
 PP = pprint.PrettyPrinter(indent=4)
@@ -86,7 +88,7 @@ def generator(f):
 @generator
 def dupes(infile, verbose):
     infile = bytes(infile, 'UTF8')
-    if verbose: seprint(infile)
+    if verbose: eprint(infile)
     infile = os.path.realpath(infile)
     with open(infile, 'rb') as fh:
         infilehash = hashlib.sha1(fh.read()).hexdigest()
@@ -95,6 +97,7 @@ def dupes(infile, verbose):
         yield result
 
 def match_field(field, term, substring):
+    c = get_db_connection('/poolz3_8x5TB_A/__fsindex/_good/fsindex.sha1.db')
     if FIELDS[field] == 'BLOB':
         if not isinstance(term, bytes):
             term = bytes(term, 'UTF8')
@@ -113,7 +116,7 @@ def match_field(field, term, substring):
         answer = c.execute(query, (term,))
     results = answer.fetchall()
     #count = len(results)
-    #seprint("match_field() count:", "{:,}".format(count))
+    #eprint("match_field() count:", "{:,}".format(count))
     return results
 
 @cli.command('search')
@@ -135,8 +138,7 @@ def exists(results):
         yield result
 
 @cli.command('mode')
-@click.option('--mode', 'modes', is_flag=False, nargs=1,
-              type=click.Choice(list(MODE_FUNCTIONS.keys())),
+@click.option('--mode', 'modes', is_flag=False, nargs=1, type=click.Choice(list(MODE_FUNCTIONS.keys())),
               required=True, multiple=True)
 @processor
 def mode(results, modes):
@@ -163,8 +165,7 @@ def show(results):
         yield result
 
 @cli.command('fields')
-@click.option('--field', 'fields', is_flag=False, nargs=1,
-              type=click.Choice(list(FIELDS.keys())),
+@click.option('--field', 'fields', is_flag=False, nargs=1, type=click.Choice(list(FIELDS.keys())),
               required=True, multiple=True)
 @processor
 def fields(results, fields):
@@ -187,10 +188,10 @@ def p_print(results):
 @processor
 def result_bool(results, verbose):
     for result in results:
-        if verbose: seprint(True)
+        if verbose: eprint(True)
         #yield True
         quit(0)
-    if verbose: seprint(False)
+    if verbose: eprint(False)
     #yield False
     quit(1)
 
