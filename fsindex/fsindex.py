@@ -12,7 +12,8 @@ from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.sqlalchemy.model.Config import CONFIG
 from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
-from .cli.list_objects.filerecord import filerecord
+#from .cli.list_objects.filerecord import filerecord
+from .cli.list_objects.list_objects import list_objects
 
 __version__ = 0.01
 
