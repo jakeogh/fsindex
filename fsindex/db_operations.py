@@ -6,6 +6,7 @@ import hashlib
 from collections import OrderedDict
 from .db_connection import c
 
+
 FIELDS = OrderedDict((
     ('path_hash','TEXT'),
     ('full_path','BLOB'),
@@ -20,8 +21,17 @@ FIELDS = OrderedDict((
     ('st_size','INT'),
     ('st_atime_ns','INT'),
     ('st_mtime_ns','INT'),
-    ('st_ctime_ns','INT')
+    ('st_ctime_ns','INT'),
+    ('existance_timestamp', 'INT'),
+    ('nonexistance_timestamp', 'INT')
     ))
+
+    # stuff to add:
+    #   indexing timestamp
+    #   file extended attrs
+    #   sha256/512/whirpool
+    #
+    #   type str?
 
 MODE_DESCRIPTIONS = OrderedDict((
     ('S_IFSOCK', 'Socket'),         #49152
@@ -53,7 +63,7 @@ for label in FIELDS.keys():
     field_str = field_str + label + ' ' + labeltype + ', '
 
 def sqlite_create_database():
-    query = '''CREATE TABLE path_db (''' + field_str + ''')'''
+    query = '''CREATE TABLE path_db (''' + field_str + '''PRIMARY KEY)'''
     c.execute(query) #bug there should not be a requirement to be unique, a file could change.
     c.execute("PRAGMA synchronous = OFF")
 
