@@ -27,7 +27,12 @@ __version__ = 0.01
 @click.pass_context
 def fsindex(ctx, verbose, database, temp_database):
     ''' fsindex orm interface'''
-    if temp_database:
+    if database:
+        if temp_database:
+            eprint("Error: --database and --temp-database are mutually exclusive.")
+            quit(1)
+        CONFIG.database = database
+    elif temp_database:
         CONFIG.database = CONFIG.database_timestamp
     else:
         CONFIG.database = CONFIG.database_real('fsindex')
