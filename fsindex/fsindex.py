@@ -54,7 +54,6 @@ fsindex.add_command(list_objects, name='list')
 fsindex.add_command(create_objects, name='create')
 fsindex.add_command(print_database)
 
-#fsindex.add_command(list_objects, name='list')
 #fsindex.add_command(bookmark)
 #fsindex.add_command(content_files)
 #fsindex.add_command(show_config, name='config')
