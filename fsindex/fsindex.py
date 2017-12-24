@@ -27,12 +27,8 @@ def fsindex(ctx, verbose, database, temp_database):
     ''' fsindex orm interface'''
     if temp_database:
         CONFIG.database = CONFIG.database_timestamp
-        print("temp database")
     else:
         CONFIG.database = CONFIG.database_real('fsindex')
-    if verbose:
-        print("verbose is True")
-        eprint(CONFIG.database)
     if not database_exists(CONFIG.database):
         create_database(CONFIG.database)
         with self_contained_session(CONFIG.database) as session:
