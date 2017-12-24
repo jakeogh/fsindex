@@ -13,4 +13,4 @@ def filerecord(config, path):
         BASE.metadata.create_all(session.bind)
         filerecord = FileRecord.construct(session=session, inpath=path)
         session.commit()
-        print(filerecord)
+        print(bytes(filerecord))
