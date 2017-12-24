@@ -4,7 +4,7 @@ import click
 import shutil
 from sqlalchemy_utils.functions import database_exists
 from sqlalchemy_utils.functions import create_database
-from kcl.logops import set_verbose
+#from kcl.logops import set_verbose
 from kcl.printops import eprint
 from kcl.sqlalchemy.test import test as kcltest
 from kcl.sqlalchemy.print_database import print_database
@@ -20,7 +20,8 @@ __version__ = 0.01
 # pylint: disable=C0326
 # http://pylint-messages.wikidot.com/messages:c0326
 @click.group(context_settings=CONTEXT_SETTINGS)
-@click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=True)
+#@click.option('--verbose', is_flag=True, callback=set_verbose, expose_value=True)
+@click.option('--verbose', is_flag=True)
 @click.option('--database', is_flag=False, type=str, required=False)
 @click.option('--temp-database', is_flag=True, required=False)
 @click.pass_context
