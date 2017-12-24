@@ -10,7 +10,7 @@ from kcl.sqlalchemy.test import test as kcltest
 from kcl.sqlalchemy.print_database import print_database
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.BaseMixin import BASE
-from kcl.sqlalchemy.ipython import ipythoin
+from kcl.sqlalchemy.ipython import ipython
 from kcl.sqlalchemy.model.Config import CONFIG
 from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 from .cli.list_objects.list_objects import list_objects
