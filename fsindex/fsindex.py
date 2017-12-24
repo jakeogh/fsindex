@@ -30,6 +30,8 @@ def fsindex(ctx, verbose, database, temp_database):
         CONFIG.database = CONFIG.database_timestamp
     else:
         CONFIG.database = CONFIG.database_real('fsindex')
+    if verbose:
+        eprint(CONFIG.database)
     if not database_exists(CONFIG.database):
         create_database(CONFIG.database)
         with self_contained_session(CONFIG.database) as session:
