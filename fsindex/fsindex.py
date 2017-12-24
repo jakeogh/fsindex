@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import click
+import sys
+print(sys.argv[:])
 import shutil
 from sqlalchemy_utils.functions import database_exists
 from sqlalchemy_utils.functions import create_database
