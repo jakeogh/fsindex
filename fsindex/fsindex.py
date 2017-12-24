@@ -14,7 +14,6 @@ from kcl.sqlalchemy.model.Config import CONFIG
 from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 from .cli.list_objects.list_objects import list_objects
 from .cli.create_objects.create_objects import create_objects
-
 __version__ = 0.01
 
 # pylint: disable=C0326
