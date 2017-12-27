@@ -19,6 +19,7 @@ def filerecord_index(config, path):
         BASE.metadata.create_all(session.bind)
         for index, inpath in enumerate(all_files(path)):
             filerecord = FileRecord.construct(session=session, inpath=inpath)
+            session.add(filerecord)
             if index % 1000:
                 session.flush()
         session.commit()
