@@ -22,7 +22,7 @@ def filerecord_index(config, path):
             #filerecord = FileRecord.construct(session=session, inpath=inpath, timestamp=datetime.now())
             filerecord = FileRecord.construct(session=session, inpath=inpath)
             session.add(filerecord)
-            #if index % 1000:
-            session.flush()
-            session.commit()
+            if index % 1000:
+                session.flush()
+        session.commit()
             #print(bytes(filerecord))
