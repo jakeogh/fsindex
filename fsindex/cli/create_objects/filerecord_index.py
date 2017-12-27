@@ -25,4 +25,4 @@ def filerecord_index(config, path):
             if index % 1000:
                 session.flush()
         session.commit()
-            #print(bytes(filerecord))
+        #print(bytes(filerecord))

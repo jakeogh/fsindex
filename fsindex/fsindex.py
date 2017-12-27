@@ -6,6 +6,7 @@ print(sys.argv[:])
 import shutil
 from sqlalchemy_utils.functions import database_exists
 from sqlalchemy_utils.functions import create_database
+from sqlalchemy_utils.functions import drop_database
 #from kcl.logops import set_verbose
 from kcl.printops import eprint
 from kcl.sqlalchemy.test import test as kcltest
@@ -26,8 +27,9 @@ __version__ = 0.01
 @click.option('--verbose', is_flag=True)
 @click.option('--database', is_flag=False, type=str, required=False)
 @click.option('--temp-database', is_flag=True, required=False)
+@click.option('--delete-database', is_flag=True, required=False)
 @click.pass_context
-def fsindex(ctx, verbose, database, temp_database):
+def fsindex(ctx, verbose, database, temp_database, delete_database):
     ''' fsindex orm interface'''
     if database:
         if temp_database:
@@ -38,6 +40,9 @@ def fsindex(ctx, verbose, database, temp_database):
         CONFIG.database = CONFIG.database_timestamp
     else:
         CONFIG.database = CONFIG.database_real('fsindex')
+    if delete_database:
+        if database_exists(CONFIG.database):
+            drop_database(CONFIG.database)
     if not database_exists(CONFIG.database):
         create_database(CONFIG.database)
         with self_contained_session(CONFIG.database) as session:
