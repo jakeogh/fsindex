@@ -10,7 +10,7 @@ from sqlalchemy_utils.functions import drop_database
 #from kcl.logops import set_verbose
 from kcl.printops import eprint
 from kcl.sqlalchemy.test import test as kcltest
-from kcl.sqlalchemy.print_database import print_database
+from kcl.sqlalchemy.print_database import print_database as kcl_print_database
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.sqlalchemy.ipython import ipython
@@ -61,9 +61,17 @@ def fsindex(ctx, verbose, database, temp_database, delete_database):
 def test(package, keep_databases, count, test_class, test_match):
     kcltest(package=package, keep_databases=keep_databases, count=count, test_class=test_class, test_match=test_match)
 
+
+@fsindex.command()
+@click.option('--table', type=str, default=False)
+@click.pass_obj
+def print_database(config, table):
+    kcl_print_database(database=CONFIG.database, table=table)
+
+
 fsindex.add_command(list_objects, name='list')
 fsindex.add_command(create_objects, name='create')
-fsindex.add_command(print_database)
+#fsindex.add_command(print_database)
 fsindex.add_command(ipython)
 
 #fsindex.add_command(bookmark)
