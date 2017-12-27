@@ -49,6 +49,7 @@ def fsindex(ctx, verbose, database, temp_database, delete_database):
             BASE.metadata.create_all(session.bind)
     if verbose:
         eprint(CONFIG.database)
+        CONFIG.database_echo = True
     ctx.obj = CONFIG
     pass
 
