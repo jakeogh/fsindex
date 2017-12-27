@@ -6,6 +6,7 @@ from kcl.sqlalchemy.model.FileRecord import FileRecord
 from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.dirops import path_is_dir
 from kcl.dirops import all_files
+from datetime import datetime
 
 # exists=False or cant pass broken symlinks
 # dir_okay=True or cant pass dirs or symlinks to dirs
@@ -18,7 +19,7 @@ def filerecord_index(config, path):
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
         for index, inpath in enumerate(all_files(path)):
-            filerecord = FileRecord.construct(session=session, inpath=inpath)
+            filerecord = FileRecord.construct(session=session, inpath=inpath, timestamp=datetime.now())
             session.add(filerecord)
             #if index % 1000:
             session.flush()
