@@ -20,7 +20,7 @@ def filerecord_index(config, path):
         for index, inpath in enumerate(all_files(path)):
             filerecord = FileRecord.construct(session=session, inpath=inpath)
             session.add(filerecord)
-            if index % 1000:
-                session.flush()
+            #if index % 1000:
+            session.flush()
         session.commit()
         #print(bytes(filerecord))
