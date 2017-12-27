@@ -19,7 +19,8 @@ def filerecord_index(config, path):
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
         for index, inpath in enumerate(all_files(path)):
-            filerecord = FileRecord.construct(session=session, inpath=inpath, timestamp=datetime.now())
+            #filerecord = FileRecord.construct(session=session, inpath=inpath, timestamp=datetime.now())
+            filerecord = FileRecord.construct(session=session, inpath=inpath)
             session.add(filerecord)
             #if index % 1000:
             session.flush()
