@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-
+import click
 import builtins
 from fsindex.model.Config import CONFIG
 builtins.config = CONFIG
