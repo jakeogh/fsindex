@@ -16,12 +16,11 @@ from kcl.sqlalchemy.print_database import print_database as kcl_print_database
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.sqlalchemy.ipython import ipython
-#from kcl.sqlalchemy.visualization import sa_display
 from fsindex.model.Config import CONFIG
 from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 from .cli.list_objects.list_objects import list_objects
 from .cli.create_objects.create_objects import create_objects
-from .cli.visualization import sa_display
+from .cli.visualization.sa_display import sa_display
 #import sadisplay
 #import codecs
 #import time
