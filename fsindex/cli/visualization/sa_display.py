@@ -2,9 +2,11 @@
 
 import click
 from kcl.sqlalchemy.model.FileRecord import FileRecord
+from kcl.sqlalchemy.model.FileRecord import Filename
+from kcl.sqlalchemy.model.FileRecord import Path
 from kcl.sqlalchemy.visualization.sa_display import sa_display as kcl_sa_display
 
 @click.command()
 def sa_display():
-    import IPython; IPython.embed()
+    #import IPython; IPython.embed()
     kcl_sa_display(globals())
