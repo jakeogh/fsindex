@@ -10,6 +10,7 @@ from kcl.sqlalchemy.clickapp.clickapp import clickapp as fsindex
 from kcl.sqlalchemy.ipython import ipython
 from .cli.visualization.sa_display import sa_display
 from .cli.list_objects.list_objects import list_objects
+from .cli.create_objects.create_objects import create_objects
 
 fsindex.help = CONFIG.appname + " interface"
 fsindex.add_command(ipython)
@@ -33,7 +34,6 @@ fsindex.add_command(ipython)
 #from fsindex.model.Config import CONFIG
 #from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 #from .cli.list_objects.list_objects import list_objects
-#from .cli.create_objects.create_objects import create_objects
 #from .cli.visualization.sa_display import sa_display
 #
 #__version__ = 0.01
