@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import click
 from kcl.sqlalchemy.model import FileRecord
 from kcl.sqlalchemy.visualization import sa_display as kcl_sa_display
 
