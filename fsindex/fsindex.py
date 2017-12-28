@@ -4,6 +4,7 @@ import click
 import sys
 print(sys.argv[:])
 import shutil
+import time
 from sqlalchemy_utils.functions import database_exists
 from sqlalchemy_utils.functions import create_database
 from sqlalchemy_utils.functions import drop_database
