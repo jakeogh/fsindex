@@ -73,9 +73,11 @@ def test(package, keep_databases, count, test_class, test_match):
 
 @fsindex.command()
 @click.option('--table', type=str, default=False)
-@click.pass_obj
-def print_database(config, table):
-    kcl_print_database(database=CONFIG.database, table=table)
+#@click.pass_obj
+@click.pass_context
+def print_database(ctx, table):
+    ctx.invoke(kcl_print_database, database=ctx.obj.database, table=table)
+    #kcl_print_database(database=CONFIG.database, table=table)
 
 
 #@fsindex.command()
