@@ -21,10 +21,6 @@ from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 from .cli.list_objects.list_objects import list_objects
 from .cli.create_objects.create_objects import create_objects
 from .cli.visualization.sa_display import sa_display
-#import sadisplay
-#import codecs
-#import time
-#import pydot
 
 __version__ = 0.01
 
@@ -38,7 +34,7 @@ __version__ = 0.01
 @click.option('--delete-database', is_flag=True, required=False)
 @click.pass_context
 def fsindex(ctx, verbose, database, temp_database, delete_database):
-    ''' fsindex orm interface'''
+    __doc__ = ''' fsindex orm interface'''
     if database:
         if temp_database:
             eprint("Error: --database and --temp-database are mutually exclusive.")
@@ -71,33 +67,12 @@ def test(package, keep_databases, count, test_class, test_match):
     kcltest(package=package, keep_databases=keep_databases, count=count, test_class=test_class, test_match=test_match)
 
 
+#@click.pass_obj
 @fsindex.command()
 @click.option('--table', type=str, default=False)
-#@click.pass_obj
 @click.pass_context
 def print_database(ctx, table):
     ctx.invoke(kcl_print_database, database=ctx.obj.database, table=table)
-    #kcl_print_database(database=CONFIG.database, table=table)
-
-
-#@fsindex.command()
-#@click.option('--table', type=str, default=False)
-#@click.pass_obj
-#def sa_display(config, table):
-#    desc = sadisplay.describe(globals().values())
-#    dotfile = 'sadisplay.schema.' + str(time.time()) + '.dot'
-#
-#
-#    #with codecs.open('schema.plantuml', 'w', encoding='utf-8') as f:
-#    #    f.write(sadisplay.plantuml(desc))
-#
-#    with codecs.open(dotfile, 'w', encoding='utf-8') as f:
-#        f.write(sadisplay.dot(desc))
-#
-#    (graph,) = pydot.graph_from_dot_file(dotfile)
-#    graph.write_png(dotfile + '.png')
-#    #kcl_print_database(database=CONFIG.database, table=table)
-
 
 
 fsindex.add_command(list_objects, name='list')
@@ -107,7 +82,6 @@ fsindex.add_command(ipython)
 fsindex.add_command(sa_display)
 
 #fsindex.add_command(bookmark)
-#fsindex.add_command(content_files)
 #fsindex.add_command(show_config, name='config')
 #fsindex.add_command(display_database)
 #fsindex.add_command(import_all_iris)
