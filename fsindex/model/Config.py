@@ -10,5 +10,6 @@ class Config(BaseConfig):
     '''Simple configuration class.'''
     def __init__(self):
         BaseConfig.__init__(self)
+        self.appname = "fsindex"
 
 CONFIG = Config()
