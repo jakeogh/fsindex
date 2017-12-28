@@ -16,14 +16,16 @@ from kcl.sqlalchemy.print_database import print_database as kcl_print_database
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.sqlalchemy.ipython import ipython
+#from kcl.sqlalchemy.visualization import sa_display
 from fsindex.model.Config import CONFIG
 from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 from .cli.list_objects.list_objects import list_objects
 from .cli.create_objects.create_objects import create_objects
-import sadisplay
-import codecs
-import time
-import pydot
+from .cli.visualization import sa_display
+#import sadisplay
+#import codecs
+#import time
+#import pydot
 
 __version__ = 0.01
 
@@ -77,23 +79,23 @@ def print_database(config, table):
     kcl_print_database(database=CONFIG.database, table=table)
 
 
-@fsindex.command()
-@click.option('--table', type=str, default=False)
-@click.pass_obj
-def sa_display(config, table):
-    desc = sadisplay.describe(globals().values())
-    dotfile = 'sadisplay.schema.' + str(time.time()) + '.dot'
-
-
-    #with codecs.open('schema.plantuml', 'w', encoding='utf-8') as f:
-    #    f.write(sadisplay.plantuml(desc))
-
-    with codecs.open(dotfile, 'w', encoding='utf-8') as f:
-        f.write(sadisplay.dot(desc))
-
-    (graph,) = pydot.graph_from_dot_file(dotfile)
-    graph.write_png(dotfile + '.png')
-    #kcl_print_database(database=CONFIG.database, table=table)
+#@fsindex.command()
+#@click.option('--table', type=str, default=False)
+#@click.pass_obj
+#def sa_display(config, table):
+#    desc = sadisplay.describe(globals().values())
+#    dotfile = 'sadisplay.schema.' + str(time.time()) + '.dot'
+#
+#
+#    #with codecs.open('schema.plantuml', 'w', encoding='utf-8') as f:
+#    #    f.write(sadisplay.plantuml(desc))
+#
+#    with codecs.open(dotfile, 'w', encoding='utf-8') as f:
+#        f.write(sadisplay.dot(desc))
+#
+#    (graph,) = pydot.graph_from_dot_file(dotfile)
+#    graph.write_png(dotfile + '.png')
+#    #kcl_print_database(database=CONFIG.database, table=table)
 
 
 
@@ -101,6 +103,7 @@ fsindex.add_command(list_objects, name='list')
 fsindex.add_command(create_objects, name='create')
 #fsindex.add_command(print_database)
 fsindex.add_command(ipython)
+fsindex.add_command(sa_display)
 
 #fsindex.add_command(bookmark)
 #fsindex.add_command(content_files)
