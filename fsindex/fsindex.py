@@ -76,14 +76,19 @@ def print_database(config, table):
 @fsindex.command()
 @click.option('--table', type=str, default=False)
 @click.pass_obj
-def sadisplay(config, table):
+def sa_display(config, table):
     desc = sadisplay.describe(globals().values())
+    dotfile = 'sadisplay.schema.' + str(time.time()) + '.dot'
 
-    with codecs.open('schema.plantuml', 'w', encoding='utf-8') as f:
-        f.write(sadisplay.plantuml(desc))
 
-    with codecs.open('schema.dot', 'w', encoding='utf-8') as f:
+    #with codecs.open('schema.plantuml', 'w', encoding='utf-8') as f:
+    #    f.write(sadisplay.plantuml(desc))
+
+    with codecs.open(dotfile, 'w', encoding='utf-8') as f:
         f.write(sadisplay.dot(desc))
+
+    (graph,) = pydot.graph_from_dot_file(dotfile)
+    graph.write_png(dotfile + '.png')
     #kcl_print_database(database=CONFIG.database, table=table)
 
 
