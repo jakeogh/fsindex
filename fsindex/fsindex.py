@@ -18,6 +18,9 @@ from fsindex.model.Config import CONFIG
 from kcl.click.CONTEXT_SETTINGS import CONTEXT_SETTINGS
 from .cli.list_objects.list_objects import list_objects
 from .cli.create_objects.create_objects import create_objects
+import sadisplay
+import codecs
+
 __version__ = 0.01
 
 # pylint: disable=C0326
@@ -68,6 +71,21 @@ def test(package, keep_databases, count, test_class, test_match):
 @click.pass_obj
 def print_database(config, table):
     kcl_print_database(database=CONFIG.database, table=table)
+
+
+@fsindex.command()
+@click.option('--table', type=str, default=False)
+@click.pass_obj
+def sadisplay(config, table):
+    desc = sadisplay.describe(globals().values())
+
+    with codecs.open('schema.plantuml', 'w', encoding='utf-8') as f:
+        f.write(sadisplay.plantuml(desc))
+
+    with codecs.open('schema.dot', 'w', encoding='utf-8') as f:
+        f.write(sadisplay.dot(desc))
+    #kcl_print_database(database=CONFIG.database, table=table)
+
 
 
 fsindex.add_command(list_objects, name='list')
