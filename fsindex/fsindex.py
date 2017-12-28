@@ -11,8 +11,8 @@ from kcl.sqlalchemy.ipython import ipython
 from .cli.visualization.sa_display import sa_display
 from .cli.list_objects.list_objects import list_objects
 
-clickapp.help = CONFIG.appname + " interface"
-clickapp.add_command(ipython)
+fsindex.help = CONFIG.appname + " interface"
+fsindex.add_command(ipython)
 
 
 
