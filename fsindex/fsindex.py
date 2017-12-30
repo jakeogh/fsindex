@@ -8,6 +8,7 @@ builtins.config = CONFIG
 from kcl.sqlalchemy.clickapp.clickapp import clickapp as fsindex
 from kcl.sqlalchemy.clickapp.print_database import print_database
 from kcl.sqlalchemy.clickapp.test import test
+from kcl.sqlalchemy.clickapp.show_config import show_config
 from kcl.sqlalchemy.ipython import ipython
 from .cli.visualization.sa_display import sa_display
 from .cli.list_objects.list_objects import list_objects
@@ -24,4 +25,5 @@ fsindex.add_command(print_database)
 #fsindex.add_command(show_config, name='config')
 #fsindex.add_command(display_database)
 fsindex.add_command(test)
+fsindex.add_command(show_config)
 
