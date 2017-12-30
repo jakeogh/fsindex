@@ -6,7 +6,7 @@ from fsindex.model.Config import CONFIG
 builtins.config = CONFIG
 
 from kcl.sqlalchemy.clickapp.clickapp import clickapp as fsindex
-from kcl.sqlalchemy.clickapp.clickapp import print_database
+from kcl.sqlalchemy.clickapp.print_database import print_database
 from kcl.sqlalchemy.clickapp.test import test
 from kcl.sqlalchemy.ipython import ipython
 from .cli.visualization.sa_display import sa_display
