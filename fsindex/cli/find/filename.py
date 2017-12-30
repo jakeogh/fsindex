@@ -12,7 +12,7 @@ from kcl.sqlalchemy.model.Filename import Filename
 @click.option('--regex', is_flag=True)
 @click.pass_obj
 def filename(config, name, like, regex):
-    with self_contained_session(config.database) as session:
+    with self_contained_session(config.database, echo=config.database_echo) as session:
         if like and regex:
             eprint("--like and --regex are mutually exclusive.")
             quit(1)
