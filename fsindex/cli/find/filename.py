@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import click
+from sqlalchemy.sql import text
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Filename import Filename
 
@@ -17,7 +18,7 @@ def filename(config, name, like, regex):
         if like:
             filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
         elif regex:
-            filename_generator = session.query(Filename).filter(text('name ~ :reg')).params(reg='foo')
+            filename_generator = session.query(Filename).filter(text('name ~ :reg')).params(reg=regex)
         else:
             filename_generator = session.query(Filename).filter(Filename.filename == name)
 
