@@ -5,7 +5,7 @@ from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Filename import Filename
 
 @click.command()
-@click.argument('name', type=bytes)
+@click.argument('name', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
 @click.pass_obj
 def filename(config, name):
     with self_contained_session(config.database) as session:
