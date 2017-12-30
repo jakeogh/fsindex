@@ -7,25 +7,25 @@ from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Path import Path
 
 @click.command()
-@click.argument('name', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
+@click.argument('path', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
 @click.option('--like', is_flag=True)
 @click.option('--regex', is_flag=True)
 @click.pass_obj
-def filename(config, name, like, regex):
+def path(config, path, like, regex):
     with self_contained_session(config.database, echo=config.database_echo) as session:
         if like and regex:
             eprint("--like and --regex are mutually exclusive.")
             quit(1)
         if like:
-            filename_generator = session.query(Path).filter(Path.filename.like(b'%'+name+b'%'))
+            path_generator = session.query(Path).filter(Path.path.like(b'%'+path+b'%'))
         elif regex:
-            filename_generator = session.query(Path).filter(text('filename ~ :reg')).params(reg=name)
+            path_generator = session.query(Path).filter(text('path ~ :reg')).params(reg=path)
         else:
-            filename_generator = session.query(Path).filter(Path.filename == name)
+            path_generator = session.query(Path).filter(Path.path == path)
 
-        for filename in filename_generator:
-            #print(filename)
-            for item in filename.filerecords:
+        for path in path_generator:
+            #print(path)
+            for item in path.filerecords:
                 print(item)
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").fetchall()[0][0])
