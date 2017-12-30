@@ -6,11 +6,15 @@ from kcl.sqlalchemy.model.Filename import Filename
 
 @click.command()
 @click.argument('name', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
+@click.option('--like', is_flag=True)
 @click.pass_obj
-def filename(config, name):
+def filename(config, name, like):
     with self_contained_session(config.database) as session:
         #filename_generator = session.query(Filename).filter(Filename.filename == b'JaguarAJ-V8Engine.pdf')
-        filename_generator = session.query(Filename).filter(Filename.filename == name)
+        if like:
+            filename_generator = session.query(Filename).filter(User.name.like('%'+name+'%'))
+        else:
+            filename_generator = session.query(Filename).filter(Filename.filename == name)
         for filename in filename_generator:
             print(filename)
 
@@ -28,5 +32,7 @@ def filename(config, name):
 # 2017-12-30 01:32:42,137 INFO sqlalchemy.engine.base.Engine {'filename_1': <psycopg2.extensions.Binary object at 0x7fd7bf079f30>}
 # Out[10]: b'JaguarAJ-V8Engine.pdf'
 
+
+# bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").scalar())
 
 
