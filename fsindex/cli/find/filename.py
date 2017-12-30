@@ -7,14 +7,20 @@ from kcl.sqlalchemy.model.Filename import Filename
 @click.command()
 @click.argument('name', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
 @click.option('--like', is_flag=True)
+@click.option('--regex', is_flag=True)
 @click.pass_obj
-def filename(config, name, like):
+def filename(config, name, like, regex):
     with self_contained_session(config.database) as session:
-        #filename_generator = session.query(Filename).filter(Filename.filename == b'JaguarAJ-V8Engine.pdf')
+        if like and regex:
+            eprint("--like and --regex are mutually exclusive.")
+            quit(1)
         if like:
             filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
+        elif regex:
+            filename_generator = session.query(Filename).filter(text('name ~ :reg')).params(reg='foo')
         else:
             filename_generator = session.query(Filename).filter(Filename.filename == name)
+
         for filename in filename_generator:
             print(filename)
 
