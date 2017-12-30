@@ -2,8 +2,10 @@
 
 import click
 from kcl.sqlalchemy.model.FileRecord import FileRecord
-from kcl.sqlalchemy.model.FileRecord import Filename
-from kcl.sqlalchemy.model.FileRecord import Path
+from kcl.sqlalchemy.model.Filename import Filename
+from kcl.sqlalchemy.model.Path import Path
+from kcl.sqlalchemy.model.BytesHash import BytesHash
+
 from kcl.sqlalchemy.visualization.sa_display import sa_display as kcl_sa_display
 
 @click.command()
