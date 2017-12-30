@@ -12,7 +12,7 @@ def filename(config, name, like):
     with self_contained_session(config.database) as session:
         #filename_generator = session.query(Filename).filter(Filename.filename == b'JaguarAJ-V8Engine.pdf')
         if like:
-            filename_generator = session.query(Filename).filter(Filename.filename.like('%'+name+'%'))
+            filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
         else:
             filename_generator = session.query(Filename).filter(Filename.filename == name)
         for filename in filename_generator:
