@@ -25,5 +25,5 @@ fsindex.add_command(print_database)
 #fsindex.add_command(show_config, name='config')
 #fsindex.add_command(display_database)
 fsindex.add_command(test)
-fsindex.add_command(show_config)
+fsindex.add_command(show_config, name="config")
 
