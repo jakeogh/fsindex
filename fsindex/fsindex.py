@@ -13,14 +13,14 @@ from .cli.create_objects.create_objects import create_objects
 
 fsindex.help = CONFIG.appname + " interface"
 
-@fsindex.command()
-@click.option('--package', is_flag=False, type=str, required=False, default='fsindex')
-@click.option('--keep-databases', is_flag=True)
-@click.option('--count', is_flag=False, type=int, required=False)
-@click.option('--test-class', is_flag=False, type=str, required=False)
-@click.option('--test-match', is_flag=False, type=str, required=False)
-def test(package, keep_databases, count, test_class, test_match):
-    kcltest(package=package, keep_databases=keep_databases, count=count, test_class=test_class, test_match=test_match)
+#@fsindex.command()
+#@click.option('--package', is_flag=False, type=str, required=False, default='fsindex')
+#@click.option('--keep-databases', is_flag=True)
+#@click.option('--count', is_flag=False, type=int, required=False)
+#@click.option('--test-class', is_flag=False, type=str, required=False)
+#@click.option('--test-match', is_flag=False, type=str, required=False)
+#def test(package, keep_databases, count, test_class, test_match):
+#    kcltest(package=package, keep_databases=keep_databases, count=count, test_class=test_class, test_match=test_match)
 
 @fsindex.command()
 @click.option('--table', type=str, default=False)
