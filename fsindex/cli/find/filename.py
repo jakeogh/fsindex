@@ -2,15 +2,17 @@
 
 import click
 from kcl.sqlalchemy.self_contained_session import self_contained_session
-from kcl.sqlalchemy.model.FileRecord import FileRecord
+from kcl.sqlalchemy.model.Filename import Filename
 
 @click.command()
+@click.argument('name', type=bytes)
 @click.pass_obj
-def filerecord(config):
+def filename(config, name):
     with self_contained_session(config.database) as session:
-        filerecord_generator = session.query(FileRecord)
-        for filerecord in filerecord_generator:
-            print(filerecord)
+        #filename_generator = session.query(Filename).filter(Filename.filename == b'JaguarAJ-V8Engine.pdf')
+        filename_generator = session.query(Filename).filter(Filename.filename == name)
+        for filename in filename_generator:
+            print(filename)
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").fetchall()[0][0])
 # b'JaguarAJ-V8Engine.pdf'
