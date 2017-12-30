@@ -25,6 +25,7 @@ def filename(config, name, like, regex):
 
         for filename in filename_generator:
             print(filename)
+            print("filerecords:", filename.filerecords)
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").fetchall()[0][0])
 # b'JaguarAJ-V8Engine.pdf'
