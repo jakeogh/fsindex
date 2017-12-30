@@ -7,12 +7,9 @@ builtins.config = CONFIG
 
 from kcl.sqlalchemy.clickapp.clickapp import clickapp as fsindex
 fsindex.help = CONFIG.appname + " interface"
+CONFIG.appobject = fsindex
 
 from kcl.sqlalchemy.clickapp.default import *
-fsindex.add_command(ipython)
-fsindex.add_command(print_database)
-fsindex.add_command(test)
-fsindex.add_command(show_config, name="config")
 
 from .cli.visualization.sa_display import sa_display
 from .cli.list_objects.list_objects import list_objects
