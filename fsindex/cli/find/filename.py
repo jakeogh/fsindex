@@ -2,6 +2,7 @@
 
 import click
 from sqlalchemy.sql import text
+from kcl.printops import eprint
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Filename import Filename
 
