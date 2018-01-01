@@ -56,7 +56,7 @@ def generator(f):
 
 
 def match_field(session, table, field, term, substring):
-    tables = list_tables(database=config.bind.url)
+    tables = list_tables(database=session.bind.url)
     eprint(tables)
     if table not in tables: # todo make decorator
         eprint("non existing table:", table, "valid tables:", tables)
