@@ -22,27 +22,34 @@ fsindex.add_command(create_objects, name='create')
 fsindex.add_command(find)
 #fsindex.add_command(display_database)
 
-#def match_field(session, field, term, substring):
-#    if FIELDS[field] == 'BLOB':
-#        if not isinstance(term, bytes):
-#            term = bytes(term, 'UTF8')
-#    elif FIELDS[field] == 'INT':
-#        term = int(term)
-#    if 'hash' in field:
-#        term = term.lower()
-#    if substring:
-#        query = '''SELECT * FROM path_db WHERE ''' + field + ''' LIKE ?'''
-#        try:
-#            answer = session.execute(query, (b'%'+term+b'%',))
-#        except TypeError:
-#            answer = session.execute(query, ('%'+term+'%',))
-#    else:
-#        query = '''SELECT * FROM path_db WHERE ''' + field + '''=?'''
-#        answer = session.execute(query, (term,))
-#    results = answer.fetchall()
-#    #count = len(results)
-#    #eprint("match_field() count:", "{:,}".format(count))
-#    return results
+from kcl.sqlalchemy.list_tables import list_tables
+
+def match_field(session, table, field, term, substring):
+    tables = list_tables(database=config.bind.url)
+    if table not in tables: # todo make decorator
+        eprint("non existing table:", table, "valid tables:", tables)
+        quit(1)
+
+    #if FIELDS[field] == 'BLOB':
+    #    if not isinstance(term, bytes):
+    #        term = bytes(term, 'UTF8')
+    #elif FIELDS[field] == 'INT':
+    #    term = int(term)
+    #if 'hash' in field:
+    #    term = term.lower()
+    if substring:
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE ?'''
+        try:
+            answer = session.execute(query, (b'%'+term+b'%',))
+        except TypeError:
+            answer = session.execute(query, ('%'+term+'%',))
+    else:
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + '''=?'''
+        answer = session.execute(query, (term,))
+    results = answer.fetchall()
+    #count = len(results)
+    #eprint("match_field() count:", "{:,}".format(count))
+    return results
 #
 #@fsindex.command('search')
 #@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
