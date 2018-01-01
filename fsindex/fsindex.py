@@ -23,6 +23,37 @@ fsindex.add_command(find)
 #fsindex.add_command(display_database)
 
 from kcl.sqlalchemy.list_tables import list_tables
+from kcl.sqlalchemy.self_contained_session import self_contained_session
+from functools import update_wrapper
+
+
+
+def processor(f):
+    """Helper decorator to rewrite a function so that it returns another
+    function from it.
+    From: https://github.com/pallets/click/blob/master/examples/imagepipe/imagepipe.py
+    """
+    def new_func(*args, **kwargs):
+        def processor(stream):
+            return f(stream, *args, **kwargs)
+        return processor
+    return update_wrapper(new_func, f)
+
+def generator(f):
+    """Similar to the :func:`processor` but passes through old values
+    unchanged and does not pass through the values as parameter.
+    From: https://github.com/pallets/click/blob/master/examples/imagepipe/imagepipe.py
+    """
+    @processor
+    def new_func(stream, *args, **kwargs):
+        for item in stream:
+            yield item
+        for item in f(*args, **kwargs):
+            yield item
+    return update_wrapper(new_func, f)
+
+
+
 
 def match_field(session, table, field, term, substring):
     tables = list_tables(database=config.bind.url)
@@ -51,15 +82,17 @@ def match_field(session, table, field, term, substring):
     #eprint("match_field() count:", "{:,}".format(count))
     return results
 #
-#@fsindex.command('search')
-#@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
-#@click.option('--term', required=True, nargs=1)
-#@click.option('--substring', is_flag=True)
-#@generator
-#def search(field, term, substring):
-#    results = match_field(field=field, term=term, substring=substring)
-#    for result in results:
-#        yield result
+@fsindex.command('search')
+@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
+@click.option('--term', required=True, nargs=1)
+@click.option('--substring', is_flag=True)
+@generator
+def search(field, term, substring):
+    with self_contained_session(config.database) as session:
+        BASE.metadata.create_all(session.bind)
+        results = match_field(session=session, field=field, term=term, substring=substring)
+        for result in results:
+            yield result
 
 ##!/usr/bin/env python3
 #
@@ -68,7 +101,6 @@ def match_field(session, table, field, term, substring):
 #import os
 #import hashlib
 #import pprint
-#from functools import update_wrapper
 #from stat import *
 #import click
 #from kcl.printops import eprint
@@ -122,30 +154,6 @@ def match_field(session, table, field, term, substring):
 #    # Evaluate the stream and throw away the items.
 #    for _ in stream:
 #        pass
-#
-#def processor(f):
-#    """Helper decorator to rewrite a function so that it returns another
-#    function from it.
-#    From: https://github.com/pallets/click/blob/master/examples/imagepipe/imagepipe.py
-#    """
-#    def new_func(*args, **kwargs):
-#        def processor(stream):
-#            return f(stream, *args, **kwargs)
-#        return processor
-#    return update_wrapper(new_func, f)
-#
-#def generator(f):
-#    """Similar to the :func:`processor` but passes through old values
-#    unchanged and does not pass through the values as parameter.
-#    From: https://github.com/pallets/click/blob/master/examples/imagepipe/imagepipe.py
-#    """
-#    @processor
-#    def new_func(stream, *args, **kwargs):
-#        for item in stream:
-#            yield item
-#        for item in f(*args, **kwargs):
-#            yield item
-#    return update_wrapper(new_func, f)
 #
 #@cli.command('dupes')
 #@click.option('--file', 'infile', required=True, nargs=1)
