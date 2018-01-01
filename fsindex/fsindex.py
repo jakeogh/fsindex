@@ -93,6 +93,7 @@ def search(field, term, substring):
         BASE.metadata.create_all(session.bind)
         results = match_field(session=session, field=field, term=term, substring=substring)
         for result in results:
+            print(result)
             yield result
 
 ##!/usr/bin/env python3
