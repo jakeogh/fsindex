@@ -85,15 +85,16 @@ def match_field(session, table, field, term, substring):
 #
 @fsindex.command('search')
 #@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
+@click.option('--table', required=True, nargs=1)
 @click.option('--field', required=True, nargs=1)
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
 #@generator
-def search(field, term, substring):
+def search(table, field, term, substring):
     eprint(field, term, substring)
     with self_contained_session(config.database) as session:
 #        BASE.metadata.create_all(session.bind)
-        results = match_field(session=session, field=field, term=term, substring=substring)
+        results = match_field(session=session, table=table, field=field, term=term, substring=substring)
         for result in results:
             print(result)
             #yield result
