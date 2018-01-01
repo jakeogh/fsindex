@@ -20,5 +20,4 @@ fsindex.add_command(sa_display)
 fsindex.add_command(list_objects, name='list')
 fsindex.add_command(create_objects, name='create')
 fsindex.add_command(find)
-
 #fsindex.add_command(display_database)
