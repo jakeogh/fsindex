@@ -83,7 +83,8 @@ def match_field(session, table, field, term, substring):
     return results
 #
 @fsindex.command('search')
-@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
+#@click.option('--field', required=True, nargs=1, type=click.Choice(list(FIELDS.keys())))
+@click.option('--field', required=True, nargs=1)
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
 @generator
