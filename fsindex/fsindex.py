@@ -22,7 +22,7 @@ fsindex.add_command(create_objects, name='create')
 fsindex.add_command(find)
 #fsindex.add_command(display_database)
 
-from kcl.sqlalchemy.list_tables import list_tables
+from kcl.sqlalchemy.table_list import table_list
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from functools import update_wrapper
 
@@ -56,7 +56,7 @@ def generator(f):
 
 
 def match_field(session, table, field, term, substring):
-    tables = list_tables(database=session.bind.url)
+    tables = table_list(database=session.bind.url)
     eprint(tables)
     if table not in tables: # todo make decorator
         eprint("non existing table:", table, "valid tables:", tables)
