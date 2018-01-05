@@ -78,6 +78,7 @@ def match_field(session, table, field, term, substring):
     else:
         query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + '''=?'''
         eprint("query:", query)
+        eprint("term:", term)
         answer = session.execute(query, (term,))
     results = answer.fetchall()
     #count = len(results)
