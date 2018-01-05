@@ -77,7 +77,9 @@ def match_field(session, table, field, term, substring):
             answer = session.execute(query, ('%'+term+'%',))
     else:
         #query = text('''SELECT * FROM :table  WHERE :field =:term::bytea''')
-        query = text('''SELECT * FROM :table  WHERE :field = :term''')
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' = :term'''
+        #query = text('''SELECT * FROM :table  WHERE :field = :term''')
+        query = text(query)
         eprint("query:", query)
         eprint("table:", table)
         eprint("field:", field)
