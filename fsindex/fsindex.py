@@ -76,12 +76,13 @@ def match_field(session, table, field, term, substring):
         except TypeError:
             answer = session.execute(query, ('%'+term+'%',))
     else:
-        query = text('''SELECT * FROM :table  WHERE :field =:term::bytea''')
+        #query = text('''SELECT * FROM :table  WHERE :field =:term::bytea''')
+        query = text('''SELECT * FROM :table  WHERE :field = :term''')
         eprint("query:", query)
         eprint("table:", table)
         eprint("field:", field)
         eprint("term:", term)
-        answer = session.execute(query, table=table, filed=field, term=term)
+        answer = session.execute(query, table=table, field=field, term=term)
     results = answer.fetchall()
     #count = len(results)
     #eprint("match_field() count:", "{:,}".format(count))
