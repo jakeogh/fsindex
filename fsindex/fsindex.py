@@ -26,7 +26,7 @@ from kcl.sqlalchemy.table_list import table_list
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from functools import update_wrapper
 from sqlalchemy.sql import text
-
+import pprint
 
 def processor(f):
     """Helper decorator to rewrite a function so that it returns another
@@ -113,7 +113,7 @@ def search(config, table, field, term, substring):
 #        BASE.metadata.create_all(session.bind)
         results = match_field(session=session, table=table, field=field, term=term, substring=substring)
         for result in results:
-            print(result)
+            pprint.pprint(result)
             #yield result
 
 ##!/usr/bin/env python3
