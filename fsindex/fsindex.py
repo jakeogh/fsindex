@@ -70,23 +70,27 @@ def match_field(session, table, field, term, substring):
     #if 'hash' in field:
     #    term = term.lower()
     if substring:
-        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE ?'''
-        try:
-            answer = session.execute(query, (b'%'+term+b'%',))
-        except TypeError:
-            answer = session.execute(query, ('%'+term+'%',))
-    else:
-        #query = text('''SELECT * FROM :table  WHERE :field =:term::bytea''')
-        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' = :term'''
-        #query = text('''SELECT * FROM :table  WHERE :field = :term''')
+        #query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE ?'''
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE %:term%'''
         query = text(query)
         eprint("query:", query)
         eprint("table:", table)
         eprint("field:", field)
         eprint("term:", term)
-        #query = query.bindparams(table=table, field=field, term=term)
         query = query.bindparams(term=term)
-        #answer = session.execute(query, table=table, field=field, term=term)
+        answer = session.execute(query)
+        #try:
+        #    answer = session.execute(query, (b'%'+term+b'%',))
+        #except TypeError:
+        #    answer = session.execute(query, ('%'+term+'%',))
+    else:
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' = :term'''
+        query = text(query)
+        eprint("query:", query)
+        eprint("table:", table)
+        eprint("field:", field)
+        eprint("term:", term)
+        query = query.bindparams(term=term)
         answer = session.execute(query)
     results = answer.fetchall()
     #count = len(results)
