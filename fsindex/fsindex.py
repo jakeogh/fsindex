@@ -39,6 +39,7 @@ def processor(f):
         return processor
     return update_wrapper(new_func, f)
 
+
 def generator(f):
     """Similar to the :func:`processor` but passes through old values
     unchanged and does not pass through the values as parameter.
@@ -51,7 +52,6 @@ def generator(f):
         for item in f(*args, **kwargs):
             yield item
     return update_wrapper(new_func, f)
-
 
 
 
