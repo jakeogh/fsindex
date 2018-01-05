@@ -25,7 +25,7 @@ fsindex.add_command(find)
 from kcl.sqlalchemy.table_list import table_list
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from functools import update_wrapper
-
+from sqlalchemy.sql import text
 
 
 def processor(f):
@@ -76,10 +76,12 @@ def match_field(session, table, field, term, substring):
         except TypeError:
             answer = session.execute(query, ('%'+term+'%',))
     else:
-        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + '''=?::bytea'''
+        query = text('''SELECT * FROM :table  WHERE :field =:term::bytea''')
         eprint("query:", query)
+        eprint("table:", table)
+        eprint("field:", filed)
         eprint("term:", term)
-        answer = session.execute(query, (term,))
+        answer = session.execute(query, table=table, filed=filed, term=term)
     results = answer.fetchall()
     #count = len(results)
     #eprint("match_field() count:", "{:,}".format(count))
