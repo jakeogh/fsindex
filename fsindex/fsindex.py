@@ -76,7 +76,7 @@ def match_field(session, table, field, term, substring):
         except TypeError:
             answer = session.execute(query, ('%'+term+'%',))
     else:
-        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + '''=?'''
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + '''=?::bytea'''
         eprint("query:", query)
         eprint("term:", term)
         answer = session.execute(query, (term,))
