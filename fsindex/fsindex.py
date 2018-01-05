@@ -20,7 +20,6 @@ fsindex.add_command(sa_display)
 fsindex.add_command(list_objects, name='list')
 fsindex.add_command(create_objects, name='create')
 fsindex.add_command(find)
-#fsindex.add_command(display_database)
 
 from kcl.sqlalchemy.table_list import table_list
 from kcl.sqlalchemy.self_contained_session import self_contained_session
@@ -57,46 +56,21 @@ def generator(f):
 
 def match_field(session, table, field, term, substring):
     tables = table_list(database=session.bind.url)
-    eprint(tables)
     if table not in tables: # todo make decorator
         eprint("non existing table:", table, "valid tables:", tables)
         quit(1)
 
-    #if FIELDS[field] == 'BLOB':
-    #    if not isinstance(term, bytes):
-    #        term = bytes(term, 'UTF8')
-    #elif FIELDS[field] == 'INT':
-    #    term = int(term)
-    #if 'hash' in field:
-    #    term = term.lower()
     if substring:
-        #query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE ?'''
         query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE :term'''
         query = text(query)
-        eprint("query:", query)
-        eprint("table:", table)
-        eprint("field:", field)
         term = '%'+term+'%'
-        eprint("term:", term)
-
-        query = query.bindparams(term=term)
-        answer = session.execute(query)
-        #try:
-        #    answer = session.execute(query, (b'%'+term+b'%',))
-        #except TypeError:
-        #    answer = session.execute(query, ('%'+term+'%',))
     else:
         query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' = :term'''
         query = text(query)
-        eprint("query:", query)
-        eprint("table:", table)
-        eprint("field:", field)
-        eprint("term:", term)
-        query = query.bindparams(term=term)
-        answer = session.execute(query)
+
+    query = query.bindparams(term=term)
+    answer = session.execute(query)
     results = answer.fetchall()
-    #count = len(results)
-    #eprint("match_field() count:", "{:,}".format(count))
     return results
 #
 @fsindex.command('search')
@@ -110,7 +84,6 @@ def match_field(session, table, field, term, substring):
 def search(config, table, field, term, substring):
     eprint(field, term, substring)
     with self_contained_session(config.database, echo=config.database_echo) as session:
-#        BASE.metadata.create_all(session.bind)
         results = match_field(session=session, table=table, field=field, term=term, substring=substring)
         for result in results:
             pprint.pprint(result)
