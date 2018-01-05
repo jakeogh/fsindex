@@ -71,12 +71,14 @@ def match_field(session, table, field, term, substring):
     #    term = term.lower()
     if substring:
         #query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE ?'''
-        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE %:term%'''
+        query = '''SELECT * FROM ''' + table + ''' WHERE ''' + field + ''' LIKE :term'''
         query = text(query)
         eprint("query:", query)
         eprint("table:", table)
         eprint("field:", field)
+        term = '%'+term+'%'
         eprint("term:", term)
+
         query = query.bindparams(term=term)
         answer = session.execute(query)
         #try:
