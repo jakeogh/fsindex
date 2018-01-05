@@ -92,9 +92,10 @@ def match_field(session, table, field, term, substring):
 @click.option('--term', required=True, nargs=1)
 @click.option('--substring', is_flag=True)
 #@generator
-def search(table, field, term, substring):
+@click.pass_obj
+def search(config, table, field, term, substring):
     eprint(field, term, substring)
-    with self_contained_session(config.database) as session:
+    with self_contained_session(config.database, echo=config.database_echo) as session:
 #        BASE.metadata.create_all(session.bind)
         results = match_field(session=session, table=table, field=field, term=term, substring=substring)
         for result in results:
