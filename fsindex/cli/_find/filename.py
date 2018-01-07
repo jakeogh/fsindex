@@ -23,15 +23,6 @@ def ilike_filter(query, name):
 @click.pass_obj
 def filename(config, like, ilike):
     with self_contained_session(config.database, echo=config.database_echo) as session:
-        #if like and regex:
-        #    eprint("--like and --regex are mutually exclusive.")
-        #    quit(1)
-        #if ilike and regex:
-        #    eprint("--ilike and --regex are mutually exclusive.")
-        #    quit(1)
-        if like and ilike:
-            eprint("--like and --ilike are mutually exclusive.")
-            quit(1)
         query = session.query(Filename)
         for name in like:
             query = like_filter(query, name)
