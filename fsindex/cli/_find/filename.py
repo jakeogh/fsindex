@@ -16,12 +16,12 @@ def ilike_filter(query, name):
     return new_query
 
 @click.command()
-@click.argument('names', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
-@click.option('--like', is_flag=True)
+#@click.argument('names', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
+@click.option('--like', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
 @click.option('--ilike', is_flag=True)
 @click.option('--regex', is_flag=True)
 @click.pass_obj
-def filename(config, names, like, ilike, regex):
+def filename(config, like, ilike, regex):
     with self_contained_session(config.database, echo=config.database_echo) as session:
         if like and regex:
             eprint("--like and --regex are mutually exclusive.")
@@ -33,17 +33,15 @@ def filename(config, names, like, ilike, regex):
             eprint("--like and --ilike are mutually exclusive.")
             quit(1)
         query = session.query(Filename)
-        if like:
-            for name in names:
-                query = like_filter(query, name)
-        elif ilike:
-            for name in names:
-                query = ilike_filter(query, name)
-        elif regex:  # broken for bytes
-            query = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
-        else:
-            assert len(names) == 1
-            query = session.query(Filename).filter(Filename.filename == names[0])
+        for name in like:
+            query = like_filter(query, name)
+        for name in ilike:
+            query = ilike_filter(query, name)
+        #elif regex:  # broken for bytes
+        #    query = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
+        #else:
+        #    assert len(names) == 1
+        #    query = session.query(Filename).filter(Filename.filename == names[0])
 
         for filename in query:
             #print(filename)
