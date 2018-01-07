@@ -7,29 +7,43 @@ from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Filename import Filename
 
 
-def ilike_filter(query, name):
+def like_filter(query, name):
     new_query = query.filter(Filename.filename.like(b'%'+name+b'%'))
+    return new_query
+
+def ilike_filter(query, name):
+    new_query = query.filter(Filename.filename.ilike(b'%'+name+b'%'))
     return new_query
 
 @click.command()
 @click.argument('names', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
 @click.option('--like', is_flag=True)
+@click.option('--ilike', is_flag=True)
 @click.option('--regex', is_flag=True)
 @click.pass_obj
-def filename(config, names, like, regex):
+def filename(config, names, like, ilike, regex):
     with self_contained_session(config.database, echo=config.database_echo) as session:
         if like and regex:
             eprint("--like and --regex are mutually exclusive.")
             quit(1)
+        if ilike and regex:
+            eprint("--ilike and --regex are mutually exclusive.")
+            quit(1)
+        if like and ilike:
+            eprint("--like and --ilike are mutually exclusive.")
+            quit(1)
         query = session.query(Filename)
         if like:
             for name in names:
-                #filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
+                query = like_filter(query, name)
+        elif ilike:
+            for name in names:
                 query = ilike_filter(query, name)
-        elif regex:
+        elif regex:  # broken for bytes
             query = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
         else:
-            query = session.query(Filename).filter(Filename.filename == name)
+            assert len(names) == 1
+            query = session.query(Filename).filter(Filename.filename == names[0])
 
         for filename in query:
             #print(filename)
