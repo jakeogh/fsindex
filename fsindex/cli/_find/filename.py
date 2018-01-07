@@ -17,7 +17,7 @@ def ilike_filter(query, name):
 
 @click.command()
 #@click.argument('names', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
-@click.option('--like', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
+@click.option('--like', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
 @click.option('--ilike', is_flag=True)
 @click.option('--regex', is_flag=True)
 @click.pass_obj
