@@ -7,6 +7,7 @@ from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
 import pathlib
+import os
 
 # exists=False or cant pass broken symlinks
 # dir_okay=True or cant pass dirs or symlinks to dirs
@@ -18,7 +19,7 @@ def filerecord_index(config, path):
     assert path_is_dir(path)
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
-        pathlib_object = pathlib.Path(bytes(path))
+        pathlib_object = pathlib.Path(os.fsdecode(path))
         print("pathlib_object:", pathlib_object)
         print("type(pathlib_object):", type(pathlib_object))
         for index, path in enumerate(all_files_iter(pathlib_object)):
