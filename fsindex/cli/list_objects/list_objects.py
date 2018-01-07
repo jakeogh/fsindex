@@ -11,4 +11,4 @@ def list_objects():
 
 
 list_objects.add_command(filerecord, name='records')
-list_objects.add_command(filename, name='names')
+list_objects.add_command(filename, name='filenames')
