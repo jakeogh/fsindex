@@ -6,8 +6,13 @@ from kcl.printops import eprint
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Filename import Filename
 
+
+def ilike_filter(query, name):
+    new_query = query.filter(Filename.filename.like(b'%'+name+b'%'))
+    return new_query
+
 @click.command()
-@click.argument('name', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
+@click.argument('names', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
 @click.option('--like', is_flag=True)
 @click.option('--regex', is_flag=True)
 @click.pass_obj
@@ -16,15 +21,17 @@ def filename(config, name, like, regex):
         if like and regex:
             eprint("--like and --regex are mutually exclusive.")
             quit(1)
+        query = session.query(Filename)
         if like:
-            filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
-            print(type(filename_generator))
+            for name in names:
+                #filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
+                query = ilike_filter(query, name)
         elif regex:
-            filename_generator = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
+            query = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
         else:
-            filename_generator = session.query(Filename).filter(Filename.filename == name)
+            query = session.query(Filename).filter(Filename.filename == name)
 
-        for filename in filename_generator:
+        for filename in query:
             #print(filename)
             for item in filename.filerecords:
                 print(item)
