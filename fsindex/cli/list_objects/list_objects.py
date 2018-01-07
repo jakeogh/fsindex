@@ -9,5 +9,6 @@ from fsindex.cli.list_objects.filename import filename
 def list_objects():
     pass
 
+
 list_objects.add_command(filerecord, name='records')
 list_objects.add_command(filename, name='names')
