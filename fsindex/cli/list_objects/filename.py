@@ -6,8 +6,8 @@ from kcl.sqlalchemy.model.Filename import Filename
 
 @click.command()
 @click.pass_obj
-def filenames(config):
+def filename(config):
     with self_contained_session(config.database) as session:
-        filenames_generator = session.query(Filename)
-        for filenames in filenames_generator:
-            print(filenames)
+        filename_generator = session.query(Filename)
+        for filename in filename_generator:
+            print(filename)
