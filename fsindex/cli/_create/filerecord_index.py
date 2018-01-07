@@ -23,7 +23,7 @@ def filerecord_index(config, path):
         print("pathlib_object:", pathlib_object)
         print("type(pathlib_object):", type(pathlib_object))
         for index, path in enumerate(all_files_iter(pathlib_object)):
-            filerecord = FileRecord.construct(session=session, path=path)
+            filerecord = FileRecord.construct(session=session, path=bytes(path))
             session.add(filerecord)
             if index % 1000:
                 session.flush()
