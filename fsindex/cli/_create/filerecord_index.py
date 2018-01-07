@@ -18,7 +18,7 @@ def filerecord_index(config, path):
     assert path_is_dir(path)
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
-        for index, path in enumerate(all_files_iter(pathlib.Path(path))):
+        for index, path in enumerate(all_files_iter(pathlib.Path(bytes(path)))):
             filerecord = FileRecord.construct(session=session, path=path)
             session.add(filerecord)
             if index % 1000:
