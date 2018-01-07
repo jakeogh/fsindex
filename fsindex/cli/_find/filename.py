@@ -18,6 +18,7 @@ def filename(config, name, like, regex):
             quit(1)
         if like:
             filename_generator = session.query(Filename).filter(Filename.filename.like(b'%'+name+b'%'))
+            print(type(filename_generator))
         elif regex:
             filename_generator = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
         else:
