@@ -55,4 +55,6 @@ def filename(config, like, ilike):
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").scalar())
 
+# bytes(session.execute("SELECT filename FROM filename WHERE encode(filename, 'escape') ILIKE encode('%JaguarAJ-V8Engine%'::bytea, 'escape')").scalar())
+
 
