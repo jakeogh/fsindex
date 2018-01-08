@@ -12,6 +12,7 @@ def like_filter(query, name):
     return new_query
 
 def ilike_filter(query, name):
+    name = name.lower()
     new_query = query.filter(Filename.filename_lower.like(b'%'+name+b'%'))
     return new_query
 
