@@ -16,6 +16,11 @@ def ilike_filter(query, name):
     new_query = query.filter(Filename.filename_lower.like(b'%'+name+b'%'))
     return new_query
 
+#def regex_filter(query, name):
+#    name = name.lower()
+#    new_query = query.filter(text('filename ~ :reg')).params(reg=name)
+#    return new_query
+
 @click.command()
 @click.option('--like', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
 @click.option('--ilike', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
