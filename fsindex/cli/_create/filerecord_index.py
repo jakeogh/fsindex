@@ -14,17 +14,16 @@ import os
 # resolve_path=False or it will resolve symlinks
 @click.command()
 @click.argument('path', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
+@click.option('--verbose', is_flag=True)
 @click.pass_obj
-def filerecord_index(config, path):
+def filerecord_index(config, path, verbose):
     assert path_is_dir(path)
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
         pathlib_object = pathlib.Path(os.fsdecode(path))
-        print("pathlib_object:", pathlib_object)
-        print("type(pathlib_object):", type(pathlib_object))
         for index, path in enumerate(all_files_iter(pathlib_object)):
-            filerecord = FileRecord.construct(session=session, path=bytes(path))
+            filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
             session.add(filerecord)
-            if index % 1000:
+            if index % 100:
                 session.flush()
         session.commit()
