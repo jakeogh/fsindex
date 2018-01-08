@@ -26,4 +26,4 @@ def filerecord_index(config, path, verbose):
             session.add(filerecord)
             if index % 100:
                 session.flush()
-        session.commit()
+                session.commit()
