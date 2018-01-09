@@ -45,7 +45,7 @@ def filename(config, like, ilike):
         for filename in query:
             #print(filename)
             for item in filename.filerecords:
-                print(item.name)
+                print(item.file)
                 #if run:
                 #    command = run + b'' + item.name
                 #    os.system(command)
