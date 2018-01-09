@@ -12,9 +12,11 @@ def like_filter(query, name):
     new_query = query.filter(Filename.filename.like(b'%'+name+b'%'))
     return new_query
 
-def ilike_filter(query, name):
+def ilike_filter_escape(query, name):
     name = name.lower()
-    new_query = query.filter(Filename.filename_lower.like(b'%'+name+b'%'))
+    name = name.replace(bytes([92]), bytes([92,92]))
+    name = name.decode('utf8') #ugly
+    new_query = query.filter(Filename.filename_lower_escape.like('%'+name+'%'))
     return new_query
 
 #def regex_filter(query, name):
@@ -35,7 +37,7 @@ def filename(config, like, ilike):
         for name in like:
             query = like_filter(query, name)
         for name in ilike:
-            query = ilike_filter(query, name)
+            query = ilike_filter_escape(query, name)
         #elif regex:  # broken for bytes
         #    query = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
         #else:
