@@ -48,7 +48,7 @@ def filename(config, like, ilike, run):
             for item in filename.filerecords:
                 print(item.file)
                 if run:
-                    command = run + b' ' + item.file
+                    command = run + b' -- ' + item.file
                     os.system(command)
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").fetchall()[0][0])
