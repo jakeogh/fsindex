@@ -27,7 +27,8 @@ def ilike_filter_escape(query, name):
 @click.command()
 @click.option('--like', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
 @click.option('--ilike', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
-@click.option('--run', type=click.Path(exists=True, dir_okay=False, path_type=bytes, allow_dash=False), multiple=False, default=False)
+#@click.option('--run', type=click.Path(exists=True, dir_okay=False, path_type=bytes, allow_dash=False), multiple=False, default=False)
+@click.option('--run', multiple=False, default=False)
 @click.pass_obj
 def filename(config, like, ilike, run):
     with self_contained_session(config.database, echo=config.database_echo) as session:
@@ -47,7 +48,7 @@ def filename(config, like, ilike, run):
             for item in filename.filerecords:
                 print(item.file)
                 if run:
-                    command = run + b'' + item.file
+                    command = bytes(run, 'UTF8') + b'' + item.file
                     os.system(command)
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").fetchall()[0][0])
