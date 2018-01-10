@@ -24,10 +24,10 @@ def _index(config, paths, verbose):
             BASE.metadata.create_all(session.bind)
             pathlib_object = pathlib.Path(os.fsdecode(path))
             for index, path in enumerate(all_files_iter(pathlib_object)):
-                print(' ')
-                ceprint("index path:", path)
+                #print(' ')
+                #ceprint("index path:", path)
                 filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
                 session.add(filerecord)
-                #if index % 100:
-                session.flush()
-                session.commit()
+                if index % 100:
+                    session.flush()
+                    session.commit()
