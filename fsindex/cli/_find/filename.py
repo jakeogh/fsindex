@@ -38,7 +38,7 @@ def ilike_filter_escape(query, name, exclude=False):
 @click.option('--run', type=click.Path(exists=True, dir_okay=False, path_type=bytes, allow_dash=False), multiple=False)
 #@click.option('--run', multiple=False, default=False)
 @click.pass_obj
-def filename(config, like, ilike, run):
+def filename(config, like, ilike, notlike, notilike, run):
     with self_contained_session(config.database, echo=config.database_echo) as session:
         query = session.query(Filename)
         for name in like:
