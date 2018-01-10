@@ -17,7 +17,7 @@ from kcl.printops import ceprint
 @click.argument('paths', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
 @click.option('--verbose', is_flag=True)
 @click.pass_obj
-def filerecord_index(config, paths, verbose):
+def _index(config, paths, verbose):
     for path in paths:
         assert path_is_dir(path)
         with self_contained_session(config.database) as session:
