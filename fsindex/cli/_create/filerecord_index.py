@@ -27,6 +27,6 @@ def filerecord_index(config, paths, verbose):
                 ceprint("path:", path)
                 filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
                 session.add(filerecord)
-                if index % 100:
-                    session.flush()
-                    session.commit()
+                #if index % 100:
+                session.flush()
+                session.commit()
