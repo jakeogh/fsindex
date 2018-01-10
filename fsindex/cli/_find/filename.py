@@ -8,15 +8,21 @@ from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.Filename import Filename
 
 
-def like_filter(query, name):
-    new_query = query.filter(Filename.filename.like(b'%'+name+b'%'))
+def like_filter(query, name, exclude=False):
+    if exclude:
+        new_query = query.filter(Filename.filename.notlike(b'%'+name+b'%'))
+    else:
+        new_query = query.filter(Filename.filename.like(b'%'+name+b'%'))
     return new_query
 
-def ilike_filter_escape(query, name):
+def ilike_filter_escape(query, name, exclude=False):
     name = name.lower()
-    name = name.replace(bytes([92]), bytes([92,92]))
-    name = name.decode('utf8') #ugly
-    new_query = query.filter(Filename.filename_lower_escape.like('%'+name+'%'))
+    name = name.replace(bytes([92]), bytes([92, 92]))
+    name = name.decode('utf8')  # ugly
+    if exclude:
+        new_query = query.filter(Filename.filename_lower_escape.notlike('%'+name+'%'))
+    else:
+        new_query = query.filter(Filename.filename_lower_escape.like('%'+name+'%'))
     return new_query
 
 #def regex_filter(query, name):
@@ -27,6 +33,8 @@ def ilike_filter_escape(query, name):
 @click.command()
 @click.option('--like', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
 @click.option('--ilike', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
+@click.option('--notlike', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
+@click.option('--notilike', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), multiple=True)
 @click.option('--run', type=click.Path(exists=True, dir_okay=False, path_type=bytes, allow_dash=False), multiple=False)
 #@click.option('--run', multiple=False, default=False)
 @click.pass_obj
@@ -37,6 +45,10 @@ def filename(config, like, ilike, run):
             query = like_filter(query, name)
         for name in ilike:
             query = ilike_filter_escape(query, name)
+        for name in notlike:
+            query = like_filter(query, name, exclude=True)
+        for name in notilike:
+            query = ilike_filter_escape(query, name, exclude=True)
         #elif regex:  # broken for bytes
         #    query = session.query(Filename).filter(text('filename ~ :reg')).params(reg=name)
         #else:
