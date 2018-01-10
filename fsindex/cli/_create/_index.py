@@ -29,7 +29,7 @@ def _index(config, paths, verbose):
                 #ceprint("index path:", path)
                 if verbose:
                     eprint(path)
-                filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
+                filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=False)
                 session.add(filerecord)
                 if index % 100:
                     session.flush()
