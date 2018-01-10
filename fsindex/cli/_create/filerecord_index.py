@@ -8,6 +8,7 @@ from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
 import pathlib
 import os
+from kcl.printops import ceprint
 
 # exists=False or cant pass broken symlinks
 # dir_okay=True or cant pass dirs or symlinks to dirs
@@ -23,6 +24,7 @@ def filerecord_index(config, paths, verbose):
             BASE.metadata.create_all(session.bind)
             pathlib_object = pathlib.Path(os.fsdecode(path))
             for index, path in enumerate(all_files_iter(pathlib_object)):
+                ceprint("path:", path)
                 filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
                 session.add(filerecord)
                 if index % 100:
