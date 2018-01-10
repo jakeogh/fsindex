@@ -8,7 +8,7 @@ from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
 import pathlib
 import os
-from kcl.printops import ceprint
+#from kcl.printops import ceprint
 
 # exists=False or cant pass broken symlinks
 # dir_okay=True or cant pass dirs or symlinks to dirs
