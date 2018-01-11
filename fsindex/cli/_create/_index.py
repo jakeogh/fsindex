@@ -8,6 +8,7 @@ from kcl.sqlalchemy.model.FileRecord import FileRecord
 from kcl.sqlalchemy.BaseMixin import BASE
 from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
+from kcl.printops import ceprint
 from kcl.printops import eprint
 
 
