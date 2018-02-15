@@ -9,4 +9,4 @@ from fsindex.model.Config import CONFIG
 CONFIG.database = CONFIG.database_timestamp
 create_database(CONFIG.database)
 
-from kcl.sqlalchemy.base_test_enviroment import *
+from kcl.sqlalchemy.test_enviroment_base import *
