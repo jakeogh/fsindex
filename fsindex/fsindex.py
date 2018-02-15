@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# https://github.com/pallets/click/issues/891#issuecomment-358594289
+
 import click
 import builtins
 from fsindex.model.Config import CONFIG
@@ -51,7 +53,6 @@ def generator(f):
         for item in f(*args, **kwargs):
             yield item
     return update_wrapper(new_func, f)
-
 
 
 def match_field(session, table, field, term, substring):
@@ -257,7 +258,4 @@ def search(config, table, field, term, substring):
 #def update(root):
 #    update_db(root)
 #    quit(0)
-#
-#
-#
 #
