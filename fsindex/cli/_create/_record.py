@@ -12,7 +12,7 @@ from kcl.sqlalchemy.BaseMixin import BASE
 @click.command()
 @click.argument('path', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=1)
 @click.pass_obj
-def filerecord(config, path):
+def _record(config, path):
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
         filerecord = FileRecord.construct(session=session, inpath=path)
