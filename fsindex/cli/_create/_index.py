@@ -5,7 +5,7 @@ import pathlib
 import os
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.FileRecord import FileRecord
-from kcl.sqlalchemy.BaseMixin import BASE
+from kcl.sqlalchemy.model.BaseMixin import BASE
 from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
 from kcl.printops import ceprint
