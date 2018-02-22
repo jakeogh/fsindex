@@ -16,7 +16,6 @@ with self_contained_session(CONFIG.database_timestamp) as session:
     assert id(path) == id(path_duplicate)
 
 db_result = [('select COUNT(*) from filename;', 3),
-             ('select COUNT(*) from path;', 1),
-             ('select COUNT(*) from pathfilename;', 3)]
+             ('select COUNT(*) from path;', 3)]
 
 check_db_result(config=CONFIG, db_result=db_result)
