@@ -3,7 +3,7 @@
 import click
 from kcl.sqlalchemy.self_contained_session import self_contained_session
 from kcl.sqlalchemy.model.FileRecord import FileRecord
-from kcl.sqlalchemy.BaseMixin import BASE
+from kcl.sqlalchemy.model.BaseMixin import BASE
 
 
 # exists=False or cant pass broken symlinks
