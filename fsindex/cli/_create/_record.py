@@ -15,6 +15,6 @@ from kcl.sqlalchemy.model.BaseMixin import BASE
 def _record(config, path):
     with self_contained_session(config.database) as session:
         BASE.metadata.create_all(session.bind)
-        filerecord = FileRecord.construct(session=session, inpath=path)
+        filerecord = FileRecord.construct(session=session, path=path)
         session.commit()
         print(bytes(filerecord))
