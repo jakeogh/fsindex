@@ -23,17 +23,17 @@ from pycallgraph.output import GraphvizOutput
 @click.option('--verbose', is_flag=True)
 @click.pass_obj
 def _index(config, paths, verbose):
-    with PyCallGraph(output=GraphvizOutput()):
-        for path in paths:
-            assert path_is_dir(path)
-            with self_contained_session(config.database) as session:
-                BASE.metadata.create_all(session.bind)
-                pathlib_object = pathlib.Path(os.fsdecode(path))
-                for index, path in enumerate(all_files_iter(pathlib_object)):
-                    if verbose:
-                        eprint(path)
-                    filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=False)
-                    session.add(filerecord)
-                    if index % 100:
-                        session.flush()
-                        session.commit()
+    #with PyCallGraph(output=GraphvizOutput()):
+    for path in paths:
+        assert path_is_dir(path)
+        with self_contained_session(config.database) as session:
+            BASE.metadata.create_all(session.bind)
+            pathlib_object = pathlib.Path(os.fsdecode(path))
+            for index, path in enumerate(all_files_iter(pathlib_object)):
+                if verbose:
+                    eprint(path)
+                filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=False)
+                session.add(filerecord)
+                if index % 100:
+                    session.flush()
+                    session.commit()
