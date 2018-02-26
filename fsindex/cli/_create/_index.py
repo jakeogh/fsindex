@@ -10,6 +10,9 @@ from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
 from kcl.printops import ceprint
 from kcl.printops import eprint
+from pycallgraph import PyCallGraph
+from pycallgraph.output import GraphvizOutput
+
 
 
 # exists=False or cant pass broken symlinks
@@ -20,18 +23,19 @@ from kcl.printops import eprint
 @click.option('--verbose', is_flag=True)
 @click.pass_obj
 def _index(config, paths, verbose):
-    for path in paths:
-        assert path_is_dir(path)
-        with self_contained_session(config.database) as session:
-            BASE.metadata.create_all(session.bind)
-            pathlib_object = pathlib.Path(os.fsdecode(path))
-            for index, path in enumerate(all_files_iter(pathlib_object)):
-                #print(' ')
-                #ceprint("index path:", path)
-                if verbose:
-                    eprint(path)
-                filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=False)
-                session.add(filerecord)
-                if index % 100:
-                    session.flush()
-                    session.commit()
+    with PyCallGraph(output=GraphvizOutput()):
+        for path in paths:
+            assert path_is_dir(path)
+            with self_contained_session(config.database) as session:
+                BASE.metadata.create_all(session.bind)
+                pathlib_object = pathlib.Path(os.fsdecode(path))
+                for index, path in enumerate(all_files_iter(pathlib_object)):
+                    #print(' ')
+                    #ceprint("index path:", path)
+                    if verbose:
+                        eprint(path)
+                    filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=False)
+                    session.add(filerecord)
+                    if index % 100:
+                        session.flush()
+                        session.commit()
