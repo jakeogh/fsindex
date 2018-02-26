@@ -32,7 +32,7 @@ def _index(config, paths, verbose):
             for index, path in enumerate(all_files_iter(pathlib_object)):
                 if verbose:
                     eprint(path)
-                filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=False)
+                filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
                 session.add(filerecord)
                 if index % 100:
                     session.flush()
