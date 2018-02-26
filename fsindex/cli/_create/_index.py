@@ -10,8 +10,8 @@ from kcl.dirops import path_is_dir
 from kcl.dirops import all_files_iter
 from kcl.printops import ceprint
 from kcl.printops import eprint
-from pycallgraph import PyCallGraph
-from pycallgraph.output import GraphvizOutput
+#from pycallgraph import PyCallGraph
+#from pycallgraph.output import GraphvizOutput
 
 
 
@@ -31,7 +31,7 @@ def _index(config, paths, verbose):
             pathlib_object = pathlib.Path(os.fsdecode(path))
             for index, path in enumerate(all_files_iter(pathlib_object)):
                 if verbose:
-                    eprint(path)
+                    ceprint(path)
                 filerecord = FileRecord.construct(session=session, path=bytes(path), verbose=verbose)
                 session.add(filerecord)
                 if index % 100:
