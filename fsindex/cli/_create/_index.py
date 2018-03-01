@@ -19,7 +19,7 @@ from kcl.printops import eprint
 # dir_okay=True or cant pass dirs or symlinks to dirs
 # resolve_path=False or it will resolve symlinks
 @click.command()
-@click.argument('paths', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1)
+@click.argument('paths', type=click.Path(exists=False, dir_okay=True, path_type=bytes, allow_dash=False), nargs=-1, required=True)
 @click.option('--verbose', is_flag=True)
 @click.pass_obj
 def _index(config, paths, verbose):
