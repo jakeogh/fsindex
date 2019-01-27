@@ -4,7 +4,9 @@
 '''
     Config class
 '''
+import attr
 from kcl.sqlalchemy.model.BaseConfig import BaseConfig
+
 
 class Config(BaseConfig):
     '''Simple configuration class.'''
