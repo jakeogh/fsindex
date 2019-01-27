@@ -12,6 +12,8 @@ from kcl.sqlalchemy.model.BaseConfig import BaseConfig
 class Config(BaseConfig):
     '''Simple configuration class.'''
     appname: str = "fsindex"
+    def __attrs_post_init__(self):
+        BaseConfig.__init__(self)
     #def __init__(self):
     #    BaseConfig.__init__(self)
     #    self.appname = "fsindex"
