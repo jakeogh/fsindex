@@ -23,8 +23,6 @@ fsindex.add_command(_list, name='list')
 fsindex.add_command(_create, name='create')
 fsindex.add_command(_find, name='find')
 
-
-##!/usr/bin/env python3
 #
 #import shutil
 #import sys
