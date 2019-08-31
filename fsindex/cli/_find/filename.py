@@ -57,11 +57,12 @@ def filename(config, like, ilike, notlike, notilike, run):
 
         for filename in query:
             #print(filename)
-            for item in filename.filerecords:
+            for item in filename.filenames:
                 print(item.file)
                 if run:
                     command = run + b' -- ' + b'"' + item.file + b'"'
-                    os.system(command)
+                    eprint(command)
+                    #os.system(command)
 
 # bytes(session.execute("SELECT filename FROM filename WHERE filename = 'JaguarAJ-V8Engine.pdf'::bytea").fetchall()[0][0])
 # b'JaguarAJ-V8Engine.pdf'
